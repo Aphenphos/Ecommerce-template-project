@@ -3,7 +3,7 @@ import e from 'express';
 import jwt from 'express';
 import User from '../models/User';
 
-const userServices = class UserService {
+const UserService = class userService {
   static async create({
     email,
     password,
@@ -49,3 +49,5 @@ const userServices = class UserService {
     }
   }
 };
+
+export default UserService;
