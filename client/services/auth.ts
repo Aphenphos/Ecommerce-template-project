@@ -1,4 +1,4 @@
-const BASE_URL = 'localhost:7890';
+const BASE_URL = 'http://localhost:7891';
 
 export async function signUpUser(email: string, password: string) {
   const userObj = {

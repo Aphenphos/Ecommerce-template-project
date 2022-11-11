@@ -1,5 +1,5 @@
 import React, { ReactElement, useState, type FC } from 'react';
-
+import { signUpUser } from '../../services/auth';
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -7,9 +7,15 @@ export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const submitSignIn = async (e: any) => {
+      e.preventDefault();
+      const resp = await signUpUser(email, password);
+      console.log(resp);
+    };
     return (
       <div id="log-in-container">
-        <form id="log-in-form">
+        <form id="log-in-form" onSubmit={submitSignIn}>
           <label>
             Email:
             <input
