@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import UserService from '../services/UserService';
+import UserService from '../services/UserService.js';
 
 const userController = Router().post('/', async (req, res, next) => {
   try {

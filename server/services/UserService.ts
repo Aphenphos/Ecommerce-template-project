@@ -1,9 +1,9 @@
 import argon2 from 'argon2';
-import e from 'express';
+import express from 'express';
 import jwt from 'express';
-import User from '../models/User';
+import User from '../models/User.js';
 
-const UserService = class userService {
+class UserService {
   static async create({
     email,
     password,
@@ -48,6 +48,6 @@ const UserService = class userService {
       console.error(e);
     }
   }
-};
+}
 
 export default UserService;
