@@ -14,7 +14,7 @@ class UserService {
     if (email.length <= 6) {
       throw new Error('Invalid email');
     } else {
-      const structure = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      const structure = /^[^\s@;]+@[^\s@;]+\.[^\s@;]+$/.test(email);
       if (structure !== true) {
         throw new Error('Invalid email');
       }
