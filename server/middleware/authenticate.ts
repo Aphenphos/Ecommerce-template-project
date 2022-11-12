@@ -13,12 +13,13 @@ const authenticate = async (
 ) => {
   try {
     const c = process.env.COOKIE_NAME;
-    if (c === undefined) {
+    const s = process.env.SECRET;
+    if (c === undefined || s === undefined) {
       throw new Error('Failed to Authenticate');
     }
     const cookies = req.cookies && req.cookies[c];
 
-    const user = jwt.verify(cookies, process.env.SECRET);
+    const user = jwt.verify(cookies, s);
     req.user = user;
 
     next();
