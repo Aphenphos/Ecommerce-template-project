@@ -1,6 +1,8 @@
 import express, { type Request, type Response } from 'express';
 import cors from 'cors';
 import userController from './controllers/users.js';
+import notFound from './middleware/not-found.js';
+
 const app = express();
 app.use(express.json());
 
@@ -21,11 +23,5 @@ app.use(
 app.use('/users', userController);
 
 //Middleware
-app.all('*', (req: Request, res: Response) => {
-  console.log(`404 for ${req.url}`);
-  res
-    .status(404)
-    .send({ error: 404, message: `URL ${req.url} not found` });
-});
-
+app.use('*', notFound);
 export default server;
