@@ -5,11 +5,13 @@ import jwt from 'jsonwebtoken';
 const authenticate = async (req: Request, next: NextFunction) => {
   try {
     const c = process.env.COOKIE_NAME;
-    const s = process.env.SECRET;
+    const s = process.env.JWT_SECRET;
     if (c === undefined || s === undefined) {
       throw new Error('Failed to Authenticate');
     }
+
     const cookies = req.cookies && req.cookies[c];
+    console.log(req.cookies);
     if (!cookies) throw new Error('Failed to Authenticate');
 
     const user = jwt.verify(cookies, s);

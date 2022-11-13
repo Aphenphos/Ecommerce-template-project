@@ -1,5 +1,6 @@
+import e from 'express';
 import React, { ReactElement, useState, type FC } from 'react';
-import { signInUser, signUpUser } from '../../services/auth';
+import { getUser, signInUser, signUpUser } from '../../services/auth';
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -19,9 +20,13 @@ export default (): FC<Props> => {
       const resp = await signInUser(email, password);
       console.log(await resp);
     };
+
+    const logMe = async () => {
+      await getUser();
+    };
     return (
       <div id="sign-up-container">
-        <form id="sign-up-form" onSubmit={submitSignIn}>
+        <form id="sign-up-form" onSubmit={submitSignUp}>
           <label>
             Email:
             <input
@@ -74,6 +79,8 @@ export default (): FC<Props> => {
           </label>
           <button id="submit-log-in">Submit</button>
         </form>
+
+        <button onClick={logMe}>log me</button>
       </div>
     );
   };

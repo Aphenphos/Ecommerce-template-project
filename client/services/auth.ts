@@ -45,3 +45,15 @@ export async function signInUser(email: string, password: string) {
     return user;
   }
 }
+
+export async function getUser() {
+  const resp = await fetch(`${BASE_URL}/api/v1/users/me`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (resp.ok) {
+    const user = await resp.json();
+    console.log(user);
+    return user;
+  }
+}
