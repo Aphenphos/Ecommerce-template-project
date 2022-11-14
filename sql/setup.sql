@@ -6,5 +6,4 @@ CREATE TABLE users (
   email VARCHAR NOT NULL UNIQUE,
   password_hash VARCHAR NOT NULL,
   vendor BOOLEAN NOT NULL DEFAULT false,
-  admin BOOLEAN NOT NULL DEFAULT false
 );
