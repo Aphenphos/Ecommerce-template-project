@@ -21,9 +21,10 @@ app.use(
   })
 );
 
+//Middleware
+app.use('*', notFound);
+
 //Routes
 app.use('/users', userController);
 
-//Middleware
-app.use('*', notFound);
 export default server;

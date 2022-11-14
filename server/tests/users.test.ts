@@ -1,6 +1,6 @@
 // Note the mismatch of import name and library name. This follows the
 // documentation example.
-import request from 'supertest';
+import request, { agent } from 'supertest';
 import app from '../app';
 import {
   afterAll,
@@ -10,6 +10,7 @@ import {
   it,
   jest,
 } from '@jest/globals';
+import { CookieAccessInfo } from 'cookiejar';
 import db from '../database.js';
 
 describe('the server', () => {
@@ -32,28 +33,48 @@ describe('the server', () => {
   // I have confirmed that the tests still fail properly if the expectations are
   // fouled up. So these aren't due to dangling promises that deceptively cause
   // tests to pass.
+  const mockUser = {
+    email: 'test@example.com',
+    password: 'P@ssw0rd!',
+  };
   afterAll((done) => {
     app.close(done);
   });
 
-  it('successfully gets /foos', () => {
-    return request(app)
-      .get('/foos')
-      .then((res) => expect(res.status).toBe(200));
+  it('Creates and signs in a user.', async () => {
+    const agent = request.agent(app);
+    const res = await agent.post('/api/v1/users/').send(mockUser);
+    expect(res.body).toEqual({
+      email: mockUser.email,
+      password: mockUser.password,
+    });
+    const session = agent.jar.getCookie(
+      'cookie',
+      CookieAccessInfo.All
+    );
+    expect(session).toBeTruthy();
   });
 
-  it('serves a list of foos on GET /foos', () => {
-    jest.spyOn(db, 'query').mockImplementation(
-      jest.fn(() => {
-        return Promise.resolve({
-          rows: [{ foo: 'bar' }],
-        });
-      })
-    );
-    return request(app)
-      .get('/foos')
-      .then((res) => {
-        expect(res.body).toEqual([{ foo: 'bar' }]);
-      });
+  it('returns the current user', async () => {
+    const agent = request.agent(app);
+    const me = await agent.get('/api/v1/users/me');
+    expect(me.body).toEqual({
+      email: expect.any(String),
+      id: expect.any(String),
+      exp: expect.any(Number),
+      iat: expect.any(Number),
+    });
+  });
+
+  it('/get returns a 401 if not logged in', async () => {
+    const resp = await request(app).get('/api/v1/users/me');
+    expect(resp.status).toBe(401);
+  });
+
+  it('delete user session(logout)', async () => {
+    const agent = request.agent(app);
+    await agent.post('/api/v1/users/sessions').send(mockUser);
+    const resp = await agent.delete('/api/v1/users/sessions');
+    expect(resp.status).toBe(204);
   });
 });
