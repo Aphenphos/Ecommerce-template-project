@@ -57,3 +57,13 @@ export async function getUser() {
     return user;
   }
 }
+
+export async function logoutUser() {
+  const resp = await fetch(`${BASE_URL}/api/v1/users/sessions`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  if (resp.ok) {
+    console.log('logged out');
+  }
+}

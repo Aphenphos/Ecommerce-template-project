@@ -1,6 +1,11 @@
 import e from 'express';
 import React, { ReactElement, useState, type FC } from 'react';
-import { getUser, signInUser, signUpUser } from '../../services/auth';
+import {
+  getUser,
+  logoutUser,
+  signInUser,
+  signUpUser,
+} from '../../services/auth';
 import './Auth.css';
 export type Props = {};
 export type Component = FC<Props>;
@@ -13,23 +18,26 @@ export default (): FC<Props> => {
 
     const submitSignUp = async (e: any) => {
       e.preventDefault();
-      const resp = await signUpUser(email, password);
-      console.log(await resp);
+      await signUpUser(email, password);
     };
 
     const submitSignIn = async (e: any) => {
       e.preventDefault();
-      const resp = await signInUser(email, password);
-      console.log(await resp);
+      await signInUser(email, password);
     };
 
     const logMe = async () => {
       const data = await getUser();
       setDisplayEmail(data.email);
     };
+
+    const logOut = async () => {
+      await logoutUser();
+    };
     return (
       <>
         <span>{displayEmail}</span>
+        <button onClick={logOut}>LogOut</button>
         <div id="sign-up-container">
           <form id="sign-up-form" onSubmit={submitSignUp}>
             <label>
