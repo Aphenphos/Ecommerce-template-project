@@ -9,6 +9,7 @@ export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [displayEmail, setDisplayEmail] = useState('');
 
     const submitSignUp = async (e: any) => {
       e.preventDefault();
@@ -23,66 +24,70 @@ export default (): FC<Props> => {
     };
 
     const logMe = async () => {
-      await getUser();
+      const data = await getUser();
+      setDisplayEmail(data.email);
     };
     return (
-      <div id="sign-up-container">
-        <form id="sign-up-form" onSubmit={submitSignUp}>
-          <label>
-            Email:
-            <input
-              type="email"
-              className="email-input"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-            ></input>
-          </label>
+      <>
+        <span>{displayEmail}</span>
+        <div id="sign-up-container">
+          <form id="sign-up-form" onSubmit={submitSignUp}>
+            <label>
+              Email:
+              <input
+                type="email"
+                className="email-input"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                placeholder="Email"
+              ></input>
+            </label>
 
-          <label>
-            Password:
-            <input
-              type="password"
-              className="password-input"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-            ></input>
-          </label>
-          <button id="submit-sign-up">Submit</button>
-        </form>
+            <label>
+              Password:
+              <input
+                type="password"
+                className="password-input"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="Password"
+              ></input>
+            </label>
+            <button id="submit-sign-up">Submit</button>
+          </form>
 
-        <form id="log-in-form" onSubmit={submitSignIn}>
-          <label>
-            Email:
-            <input
-              type="email"
-              className="email-input"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-            ></input>
-          </label>
+          <form id="log-in-form" onSubmit={submitSignIn}>
+            <label>
+              Email:
+              <input
+                type="email"
+                className="email-input"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                placeholder="Email"
+              ></input>
+            </label>
 
-          <label>
-            Password:
-            <input
-              type="password"
-              className="password-input"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-            ></input>
-          </label>
-          <button id="submit-log-in">Submit</button>
-        </form>
+            <label>
+              Password:
+              <input
+                type="password"
+                className="password-input"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="Password"
+              ></input>
+            </label>
+            <button id="submit-log-in">Submit</button>
+          </form>
 
-        <button onClick={logMe}>log me</button>
-      </div>
+          <button onClick={logMe}>log me</button>
+        </div>
+      </>
     );
   };
   component.displayName = 'Auth';
