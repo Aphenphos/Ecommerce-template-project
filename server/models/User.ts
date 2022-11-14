@@ -20,11 +20,11 @@ const User = class User {
   }) {
     const { rows } = await pool.query(
       `
-    INSERT INTO users (email, password_hash, vendor)
-    VALUES ($1, $2, $3)
+    INSERT INTO users (email, password_hash)
+    VALUES ($1, $2)
     RETURNING *
     `,
-      [email, passwordHash, false]
+      [email, passwordHash]
     );
 
     return new User(rows[0]);

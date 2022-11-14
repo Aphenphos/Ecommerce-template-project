@@ -17,7 +17,7 @@ export async function signUpUser(email: string, password: string) {
 
   const data = await resp.json();
   if (resp.ok) {
-    const user = await resp.json();
+    const user = data;
     console.log(user);
     return user;
   } else {

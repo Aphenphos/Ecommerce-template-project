@@ -1,6 +1,7 @@
 import e from 'express';
 import React, { ReactElement, useState, type FC } from 'react';
 import { getUser, signInUser, signUpUser } from '../../services/auth';
+import './Auth.css';
 export type Props = {};
 export type Component = FC<Props>;
 

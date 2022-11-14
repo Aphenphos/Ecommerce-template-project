@@ -10,11 +10,19 @@ const userController = Router()
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const user = await UserService.create(req.body);
-        const sessionToken = await UserService.signIn(req.body);
+        const {
+          email,
+          password,
+        }: { email: string; password: string } = req.body;
+        const sessionToken = await UserService.signIn({
+          email,
+          password,
+        });
         const cName = process.env.COOKIE_NAME;
         const sC = process.env.SECURE_COOKIES;
-        if (cName === undefined || sC === undefined)
+        if (cName === undefined || sC === undefined) {
           throw new Error('Failed to process ');
+        }
         res
           .cookie(cName, sessionToken, {
             httpOnly: true,
