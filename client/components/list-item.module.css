@@ -1,0 +1,8 @@
+.cat {
+  list-style-type: '🐈';
+  margin-left: 1rem;
+}
+
+.foo {
+  border: 1px solid red;
+}

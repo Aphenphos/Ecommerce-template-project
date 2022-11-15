@@ -10,19 +10,7 @@
     "noImplicitThis": true,
     "noUncheckedIndexedAccess": true,
     "outDir": "./dist/",
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules",
-        "options": {
-          "classnameTransform": "camelCase",
-          "customMatcher": "\\.module\\.css$",
-          "customRenderer": null,
-          "dotenvOptions": {},
-          "postcssOptions": {},
-          "rendererOptions": {}
-        }
-      }
-    ],
+    "plugins": [],
     "resolveJsonModule": true,
     "strictBindCallApply": true,
     "strictFunctionTypes": true,
@@ -30,6 +18,9 @@
     "strictPropertyInitialization": true,
     "target": "es2022",
     "types": [
+      "@testing-library/jest-dom",
+      "@types/testing-library__jest-dom",
+      "jest",
       "react",
       "react-dom/experimental",
       "react-dom/next",

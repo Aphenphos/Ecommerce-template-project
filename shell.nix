@@ -7,6 +7,7 @@ with pkgs;
 stdenv.mkDerivation {
   name = "node-project";
   buildInputs = [
+    heroku
     nodejs-18_x
     postgresql
   ];

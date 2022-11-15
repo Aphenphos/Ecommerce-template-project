@@ -12,6 +12,9 @@ node_modules
 # Ignore output of Webpack and tsc (TypeScript's compilation).
 dist
 
+# Ignore output of tsc (TypeScript's compiler)
+/public
+
 # Ignore Postgres lock files.
 .s.PGSQL.*
 

@@ -1,0 +1,13 @@
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #222;
+    --color: #aaa;
+    --nav-link-color: #3df;
+    --affirmative-button-background-color: #252;
+    --affirmative-button-color: #00DD99;
+    --danger-button-background-color: #522;
+    --danger-button-color: #DD9977;
+    --view-button-color: #0099DD;
+    --view-button-background-color: #225;
+  }
+}

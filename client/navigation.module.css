@@ -1,0 +1,17 @@
+.navigation {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+
+  /* @media (min-width: 700px) { */
+  /*   flex-direction: row; */
+  /* } */
+
+  /* a { */
+  /*   padding: 3px 7px; */
+  /*   color: var(--white-color); */
+  /*   text-decoration: none; */
+  /*   padding: 0; */
+  /* } */
+}

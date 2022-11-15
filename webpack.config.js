@@ -34,10 +34,11 @@ export default {
   // All Webpack bundles require a single entry point from which the entire
   // bundling process starts.
   entry: './client/app.tsx',
+  mode: process.env.NODE === 'production' ? 'production' : 'development',
   // This indicates how and where the final output is bundled.
   output: {
-    filename: 'bundle.[hash].js',
-    path: path.resolve(__dirname, './dist'),
+    filename: 'bundle.[contenthash].js',
+    path: path.resolve(__dirname, './public'),
     publicPath: '/',
   },
   // The webpack-dev-server is what we run locally when npm start is invoked. It
@@ -66,6 +67,8 @@ export default {
       '/api/v1': {
         pathRewrite: {
           // This rewritres the /api/v1 (coming from the browser) to nothing.
+          // See API_PREFIX. When deployed, we set API_PREFIX to be /api/v1, but
+          // if the API were ever to be versioned, we'd set it to /api/v2.
           '^/api/v1': ''
         },
         // This is our server that we want to reverse-proxy to.
@@ -81,7 +84,11 @@ export default {
     // own HTML file so we can do things like control what meta tags exist, how
     // the body tag is populated, the title, and anything else we might want to
     // control.
-    new HtmlPlugin({ template: './client/index.html' }),
+    new HtmlPlugin({
+      // This is required to make the CSS reload on change.
+      cache: false,
+      template: './client/index.html',
+    }),
     // Clean the dist directory on every webpack build. Note that the dist
     // directory is not used when running webpack-dev-server (npm start).
     new CleanWebpackPlugin(),
@@ -100,7 +107,7 @@ export default {
     // know how to include them. For these files, place them in the public
     // directory and Webpack will ensure they get copied over.
     new CopyPlugin({
-      patterns: [{ from: 'public' }],
+      patterns: [{ from: 'client/public' }],
     }),
     // This extracts CSS data and puts it into a CSS file, which is then
     // included in our index.html. The gathering of the CSS data is done via the
@@ -112,6 +119,10 @@ export default {
     new webpack.ProvidePlugin({
       process: 'process/browser',
       React: 'react',
+    }),
+    // Prevent Webpack from rebuilding when the css.d.ts files are written out.
+    new webpack.WatchIgnorePlugin({
+      paths: [/css\.d\.ts$/],
     }),
   ],
   resolve: {
@@ -131,6 +142,13 @@ export default {
     // assets. When a list of loaders is provided, the assets will move through
     // the loaders in a bottom-to-top order.
     rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+        },
+      },
       // TypeScript support. See also the resolve.extensions section for
       // including them by file type.
       {
@@ -149,6 +167,13 @@ export default {
           // plugins section. This plugin must be the last in order in order to
           // work correctly (and thus needs to be on the top).
           MiniCssExtractPlugin.loader,
+          // This loader makes CSS Modules type safe with TypeScript files.
+          {
+            loader: 'css-modules-typescript-loader',
+            options: {
+              mode: process.env.CI ? 'verify' : 'emit'
+            },
+          },
           {
             loader: 'css-loader',
             options: {
@@ -158,6 +183,7 @@ export default {
               // letting us pretend that CSS files are actually standalone
               // modules that don't interfere with other modules.
               modules: {
+                exportLocalsConvention: 'camelCase',
                 // The localIdentName provides a template in which the class
                 // names are mangled by CSS Modules. By default it is just a
                 // random hash. Below, we use the file name ([name]) and the
