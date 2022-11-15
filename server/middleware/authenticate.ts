@@ -11,12 +11,14 @@ const authenticate = async (
     const c = process.env.COOKIE_NAME;
     const s = process.env.JWT_SECRET;
     if (c === undefined || s === undefined) {
-      throw new Error('Failed to Authenticate');
+      throw new Error('Failed to ENV');
     }
 
     const cookies = req.cookies && req.cookies[c];
     console.log(cookies);
-    if (!cookies) throw new Error('Failed to Authenticate Cookies');
+    if (!cookies) {
+      throw 'Failed to authenticate Cookies';
+    }
 
     const user = jwt.verify(cookies, s);
     (req as any).user = user;

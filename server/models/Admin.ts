@@ -15,6 +15,7 @@ const Admin = class Admin {
     const { rows } = await pool.query(
       `
     DELETE FROM users WHERE email=$1 AND id=$2
+    RETURNING *
     `,
       [email, id]
     );
@@ -43,6 +44,17 @@ const Admin = class Admin {
       [id]
     );
 
+    return new Admin(rows[0]);
+  }
+
+  static async checkIfAdmin(id: bigint) {
+    const { rows } = await pool.query(
+      `
+    SELECT * WHERE admin_id=$1
+    RETURNING *
+    `,
+      [id]
+    );
     return new Admin(rows[0]);
   }
 };
