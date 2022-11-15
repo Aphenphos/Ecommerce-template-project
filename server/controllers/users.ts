@@ -71,9 +71,9 @@ const userController = Router()
 
   .get(
     '/me',
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        await authenticate(req, next);
         res.json((req as any).user);
       } catch (err) {
         next(err);

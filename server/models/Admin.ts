@@ -37,7 +37,8 @@ const Admin = class Admin {
   static async removeVendor(id: bigint) {
     const { rows } = await pool.query(
       `
-      DELETE FROM vendors WHERE vendor_id=$1
+      DELETE FROM vendors WHERE id=$1
+      RETURNING *
       `,
       [id]
     );

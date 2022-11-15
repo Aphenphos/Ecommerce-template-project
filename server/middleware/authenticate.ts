@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 //perhaps narrow this type from any to exactly what I want it to return later.
 
-const authenticate = async (req: Request, next: NextFunction) => {
+const authenticate = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const c = process.env.COOKIE_NAME;
     const s = process.env.JWT_SECRET;

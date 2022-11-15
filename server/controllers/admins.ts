@@ -20,7 +20,7 @@ const adminController = Router()
 
   .delete('/rmVendor', async (req, res, next) => {
     try {
-      const rmVendor = await Admin.removeVendor(req.body.vendor_id);
+      const rmVendor = await Admin.removeVendor(req.body.id);
       res.send(rmVendor);
     } catch (err) {
       next(err);
@@ -30,6 +30,7 @@ const adminController = Router()
     '/addVendor',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
+        console.log(req.body);
         const data = await Admin.makeVendor(req.body.id);
         res.json(data);
       } catch (err) {
