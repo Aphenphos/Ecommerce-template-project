@@ -1,12 +1,14 @@
 import pool from '../database.js';
 
 const Admin = class Admin {
-  id: bigint;
-  admin_id: bigint;
+  id?: bigint;
+  admin_id?: bigint;
+  vendor_id?: bigint;
 
   constructor(row: any) {
     this.id = row.id;
     this.admin_id = row.admin_id;
+    this.vendor_id = row.vendor_id;
   }
 
   static async removeUser(email: string, id: bigint) {
@@ -26,6 +28,17 @@ const Admin = class Admin {
     VALUES ($1)
     RETURNING *
     `,
+      [id]
+    );
+
+    return new Admin(rows[0]);
+  }
+
+  static async removeVendor(id: bigint) {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM vendors WHERE vendor_id=$1
+      `,
       [id]
     );
 

@@ -1,4 +1,3 @@
-import e from 'express';
 import React, { ReactElement, useState, type FC } from 'react';
 import {
   getUser,

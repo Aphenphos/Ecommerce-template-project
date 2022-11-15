@@ -4,7 +4,7 @@ import Admin from '../models/Admin.js';
 
 const adminController = Router()
   .delete(
-    '/removeUser',
+    '/rmUser',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const remove = await Admin.removeUser(
@@ -18,6 +18,14 @@ const adminController = Router()
     }
   )
 
+  .delete('/rmVendor', async (req, res, next) => {
+    try {
+      const rmVendor = await Admin.removeVendor(req.body.vendor_id);
+      res.send(rmVendor);
+    } catch (err) {
+      next(err);
+    }
+  })
   .post(
     '/addVendor',
     async (req: Request, res: Response, next: NextFunction) => {
@@ -29,3 +37,5 @@ const adminController = Router()
       }
     }
   );
+
+export default adminController;
