@@ -11,11 +11,13 @@ import express, { type Request, type Response } from 'express';
 import path from 'node:path';
 import routes from './routes.js';
 import errorHandler from './middleware/error.js';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(process.env.API_PREFIX || '', routes());
 // Ordinarily we'd use __dirname as a base directory, but issues that arise from
 // https://github.com/kulshekhar/ts-jest/issues/1174 cause problems with not
@@ -26,12 +28,11 @@ app.use(process.env.API_PREFIX || '', routes());
 const publicDir = path.join(process.cwd(), 'public');
 app.use(express.static(publicDir));
 app.use(errorHandler);
-
-// Sending our index.html to the client on a 404 is required to make HTML5
-// routes. HTML5 routes are the routes using the paths instead of the
-// fake paths after the anchor (#) in the URL.
 app.all('*', (req: Request, res: Response) => {
   res.status(404).sendFile(path.join(publicDir, 'index.html'));
 });
+// Sending our index.html to the client on a 404 is required to make HTML5
+// routes. HTML5 routes are the routes using the paths instead of the
+// fake paths after the anchor (#) in the URL.
 
 export default app;

@@ -6,7 +6,6 @@ import {
   signInUser,
   signUpUser,
 } from '../../services/auth';
-import './Auth.css';
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -28,6 +27,7 @@ export default (): FC<Props> => {
 
     const logMe = async () => {
       const data = await getUser();
+      console.log(data.email);
       setDisplayEmail(data.email);
     };
 

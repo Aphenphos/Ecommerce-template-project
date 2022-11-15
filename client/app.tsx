@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './reset.css';
+import './styles/reset.css';
 import authFn from './components/Auth/Auth';
 // import './global.css';
 import {

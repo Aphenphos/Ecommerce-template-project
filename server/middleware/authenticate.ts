@@ -11,8 +11,8 @@ const authenticate = async (req: Request, next: NextFunction) => {
     }
 
     const cookies = req.cookies && req.cookies[c];
-    console.log(req.cookies);
-    if (!cookies) throw new Error('Failed to Authenticate');
+    console.log(cookies);
+    if (!cookies) throw new Error('Failed to Authenticate Cookies');
 
     const user = jwt.verify(cookies, s);
     (req as any).user = user;

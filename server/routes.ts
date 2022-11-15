@@ -11,7 +11,7 @@ import userController from './controllers/users.js';
 
 export default (): Router => {
   const prefixRouter = express.Router();
-  prefixRouter.use('/user', userController);
+  prefixRouter.use('/users', userController);
 
   return prefixRouter;
 };
