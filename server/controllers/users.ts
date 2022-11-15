@@ -30,8 +30,7 @@ const userController = Router()
             sameSite: sC === 'true' ? 'none' : 'strict',
             maxAge: ONEHOURINMS,
           })
-          .json(req.body);
-        res.json(user);
+          .json(user);
       } catch (err) {
         next(err);
       }
@@ -71,11 +70,12 @@ const userController = Router()
 
   .get(
     '/me',
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        await authenticate(req, next);
         res.json((req as any).user);
       } catch (err) {
+        console.error(err);
         next(err);
       }
     }
@@ -85,7 +85,7 @@ const userController = Router()
     const cName = process.env.COOKIE_NAME;
     const sC = process.env.SECURE_COOKIES;
     if (cName === undefined || sC === undefined) {
-      throw new Error('Failed to process ');
+      throw new Error('Failed to process');
     }
     res
       .clearCookie(cName, {

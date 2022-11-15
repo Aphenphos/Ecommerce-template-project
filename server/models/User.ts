@@ -26,7 +26,7 @@ const User = class User {
     `,
       [email, passwordHash]
     );
-
+    console.log('-----------------', rows[0]);
     return new User(rows[0]);
   }
 
@@ -38,6 +38,17 @@ const User = class User {
     );
 
     if (!rows[0]) return null;
+
+    return new User(rows[0]);
+  }
+
+  static async testDelete(email: string) {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM users WHERE email = $1
+      `,
+      [email]
+    );
 
     return new User(rows[0]);
   }
