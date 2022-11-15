@@ -37,9 +37,6 @@ describe('the server', () => {
     email: 'test@example.com',
     password: 'P@ssw0rd!',
   };
-  afterAll((done) => {
-    app.close(done);
-  });
 
   it('Creates and signs in a user.', async () => {
     const agent = request.agent(app);

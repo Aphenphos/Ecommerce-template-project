@@ -7,17 +7,10 @@
  ******************************************************************************/
 
 import express, { type Router } from 'express';
-import fooController from './controllers/foos.js';
-// Here we demonstrate that JavaScript files can be included from TypeScript
-// files on the server side.
-import catsController from './controllers/cats.js';
 import userController from './controllers/users.js';
 
 export default (): Router => {
   const prefixRouter = express.Router();
-  // Think of the poor foos.
-  prefixRouter.use('/foos', fooController);
-  prefixRouter.use('/cats', catsController);
   prefixRouter.use('/user', userController);
 
   return prefixRouter;
