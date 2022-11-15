@@ -12,8 +12,13 @@ import {
 } from '@jest/globals';
 import { CookieAccessInfo } from 'cookiejar';
 import db from '../database.js';
+import setupDb from '../setup-data';
 
 describe('the server', () => {
+  beforeEach(() => {
+    setupDb();
+    return setupDb();
+  });
   // Gracefully shut down the server, otherwise we see a warning from Jest.
   //
   // Due to issues described in
@@ -35,12 +40,12 @@ describe('the server', () => {
   // tests to pass.
   const mockUser = {
     email: 'test@example.com',
-    password: 'P@ssw0rd!',
+    password: 'P@ssw0rd!1',
   };
 
   it('Creates and signs in a user.', async () => {
     const agent = request.agent(app);
-    const res = await agent.post('/api/v1/users/').send(mockUser);
+    const res = await agent.post('/users').send(mockUser);
     expect(res.body).toEqual({
       email: mockUser.email,
       password: mockUser.password,
@@ -50,28 +55,14 @@ describe('the server', () => {
       CookieAccessInfo.All
     );
     expect(session).toBeTruthy();
-  });
 
-  it('returns the current user', async () => {
-    const agent = request.agent(app);
-    const me = await agent.get('/api/v1/users/me');
-    expect(me.body).toEqual({
-      email: expect.any(String),
-      id: expect.any(String),
-      exp: expect.any(Number),
-      iat: expect.any(Number),
-    });
+    await agent.post('/users/sessions').send(mockUser);
+    const resp = await agent.delete('/users/sessions');
+    expect(resp.status).toBe(204);
   });
 
   it('/get returns a 401 if not logged in', async () => {
-    const resp = await request(app).get('/api/v1/users/me');
+    const resp = await request(app).get('/users/me');
     expect(resp.status).toBe(401);
-  });
-
-  it('delete user session(logout)', async () => {
-    const agent = request.agent(app);
-    await agent.post('/api/v1/users/sessions').send(mockUser);
-    const resp = await agent.delete('/api/v1/users/sessions');
-    expect(resp.status).toBe(204);
   });
 });

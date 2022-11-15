@@ -15,17 +15,17 @@ const authenticate = async (
     }
 
     const cookies = req.cookies && req.cookies[c];
-    console.log(cookies);
-    if (!cookies) {
-      throw 'Failed to authenticate Cookies';
+    if (cookies) {
+      const user = jwt.verify(cookies, s);
+      (req as any).user = user;
+
+      next();
+    } else {
+      res.status(401).send({ message: 'failed to authenticate' });
     }
-
-    const user = jwt.verify(cookies, s);
-    (req as any).user = user;
-
-    next();
   } catch (err: any) {
     err.status = 401;
+    console.error(err);
     next(err);
   }
 };
