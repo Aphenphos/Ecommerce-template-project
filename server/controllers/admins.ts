@@ -1,16 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import Admin from '../models/Admin.js';
+import authorize from '../middleware/authorize.js';
+import authenticate from '../middleware/authenticate.js';
 
 const adminController = Router()
   .delete(
-    '/rmUser',
+    '/rmUser/:id',
+    authenticate,
+    authorize,
     async (req: Request, res: Response, next: NextFunction) => {
+      console.log('incontroler -----', req.params);
       try {
-        const remove = await Admin.removeUser(
-          req.body.email,
-          req.body.id
-        );
+        const remove = await Admin.removeUser((req as any).params.id);
         res.send(remove);
       } catch (err) {
         next(err);
@@ -18,9 +20,11 @@ const adminController = Router()
     }
   )
 
-  .delete('/rmVendor', async (req, res, next) => {
+  .delete('/rmVendor/:id', authorize, async (req, res, next) => {
     try {
-      const rmVendor = await Admin.removeVendor(req.body.id);
+      const rmVendor = await Admin.removeVendor(
+        (req as any).params.id
+      );
       res.send(rmVendor);
     } catch (err) {
       next(err);
@@ -28,6 +32,7 @@ const adminController = Router()
   })
   .post(
     '/addVendor',
+    authorize,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         console.log(req.body);

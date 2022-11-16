@@ -1,17 +1,14 @@
-import { NextFunction, Response } from 'express';
-import Admin from '../models/Admin';
+import { NextFunction, Request, Response } from 'express';
+import Admin from '../models/Admin.js';
 
-const authorizeAdmin = async (
+const authorize = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const id = (req as any).body.id;
-    if (id === null || id === undefined)
-      res.status(401).send({ message: 'Failed to Authorize' });
-    const check = await Admin.checkIfAdmin(id);
-    console.log(check);
+    const check = await Admin.checkIfAdmin((req as any).user.id);
+    console.log('----Authorize-----', check);
   } catch (err: any) {
     err.status = 401;
     console.error(err);
@@ -19,4 +16,4 @@ const authorizeAdmin = async (
   }
 };
 
-export default authorizeAdmin;
+export default authorize;

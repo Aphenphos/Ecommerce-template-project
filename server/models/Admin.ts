@@ -4,20 +4,22 @@ const Admin = class Admin {
   id?: bigint;
   admin_id?: bigint;
   vendor_id?: bigint;
+  email?: string;
 
   constructor(row: any) {
-    this.id = row.id;
-    this.admin_id = row.admin_id;
-    this.vendor_id = row.vendor_id;
+    this.id = row.id || undefined;
+    this.admin_id = row.admin_id || undefined;
+    this.vendor_id = row.vendor_id || undefined;
+    this.email = row.email || undefined;
   }
 
-  static async removeUser(email: string, id: bigint) {
+  static async removeUser(id: bigint) {
     const { rows } = await pool.query(
       `
-    DELETE FROM users WHERE email=$1 AND id=$2
+    DELETE FROM users WHERE AND id=$1
     RETURNING *
     `,
-      [email, id]
+      [id]
     );
     return new Admin(rows[0]);
   }
@@ -48,13 +50,14 @@ const Admin = class Admin {
   }
 
   static async checkIfAdmin(id: bigint) {
+    console.log('insql', id);
     const { rows } = await pool.query(
       `
-    SELECT * WHERE admin_id=$1
-    RETURNING *
+    SELECT * FROM admins WHERE admin_id=$1
     `,
       [id]
     );
+    console.log('-----SQL------', new Admin(rows[0]));
     return new Admin(rows[0]);
   }
 };
