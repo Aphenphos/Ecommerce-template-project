@@ -7,7 +7,6 @@ export type Component = FC<Props>;
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const [userID, setuserID] = useState('');
-    const [userEmail, setUserEmail] = useState('');
 
     const submitRMUser = async (e: any) => {
       e.preventDefault();
@@ -21,13 +20,6 @@ export default (): FC<Props> => {
             placeholder="id"
             onChange={(e) => {
               setuserID(e.target.value);
-            }}
-          ></input>
-          <input
-            type="email"
-            placeholder="email"
-            onChange={(e) => {
-              setUserEmail(e.target.value);
             }}
           ></input>
           <button>Submit</button>

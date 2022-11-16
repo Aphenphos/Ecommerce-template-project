@@ -8,7 +8,12 @@ const authorize = async (
 ) => {
   try {
     const check = await Admin.checkIfAdmin((req as any).user.id);
-    console.log('----Authorize-----', check);
+    console.log(check, '-----------', (req as any).user.id);
+    if (check.admin_id === (req as any).user.id) {
+      next();
+    } else {
+      res.status(401).send({ message: 'failed to authorize' });
+    }
   } catch (err: any) {
     err.status = 401;
     console.error(err);
