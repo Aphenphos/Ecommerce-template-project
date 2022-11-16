@@ -1,10 +1,10 @@
 import pool from '../database.js';
 
-const Admin = class Admin {
-  id: bigint;
+const Vendor = class Vendor {
+  vendor_id: bigint;
 
   constructor(row: any) {
-    this.id = row.id;
+    this.vendor_id = row.vendor_id;
   }
 
   static async makeVendor(id: bigint) {
@@ -17,7 +17,7 @@ const Admin = class Admin {
       [id]
     );
 
-    return new Admin(rows[0]);
+    return new Vendor(rows[0]);
   }
 
   static async removeVendor(id: bigint) {
@@ -29,20 +29,8 @@ const Admin = class Admin {
       [id]
     );
 
-    return new Admin(rows[0]);
-  }
-
-  static async checkIfAdmin(id: bigint) {
-    console.log('insql', id);
-    const { rows } = await pool.query(
-      `
-    SELECT * FROM admins WHERE admin_id=$1
-    `,
-      [id]
-    );
-    console.log('-----SQL------', new Admin(rows[0]));
-    return new Admin(rows[0]);
+    return new Vendor(rows[0]);
   }
 };
 
-export default Admin;
+export default Vendor;

@@ -42,6 +42,17 @@ const User = class User {
     return new User(rows[0]);
   }
 
+  static async removeUser(id: bigint) {
+    const { rows } = await pool.query(
+      `
+    DELETE FROM users WHERE id=$1
+    RETURNING *
+    `,
+      [id]
+    );
+    return new User(rows[0]);
+  }
+
   get passwordHash(): string {
     return this.#passwordHash;
   }
