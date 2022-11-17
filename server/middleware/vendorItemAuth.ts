@@ -12,7 +12,7 @@ const authVendorItem = async (
       res.status(401).send({ message: 'item not found' });
     }
     const personId = (req as any).user.id;
-    if ((itemId as any).item.id === personId) {
+    if ((itemId as any).id === personId) {
       next();
     }
   } catch (err: any) {

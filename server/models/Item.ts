@@ -3,12 +3,12 @@ import type { ItemObject } from '../../common/types';
 
 const Item = class Item {
   id: bigint;
-  name: string;
+  item_name: string;
   vendor_id: bigint;
 
   constructor(row: any) {
     this.id = row.id;
-    this.name = row.name;
+    this.item_name = row.item_name;
     this.vendor_id = row.id;
   }
 

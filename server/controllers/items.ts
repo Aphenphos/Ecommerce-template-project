@@ -25,7 +25,15 @@ const itemController = Router()
   .delete(
     '/rmItem/:id',
     [authenticate, authVendor, authVendorItem],
-    async (req: Request, res: Response, next: NextFunction) => {}
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        console.log('=======', req.params.id);
+        const rmItem = await Item.delete((req as any).params.id);
+        res.send(rmItem);
+      } catch (err) {
+        next(err);
+      }
+    }
   );
 
 export default itemController;

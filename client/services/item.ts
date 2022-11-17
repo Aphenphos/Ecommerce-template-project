@@ -22,3 +22,16 @@ export async function postItem(itemName: string) {
     console.log('item not added');
   }
 }
+
+export async function deleteItem(id: number) {
+  const resp = await fetch(`${BASE_URL}/api/v1/items/rmItem/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+
+  if (resp.ok) {
+    console.log('item deleted');
+  } else {
+    console.log('item not deleted');
+  }
+}
