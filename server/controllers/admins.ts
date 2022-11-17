@@ -11,7 +11,6 @@ const adminController = Router()
     authenticate,
     authorize,
     async (req: Request, res: Response, next: NextFunction) => {
-      console.log('incontroler -----', req.params);
       try {
         const remove = await User.removeUser((req as any).params.id);
         res.send(remove);

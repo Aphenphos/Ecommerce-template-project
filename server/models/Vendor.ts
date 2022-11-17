@@ -31,6 +31,21 @@ const Vendor = class Vendor {
 
     return new Vendor(rows[0]);
   }
+
+  static async checkIfVendor(id: bigint) {
+    const { rows } = await pool.query(
+      `
+    SELECT * FROM vendors WHERE vendor_id=$1
+    `,
+      [id]
+    );
+
+    if (!rows[0]) {
+      throw new Error('Failed to auth');
+    } else {
+      return new Vendor(rows[0]);
+    }
+  }
 };
 
 export default Vendor;

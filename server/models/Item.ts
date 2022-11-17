@@ -1,4 +1,4 @@
-import pool from '../database';
+import pool from '../database.js';
 import type { ItemObject } from '../../common/types';
 
 const Item = class Item {
@@ -13,10 +13,10 @@ const Item = class Item {
   }
 
   static async insert({
-    name,
+    item_name,
     vendor_id,
   }: {
-    name: string;
+    item_name: string;
     vendor_id: bigint;
   }) {
     const { rows } = await pool.query(
@@ -25,7 +25,7 @@ const Item = class Item {
       VALUES ($1, $2)
       RETURNING *
     `,
-      [name, vendor_id]
+      [item_name, vendor_id]
     );
 
     return new Item(rows[0]);
@@ -87,3 +87,5 @@ const Item = class Item {
     return new Item(rows[0]);
   }
 };
+
+export default Item;
