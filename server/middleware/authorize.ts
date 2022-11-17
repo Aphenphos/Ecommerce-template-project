@@ -8,7 +8,6 @@ const authorize = async (
 ) => {
   try {
     const check = await Admin.checkIfAdmin((req as any).user.id);
-    console.log(check, '-----------', (req as any).user.id);
     if (check.admin_id === (req as any).user.id) {
       next();
     } else {

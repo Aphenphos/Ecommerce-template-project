@@ -1,3 +1,4 @@
+import e from 'express';
 import pool from '../database.js';
 
 const Admin = class Admin {
@@ -16,7 +17,11 @@ const Admin = class Admin {
     `,
       [id]
     );
-    return new Admin(rows[0]);
+    if (!rows[0]) {
+      throw new Error('Failed to Auth');
+    } else {
+      return new Admin(rows[0]);
+    }
   }
 };
 

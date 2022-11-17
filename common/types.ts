@@ -29,3 +29,8 @@ export type ExpandRecursively<T> = T extends (
     ? { [K in keyof O]: ExpandRecursively<O[K]> }
     : never
   : T;
+
+export type ItemObject = {
+  item_name: string;
+  vendor_id: bigint;
+};
