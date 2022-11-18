@@ -9,7 +9,7 @@ const Item = class Item {
   constructor(row: any) {
     this.id = row.id;
     this.item_name = row.item_name;
-    this.vendor_id = row.id;
+    this.vendor_id = row.vendor_id;
   }
 
   static async insert({
@@ -62,11 +62,12 @@ const Item = class Item {
   static async updateById(id: bigint, attrs: ItemObject) {
     const toUpdate = await Item.getById(id);
     const updatedObj: ItemObject = { ...toUpdate, ...attrs };
+    console.log(updatedObj.vendor_id);
     const { rows } = await pool.query(
       `
     UPDATE items
     SET 
-    item_name=$1
+    item_name=$1,
     vendor_id=$2
     WHERE id=$3
     RETURNING *

@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express';
+import e, { NextFunction, Request, Response } from 'express';
 import Item from '../models/Item.js';
 
 const authVendorItem = async (
@@ -12,8 +12,10 @@ const authVendorItem = async (
       res.status(401).send({ message: 'item not found' });
     }
     const personId = (req as any).user.id;
-    if ((itemId as any).id === personId) {
+    if ((itemId as any).vendor_id === personId) {
       next();
+    } else {
+      res.status(401).send({ message: 'incorrect vendor' });
     }
   } catch (err: any) {
     err.status = 401;

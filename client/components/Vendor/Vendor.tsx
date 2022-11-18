@@ -1,5 +1,10 @@
+import e from 'express';
 import { FC, ReactElement, useState } from 'react';
-import { deleteItem, postItem } from '../../services/item';
+import {
+  deleteItem,
+  postItem,
+  updateItem,
+} from '../../services/item';
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -18,9 +23,11 @@ export default (): FC<Props> => {
       deleteItem(selectedItem);
     };
     const getItems = async () => {
-      console.log('getting items');
-      console.log(itemName);
       setItemList([]);
+    };
+    const submitUpdateItem = async (e: any) => {
+      e.preventDefault();
+      updateItem(selectedItem, itemName);
     };
     return (
       <>
@@ -47,6 +54,23 @@ export default (): FC<Props> => {
                 setSelectedItem((e as any).target.value);
               }}
             ></input>
+          </form>
+          <form onSubmit={submitUpdateItem}>
+            <input
+              type="number"
+              placeholder="item id to update"
+              onChange={(e) => {
+                setSelectedItem((e as any).target.value);
+              }}
+            ></input>
+            <input
+              type="text"
+              onChange={(e) => {
+                setItemName(e.target.value);
+              }}
+              placeholder="Updated Item name"
+            ></input>
+            <button>SUbmit</button>
           </form>
         </div>
       </>

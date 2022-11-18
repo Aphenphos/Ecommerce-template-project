@@ -27,9 +27,24 @@ const itemController = Router()
     [authenticate, authVendor, authVendorItem],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log('=======', req.params.id);
         const rmItem = await Item.delete((req as any).params.id);
         res.send(rmItem);
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
+  .put(
+    '/upItem/:id',
+    [authenticate, authVendor, authVendorItem],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        console.log('------ in controller');
+        const upItem = await Item.updateById(
+          (req as any).params.id,
+          req.body
+        );
+        res.json(upItem);
       } catch (err) {
         next(err);
       }

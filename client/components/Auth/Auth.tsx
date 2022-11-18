@@ -26,7 +26,6 @@ export default (): FC<Props> => {
 
     const logMe = async () => {
       const data = await getUser();
-      console.log(data.email);
       setDisplayEmail(data.email);
     };
 
