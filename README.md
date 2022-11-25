@@ -5,7 +5,7 @@ Users Vendors and Admins
 
 Users can have an email and password for login (OAuth in the future)\
 Vendors are users with the capability to post edit and remove items.\
-Admins may make users vendors as well as removing users and vendors items.\
+Admins may make users vendors as well as removing users and vendors items.
 
 FUTURE IDEAS
 
