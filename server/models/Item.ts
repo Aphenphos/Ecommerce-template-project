@@ -4,28 +4,28 @@ import type { ItemObject } from '../../common/types';
 const Item = class Item {
   id: bigint;
   item_name: string;
+  item_price: number;
   vendor_id: bigint;
 
   constructor(row: any) {
     this.id = row.id;
     this.item_name = row.item_name;
+    this.item_price = row.item_price;
     this.vendor_id = row.vendor_id;
   }
 
   static async insert({
     item_name,
+    item_price,
     vendor_id,
-  }: {
-    item_name: string;
-    vendor_id: bigint;
-  }) {
+  }: ItemObject) {
     const { rows } = await pool.query(
       `
-      INSERT INTO items (item_name, vendor_id)
-      VALUES ($1, $2)
+      INSERT INTO items (item_name, item_price, vendor_id)
+      VALUES ($1, $2, $3)
       RETURNING *
     `,
-      [item_name, vendor_id]
+      [item_name, item_price, vendor_id]
     );
 
     return new Item(rows[0]);
@@ -62,17 +62,22 @@ const Item = class Item {
   static async updateById(id: bigint, attrs: ItemObject) {
     const toUpdate = await Item.getById(id);
     const updatedObj: ItemObject = { ...toUpdate, ...attrs };
-    console.log(updatedObj.vendor_id);
     const { rows } = await pool.query(
       `
     UPDATE items
     SET 
     item_name=$1,
-    vendor_id=$2
-    WHERE id=$3
+    item_price=$2
+    vendor_id=$3
+    WHERE id=$4
     RETURNING *
     `,
-      [updatedObj.item_name, updatedObj.vendor_id, id]
+      [
+        updatedObj.item_name,
+        updatedObj.item_price,
+        updatedObj.vendor_id,
+        id,
+      ]
     );
     return new Item(rows[0]);
   }

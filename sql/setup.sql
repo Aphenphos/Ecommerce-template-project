@@ -25,6 +25,7 @@ CREATE TABLE admins (
 CREATE TABLE items (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
   item_name VARCHAR NOT NULL,
+  item_price BIGINT NOT NULL,
   vendor_id BIGINT NOT NULL,
   FOREIGN KEY (vendor_id) REFERENCES users(id)
 );
@@ -38,16 +39,24 @@ VALUES (
   '$argon2id$v=19$m=65536,t=4,p=4$8HiGW7N8akOX5VonwiWt1Q$3c9T9TaYv/XGDrGogMkI14Yo11avM7+T2kcgNeDwiKQ'
 );
 
-INSERT INTO admins (
-  admin_id
-)
-VALUES (
-  '1'
-);
-
 INSERT INTO vendors (
   vendor_id
 )
 VALUES (
   '1'
 );
+
+INSERT INTO admins (
+  admin_id
+)
+VALUES 
+  ('1');
+
+INSERT INTO items (
+  item_name,
+  item_price,
+  vendor_id
+)
+VALUES 
+  ('Test Item','1000','1'),
+  ('Another Item','10000','1');

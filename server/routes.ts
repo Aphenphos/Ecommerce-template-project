@@ -10,12 +10,14 @@ import express, { type Router } from 'express';
 import userController from './controllers/users.js';
 import adminController from './controllers/admins.js';
 import itemController from './controllers/items.js';
+import stripeController from './controllers/stripe.js';
 
 export default (): Router => {
   const prefixRouter = express.Router();
   prefixRouter.use('/users', userController);
   prefixRouter.use('/admins', adminController);
   prefixRouter.use('/items', itemController);
+  prefixRouter.use('/stripe', stripeController);
 
   return prefixRouter;
 };

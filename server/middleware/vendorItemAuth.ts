@@ -1,4 +1,4 @@
-import e, { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import Item from '../models/Item.js';
 
 const authVendorItem = async (
