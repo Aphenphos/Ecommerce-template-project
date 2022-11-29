@@ -4,7 +4,6 @@ import './styles/reset.css';
 import authFn from './components/Auth/Auth';
 import adminFn from './components/Admin/Admin';
 import vendorFn from './components/Vendor/Vendor';
-// import './global.css';
 import {
   Route,
   BrowserRouter as Router,
@@ -21,7 +20,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route path="auth" element={<Auth />}></Route>
+        <Route path="auth/:type" element={<Auth />}></Route>
         <Route path="admin" element={<Admin />}></Route>
         <Route path="vendor" element={<Vendor />}></Route>
       </Routes>

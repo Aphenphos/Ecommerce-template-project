@@ -1,48 +1,41 @@
-import React, { ReactElement, useState, type FC } from 'react';
-import {
-  getUser,
-  logoutUser,
-  signInUser,
-  signUpUser,
-} from '../../services/auth';
+import { ReactElement, useContext, useState, type FC } from 'react';
+import { Link, Navigate, useParams } from 'react-router-dom';
+import { UserContext } from '../../context/useUser';
+import { logoutUser, signUpUser } from '../../services/auth';
+import styles from './Auth.module.css';
 export type Props = {};
 export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
+    const { user } = useContext(UserContext);
+    const { type } = useParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [displayEmail, setDisplayEmail] = useState('');
 
-    const submitSignUp = async (e: any) => {
+    if (user) {
+      return <Navigate replace to="/" />;
+    }
+
+    const submitSign = async (e: any) => {
       e.preventDefault();
-      await signUpUser(email, password);
+      await signUpUser(type!, email, password);
     };
-
-    const submitSignIn = async (e: any) => {
-      e.preventDefault();
-      await signInUser(email, password);
-    };
-
-    const logMe = async () => {
-      const data = await getUser();
-      setDisplayEmail(data.email);
-    };
-
     const logOut = async () => {
       await logoutUser();
     };
+
     return (
-      <>
-        <span>{displayEmail}</span>
+      <div id={styles.auth}>
+        <span>{type}</span>
         <button onClick={logOut}>LogOut</button>
-        <div id="sign-up-container">
-          <form id="sign-up-form" onSubmit={submitSignUp}>
+        <div id={styles.signUpContainer}>
+          <form className={styles.form} onSubmit={submitSign}>
             <label>
               Email:
               <input
                 type="email"
-                className="email-input"
+                className={styles.input}
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -54,46 +47,22 @@ export default (): FC<Props> => {
               Password:
               <input
                 type="password"
-                className="password-input"
+                className={styles.input}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
                 placeholder="Password"
               ></input>
             </label>
-            <button id="submit-sign-up">Submit</button>
+            <button className={styles.submitButton}>Submit</button>
           </form>
-
-          <form id="log-in-form" onSubmit={submitSignIn}>
-            <label>
-              Email:
-              <input
-                type="email"
-                className="email-input"
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                placeholder="Email"
-              ></input>
-            </label>
-
-            <label>
-              Password:
-              <input
-                type="password"
-                className="password-input"
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                placeholder="Password"
-              ></input>
-            </label>
-            <button id="submit-log-in">Submit</button>
-          </form>
-
-          <button onClick={logMe}>log me</button>
+          {type === 'sign-in' ? (
+            <Link to="/auth/sign-up">Sign Up</Link>
+          ) : (
+            <Link to="/auth/sign-in">Sign In</Link>
+          )}
         </div>
-      </>
+      </div>
     );
   };
   component.displayName = 'Auth';

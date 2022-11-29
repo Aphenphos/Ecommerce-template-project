@@ -1,25 +1,24 @@
-import autoprefixer from 'autoprefixer'
-import { CleanWebpackPlugin } from 'clean-webpack-plugin'
-import CopyPlugin from 'copy-webpack-plugin'
-import dotenv from 'dotenv'
-import HtmlPlugin from 'html-webpack-plugin'
-import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import path from 'node:path'
-import postcssImport from 'postcss-import'
-import postcssNested from 'postcss-nested'
-import { fileURLToPath } from 'url'
-import webpack from 'webpack'
+import autoprefixer from 'autoprefixer';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import dotenv from 'dotenv';
+import HtmlPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'node:path';
+import postcssImport from 'postcss-import';
+import postcssNested from 'postcss-nested';
+import { fileURLToPath } from 'url';
+import webpack from 'webpack';
 
 // During an uncomfortable transition to a true module system for JavaScript,
 // __dirname became a casualty. We still have use for it. This is the new idiom
 // for determining __dirname (the directory of this file).
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // There can be a lot of environment variables, and many of them private. We
 // want a way to inject configuration via environment variables into the UI at
 // build time. List variables here to ensure they are included.
-const includeEnvironmentVariables = [
-]
+const includeEnvironmentVariables = [];
 // Part of a series of settings to allow use of process.env in the web. See also
 // the resolve -> alias setting in this file, the ProvidePlugin usage in this
 // file, and the added process package.
@@ -27,14 +26,15 @@ const env = Object.fromEntries(
   Object.entries({
     ...dotenv.config(),
     ...process.env,
-  }).filter(([k, _v]) => includeEnvironmentVariables.includes(k)),
-)
+  }).filter(([k, _v]) => includeEnvironmentVariables.includes(k))
+);
 
 export default {
   // All Webpack bundles require a single entry point from which the entire
   // bundling process starts.
   entry: './client/app.tsx',
-  mode: process.env.NODE === 'production' ? 'production' : 'development',
+  mode:
+    process.env.NODE === 'production' ? 'production' : 'development',
   // This indicates how and where the final output is bundled.
   output: {
     filename: 'bundle.[contenthash].js',
@@ -69,7 +69,7 @@ export default {
           // This rewritres the /api/v1 (coming from the browser) to nothing.
           // See API_PREFIX. When deployed, we set API_PREFIX to be /api/v1, but
           // if the API were ever to be versioned, we'd set it to /api/v2.
-          '^/api/v1': ''
+          '^/api/v1': '',
         },
         // This is our server that we want to reverse-proxy to.
         target: 'http://localhost:7890',
@@ -171,7 +171,7 @@ export default {
           {
             loader: 'css-modules-typescript-loader',
             options: {
-              mode: process.env.CI ? 'verify' : 'emit'
+              mode: process.env.CI ? 'verify' : 'emit',
             },
           },
           {

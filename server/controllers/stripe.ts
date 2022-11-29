@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
+import authenticate from '../middleware/authenticate.js';
 import Stripe from 'stripe';
 import Item from '../models/Item.js';
-import itemController from './items';
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
   apiVersion: '2022-11-15',
@@ -9,6 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
 
 const stripeController = Router().post(
   '/checkout',
+  authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
     const lineItems = [];
     try {
