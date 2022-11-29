@@ -1,6 +1,6 @@
 import { ReactElement, useContext, useState, type FC } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { UserContext } from '../../context/useUser';
+import { useUser } from '../../context/useUser';
 import { logoutUser, signUpUser } from '../../services/auth';
 import styles from './Auth.module.css';
 export type Props = {};
@@ -8,7 +8,7 @@ export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const { user } = useContext(UserContext);
+    const { user, setUser } = useUser();
     const { type } = useParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,7 +19,8 @@ export default (): FC<Props> => {
 
     const submitSign = async (e: any) => {
       e.preventDefault();
-      await signUpUser(type!, email, password);
+      const userData = await signUpUser(type!, email, password);
+      setUser(userData);
     };
     const logOut = async () => {
       await logoutUser();

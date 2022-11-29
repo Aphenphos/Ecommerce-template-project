@@ -11,6 +11,7 @@ import {
   BrowserRouter as Router,
   Routes,
 } from 'react-router-dom';
+import { UserProvider } from './context/useUser';
 const Admin = adminFn();
 const Auth = authFn();
 const Vendor = vendorFn();
@@ -23,13 +24,15 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Router>
-      <Header />
-      <Routes>
-        <Route path="" element={<Main />}></Route>
-        <Route path="auth/:type" element={<Auth />}></Route>
-        <Route path="admin" element={<Admin />}></Route>
-        <Route path="vendor" element={<Vendor />}></Route>
-      </Routes>
+      <UserProvider>
+        <Header />
+        <Routes>
+          <Route path="" element={<Main />}></Route>
+          <Route path="auth/:type" element={<Auth />}></Route>
+          <Route path="admin" element={<Admin />}></Route>
+          <Route path="vendor" element={<Vendor />}></Route>
+        </Routes>
+      </UserProvider>
     </Router>
   </React.StrictMode>
 );
