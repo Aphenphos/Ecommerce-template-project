@@ -8,11 +8,14 @@ export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const { user, setUser } = useUser();
+    const { user, setUser, loading } = useUser();
     const { type } = useParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    if (loading) {
+      return <>LOADING</>;
+    }
     if (user) {
       return <Navigate replace to="/" />;
     }

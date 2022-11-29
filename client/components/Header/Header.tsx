@@ -24,6 +24,7 @@ export default (): FC<Props> => {
         <Link to="/auth/sign-in">Sign-In</Link>
         <Link to="/admin">Admin</Link>
         <Link to="/vendor">Vendor</Link>
+        <Link to="/checkout">Cart</Link>
         {user ? (
           <>
             <span>{user.email}</span>

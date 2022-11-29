@@ -12,11 +12,14 @@ import {
   Routes,
 } from 'react-router-dom';
 import { UserProvider } from './context/useUser';
+import checkoutFn from './components/Checkout/Checkout';
+import { CartProvider } from './context/useCart';
 const Admin = adminFn();
 const Auth = authFn();
 const Vendor = vendorFn();
 const Header = headerFn();
 const Main = mainFn();
+const Checkout = checkoutFn();
 const container =
   document.getElementById('app') || document.createElement('div');
 container.id = 'app';
@@ -25,13 +28,16 @@ root.render(
   <React.StrictMode>
     <Router>
       <UserProvider>
-        <Header />
-        <Routes>
-          <Route path="" element={<Main />}></Route>
-          <Route path="auth/:type" element={<Auth />}></Route>
-          <Route path="admin" element={<Admin />}></Route>
-          <Route path="vendor" element={<Vendor />}></Route>
-        </Routes>
+        <CartProvider>
+          <Header />
+          <Routes>
+            <Route path="" element={<Main />}></Route>
+            <Route path="auth/:type" element={<Auth />}></Route>
+            <Route path="admin" element={<Admin />}></Route>
+            <Route path="vendor" element={<Vendor />}></Route>
+            <Route path="checkout" element={<Checkout />}></Route>
+          </Routes>
+        </CartProvider>
       </UserProvider>
     </Router>
   </React.StrictMode>

@@ -1,5 +1,3 @@
-import e from 'express';
-
 const BASE_URL = 'http://localhost:7891';
 
 export async function postItem(itemName: string) {

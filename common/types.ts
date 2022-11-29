@@ -36,3 +36,8 @@ export type ItemObject = {
   item_price: bigint;
   vendor_id: bigint;
 };
+
+export type CartItem = {
+  id: number;
+  item_quantity: number;
+};

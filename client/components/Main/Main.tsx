@@ -10,7 +10,6 @@ export default (): FC<Props> => {
     if (loading) {
       return <div>loading</div>;
     }
-    console.log(user);
     return <div>ITEMS WILL SHOW HERE!</div>;
   };
   component.displayName = 'Main';

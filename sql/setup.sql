@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS vendors CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
+DROP TABLE IF EXISTS carts CASCADE;
 
 
 CREATE TABLE users (
@@ -28,6 +29,15 @@ CREATE TABLE items (
   item_price BIGINT NOT NULL,
   vendor_id BIGINT NOT NULL,
   FOREIGN KEY (vendor_id) REFERENCES users(id)
+);
+
+CREATE TABLE carts (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
+  user_id BIGINT NOT NULL,
+  item_id BIGINT NOT NULL,
+  item_quantity BIGINT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
 INSERT INTO users (
@@ -60,3 +70,12 @@ INSERT INTO items (
 VALUES 
   ('Test Item','1000','1'),
   ('Another Item','10000','1');
+
+INSERT INTO carts (
+  user_id,
+  item_id,
+  item_quantity
+)
+VALUES
+  ('1', '1', '2'),
+  ('1', '2', '4');

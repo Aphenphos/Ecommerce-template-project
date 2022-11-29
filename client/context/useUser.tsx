@@ -13,7 +13,6 @@ const UserProvider = ({ children }: { children: any }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('in here');
     async function fetch() {
       setLoading(true);
       const pUser = await getUser();

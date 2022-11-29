@@ -40,7 +40,6 @@ export async function signUpUser(
     });
     if (resp.ok) {
       const user = await resp.json();
-      console.log(user);
       return user;
     }
   }
@@ -53,7 +52,6 @@ export async function getUser() {
   });
   if (resp.ok) {
     const user = await resp.json();
-    console.log(user);
     return user;
   }
 }

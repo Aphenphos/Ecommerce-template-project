@@ -9,13 +9,11 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY!, {
 
 const stripeController = Router().post(
   '/checkout',
-  authenticate,
   async (req: Request, res: Response, next: NextFunction) => {
     const lineItems = [];
     try {
-      for (let i = 0; i < req.body.items.length; i++) {
-        const itemData = await Item.getById(req.body.items[i].id);
-        console.log(itemData);
+      for (let i = 0; i < req.body.length; i++) {
+        const itemData = await Item.getById(req.body[i].id);
         if (itemData === null) {
           throw new Error('Item does not exist');
         }
@@ -27,7 +25,7 @@ const stripeController = Router().post(
             },
             unit_amount: itemData!.item_price,
           },
-          quantity: req.body.items[i].quantity,
+          quantity: req.body[i].quantity,
         });
       }
       const session = await stripe.checkout.sessions.create({
@@ -37,7 +35,7 @@ const stripeController = Router().post(
         success_url: `${process.env.API_URL}:7891/success`,
         cancel_url: `${process.env.API_URL}:7891/cancel`,
       });
-      res.json({ url: session.url });
+      return res.json({ url: session.url });
     } catch (err) {
       next(err);
     }
