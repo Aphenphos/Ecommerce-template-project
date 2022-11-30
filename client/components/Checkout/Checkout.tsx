@@ -10,13 +10,13 @@ export type Component = FC<Props>;
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
-    const { items, cloading } = useCartItems();
+    const { cartItems, cloading } = useCartItems();
     if (loading || cloading) {
       return <>LOADING</>;
     }
 
     const handleCheckout = async () => {
-      await checkoutUser(items);
+      await checkoutUser(cartItems);
     };
     return (
       <div>
