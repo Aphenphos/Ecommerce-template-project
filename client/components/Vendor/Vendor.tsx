@@ -11,12 +11,14 @@ export type Component = FC<Props>;
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const [itemName, setItemName] = useState('');
+    const [itemPrice, setItemPrice] = useState('');
     const [itemList, setItemList] = useState([]);
     const [selectedItem, setSelectedItem] = useState(-1);
 
     const submitItem = async (e: any) => {
       e.preventDefault();
-      postItem(itemName);
+      const itemPInt = parseInt(itemPrice);
+      await postItem(itemName, itemPInt);
     };
     const submitDeleteItem = async (e: any) => {
       e.preventDefault();
@@ -42,7 +44,15 @@ export default (): FC<Props> => {
                 }}
                 placeholder="Item Name"
               ></input>
+              <input
+                type="number"
+                onChange={(e) => {
+                  setItemPrice(e.target.value);
+                }}
+                placeholder="Item Name"
+              ></input>
             </label>
+            <button>Submit New Item</button>
           </form>
           <button onClick={getItems}></button>
           <span>{itemList}</span>

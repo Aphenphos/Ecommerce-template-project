@@ -11,19 +11,23 @@ const CartContext = createContext([] as any);
 
 const CartProvider = ({ children }: { children: any }) => {
   const [cartItems, setCartItems] = useState([]);
-  const [cLoading, setcLoading] = useState(true);
   const [itemData, setItemData] = useState([]);
+  const [cLoading, setcLoading] = useState(true);
 
   useEffect(() => {
-    async function fetch() {
+    async function fetchCart() {
       setcLoading(true);
-      const pItems = await getCart();
-      const iData = await getArrOfItems(pItems);
-      setItemData(iData);
-      setCartItems(pItems);
+      const cItems = await getCart();
+      return cItems;
     }
-    fetch();
-    setcLoading(false);
+    async function fetchItemData() {
+      const cItems = await fetchCart();
+      const iData = await getArrOfItems(cItems);
+      setItemData(iData);
+      setCartItems(cItems);
+      setcLoading(false);
+    }
+    fetchItemData();
   }, []);
   return (
     <CartContext.Provider
@@ -31,7 +35,6 @@ const CartProvider = ({ children }: { children: any }) => {
         cartItems,
         setCartItems,
         itemData,
-        setItemData,
         cLoading,
         setcLoading,
       }}

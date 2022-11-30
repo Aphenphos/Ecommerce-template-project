@@ -69,9 +69,7 @@ const itemController = Router()
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const arrToGet = req.body;
-        console.log(req.body);
         const arrOfItems = await Item.getManyById(arrToGet);
-        console.log(arrOfItems);
         return res.json(arrOfItems);
       } catch (err) {
         next(err);

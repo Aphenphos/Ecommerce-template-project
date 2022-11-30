@@ -18,7 +18,6 @@ const ItemProvider = ({ children }: { children: any }) => {
       setiLoading(true);
       const pItems = await getAllItems();
       setItems(pItems);
-      console.log(items);
     }
     fetch();
     setiLoading(false);
