@@ -1,5 +1,6 @@
 const BASE_URL = 'http://localhost:7891';
-
+import e from 'express';
+import type { CartItem } from '../../common/types';
 export async function postItem(itemName: string) {
   const itemObj = {
     item_name: itemName,
@@ -62,6 +63,30 @@ export async function getAllItems() {
     method: 'GET',
     credentials: 'include',
   });
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return console.error('Error Fetching Items');
+  }
+}
+
+export async function getArrOfItems(items: Array<CartItem>) {
+  const toGet: Array<number> = [];
+  for (let i = 0; i < items.length; i++) {
+    const itemId = items[i]!.item_id;
+    toGet.push(itemId);
+  }
+  const resp = await fetch(`${BASE_URL}/api/v1/items/getByArr`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(toGet),
+    credentials: 'include',
+  });
+
   if (resp.ok) {
     const data = await resp.json();
     return data;

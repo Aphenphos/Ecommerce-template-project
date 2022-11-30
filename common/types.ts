@@ -40,4 +40,6 @@ export type ItemObject = {
 export type CartItem = {
   id: number;
   item_quantity: number;
+  item_id: number;
+  user_id: number;
 };

@@ -10,7 +10,7 @@ export type Component = FC<Props>;
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
-    const { cartItems, cloading } = useCartItems();
+    const { cartItems, cloading, itemData } = useCartItems();
     if (loading || cloading) {
       return <>LOADING</>;
     }
@@ -20,6 +20,21 @@ export default (): FC<Props> => {
     };
     return (
       <div>
+        <div id="cart-container">
+          {cartItems.map((item: any, index: number) => (
+            <div key={item.id} className="cart-item">
+              <span>{itemData[index].item_name}</span>
+              <span>{item.item_quantity}</span>
+              <span>{itemData[index].item_price}</span>
+              <input
+                name="quant"
+                type="number"
+                value={item.quant}
+                defaultValue={1}
+              ></input>
+            </div>
+          ))}
+        </div>
         <button onClick={handleCheckout}>Checkout</button>
       </div>
     );

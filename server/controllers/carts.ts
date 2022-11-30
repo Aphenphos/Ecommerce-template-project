@@ -6,6 +6,7 @@ import Cart from '../models/Cart.js';
 const cartController = Router()
   .post(
     '/addToCart',
+    authenticate,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const toCart = await Cart.addTo({

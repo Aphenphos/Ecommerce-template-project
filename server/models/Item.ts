@@ -45,6 +45,18 @@ const Item = class Item {
     }
   }
 
+  static async getManyById(id: Array<number>) {
+    const { rows } = await pool.query(
+      `SELECT * FROM items WHERE id = ANY ($1)`,
+      [id]
+    );
+    if (!rows[0]) {
+      return null;
+    } else {
+      return rows.map((row) => new Item(row));
+    }
+  }
+
   static async getAllByVendorId(vendor_id: bigint) {
     const { rows } = await pool.query(
       `

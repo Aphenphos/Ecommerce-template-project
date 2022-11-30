@@ -33,6 +33,7 @@ export async function addToCart(
 
   const data = await resp.json();
   if (resp.ok) {
+    console.log(data);
     return data;
   } else {
     console.error('Error adding item to cart.');

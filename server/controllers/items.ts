@@ -62,6 +62,21 @@ const itemController = Router()
         next(err);
       }
     }
+  )
+
+  .post(
+    '/getByArr',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const arrToGet = req.body;
+        console.log(req.body);
+        const arrOfItems = await Item.getManyById(arrToGet);
+        console.log(arrOfItems);
+        return res.json(arrOfItems);
+      } catch (err) {
+        next(err);
+      }
+    }
   );
 
 export default itemController;
