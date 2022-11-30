@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:7891';
 
-export async function getItems() {
+export async function getCart() {
   const resp = await fetch(`${BASE_URL}/api/v1/carts/getCart`, {
     method: 'GET',
     credentials: 'include',

@@ -4,33 +4,33 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { getItems } from '../services/cart';
+import { getCart } from '../services/cart';
 
 const CartContext = createContext([] as any);
 
 const CartProvider = ({ children }: { children: any }) => {
-  const [items, setItems] = useState([]);
-  const [iLoading, setiLoading] = useState(true);
+  const [cartItems, setCartItems] = useState([]);
+  const [cLoading, setcLoading] = useState(true);
 
   useEffect(() => {
     async function fetch() {
-      setiLoading(true);
-      const pItems = await getItems();
-      setItems(pItems);
+      setcLoading(true);
+      const pItems = await getCart();
+      setCartItems(pItems);
     }
     fetch();
-    setiLoading(false);
+    setcLoading(false);
   }, []);
   return (
     <CartContext.Provider
-      value={{ items, setItems, iLoading, setiLoading }}
+      value={{ cartItems, setCartItems, cLoading, setcLoading }}
     >
       {children}
     </CartContext.Provider>
   );
 };
 
-function useItems() {
+function useCartItems() {
   const context = useContext(CartContext);
   if (context === undefined || context === null) {
     throw new Error('Missing CartProvider');
@@ -38,4 +38,4 @@ function useItems() {
   return context;
 }
 
-export { useItems, CartProvider };
+export { useCartItems, CartProvider };

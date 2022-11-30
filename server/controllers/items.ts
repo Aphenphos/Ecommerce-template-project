@@ -49,6 +49,19 @@ const itemController = Router()
         next(err);
       }
     }
+  )
+
+  .get(
+    '/getAll',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        console.log('fetching all items');
+        const allItems = await Item.getAll();
+        res.json(allItems);
+      } catch (err) {
+        next(err);
+      }
+    }
   );
 
 export default itemController;

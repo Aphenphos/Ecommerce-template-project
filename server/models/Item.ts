@@ -92,6 +92,15 @@ const Item = class Item {
     );
     return new Item(rows[0]);
   }
+
+  static async getAll() {
+    const { rows } = await pool.query(
+      `
+      SELECT * FROM items;
+      `
+    );
+    return rows.map((row) => new Item(row));
+  }
 };
 
 export default Item;

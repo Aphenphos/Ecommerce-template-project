@@ -6,14 +6,15 @@ import adminFn from './components/Admin/Admin';
 import vendorFn from './components/Vendor/Vendor';
 import headerFn from './components/Header/Header';
 import mainFn from './components/Main/Main';
+import checkoutFn from './components/Checkout/Checkout';
 import {
   Route,
   BrowserRouter as Router,
   Routes,
 } from 'react-router-dom';
 import { UserProvider } from './context/useUser';
-import checkoutFn from './components/Checkout/Checkout';
 import { CartProvider } from './context/useCart';
+import { ItemProvider } from './context/useItem';
 const Admin = adminFn();
 const Auth = authFn();
 const Vendor = vendorFn();
@@ -28,16 +29,18 @@ root.render(
   <React.StrictMode>
     <Router>
       <UserProvider>
-        <CartProvider>
-          <Header />
-          <Routes>
-            <Route path="" element={<Main />}></Route>
-            <Route path="auth/:type" element={<Auth />}></Route>
-            <Route path="admin" element={<Admin />}></Route>
-            <Route path="vendor" element={<Vendor />}></Route>
-            <Route path="checkout" element={<Checkout />}></Route>
-          </Routes>
-        </CartProvider>
+        <ItemProvider>
+          <CartProvider>
+            <Header />
+            <Routes>
+              <Route path="" element={<Main />}></Route>
+              <Route path="auth/:type" element={<Auth />}></Route>
+              <Route path="admin" element={<Admin />}></Route>
+              <Route path="vendor" element={<Vendor />}></Route>
+              <Route path="checkout" element={<Checkout />}></Route>
+            </Routes>
+          </CartProvider>
+        </ItemProvider>
       </UserProvider>
     </Router>
   </React.StrictMode>

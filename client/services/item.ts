@@ -56,3 +56,16 @@ export async function updateItem(id: number, data: string) {
     console.log('update failed');
   }
 }
+
+export async function getAllItems() {
+  const resp = await fetch(`${BASE_URL}/api/v1/items/getAll`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return console.error('Error Fetching Items');
+  }
+}
