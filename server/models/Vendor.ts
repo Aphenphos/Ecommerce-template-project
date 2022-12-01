@@ -46,6 +46,28 @@ const Vendor = class Vendor {
       return new Vendor(rows[0]);
     }
   }
+
+  static async getAllVendors() {
+    const { rows } = await pool.query(
+      `
+      SELECT * FROM vendors
+      LEFT JOIN users
+      ON vendors.vendor_id = users.id;
+      `
+    );
+
+    if (!rows[0]) {
+      throw new Error('Failed to grab vendors');
+    } else {
+      return rows.map((row) => {
+        const newObj = {
+          vendor_id: row.vendor_id,
+          vendor_email: row.email,
+        };
+        return newObj;
+      });
+    }
+  }
 };
 
 export default Vendor;

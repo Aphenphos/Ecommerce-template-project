@@ -57,6 +57,16 @@ const User = class User {
   get passwordHash(): string {
     return this.#passwordHash;
   }
-};
 
+  static async getAll() {
+    const { rows } = await pool.query(
+      `
+    SELECT * FROM users`
+    );
+
+    if (!rows[0]) return null;
+
+    return rows.map((row) => new User(row));
+  }
+};
 export default User;

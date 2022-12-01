@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import authenticate from '../middleware/authenticate.js';
+import authorize from '../middleware/authorize.js';
 import authVendor from '../middleware/authvendor.js';
+import User from '../models/User.js';
 import Vendor from '../models/Vendor.js';
 import UserService from '../services/UserService.js';
 
@@ -117,5 +119,18 @@ const userController = Router()
       }
     }
   );
+
+// .get(
+//   '/allUsers',
+//   [authenticate, authorize],
+//   async (req: Request, res: Response, next: NextFunction) => {
+//     try {
+//       const userArr = await User.getAll();
+//       res.json(userArr);
+//     } catch (err) {
+//       next(err);
+//     }
+//   }
+// );
 
 export default userController;

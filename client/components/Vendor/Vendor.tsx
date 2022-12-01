@@ -70,15 +70,19 @@ export default (): FC<Props> => {
             <button>Submit New Item</button>
           </form>
 
-          {vItems.map((item: any) => (
-            <div key={item.id}>
-              <span>{item.item_name}</span>
-              <span>{item.item_price}</span>
-              <button value={item.id} onClick={submitDeleteItem}>
-                Delete Item
-              </button>
-            </div>
-          ))}
+          {vItems ? (
+            vItems.map((item: any) => (
+              <div key={item.id}>
+                <span>{item.item_name}</span>
+                <span>{item.item_price}</span>
+                <button value={item.id} onClick={submitDeleteItem}>
+                  Delete Item
+                </button>
+              </div>
+            ))
+          ) : (
+            <>Post an Item!</>
+          )}
         </div>
       </>
     );

@@ -42,7 +42,6 @@ const itemController = Router()
     [authenticate, authVendor, authVendorItem],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log('------ in controller');
         const upItem = await Item.updateById(
           (req as any).params.id,
           req.body
