@@ -60,7 +60,14 @@ export default (): FC<Props> => {
             </div>
           ))}
         </div>
-        <button onClick={handleCheckout}>Checkout</button>
+
+        {cartItems[0] ? (
+          <>
+            <button onClick={handleCheckout}>Checkout</button>
+          </>
+        ) : (
+          <>Your Cart is Empty!</>
+        )}
       </div>
     );
   };
