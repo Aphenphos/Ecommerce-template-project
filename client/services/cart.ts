@@ -39,3 +39,16 @@ export async function addToCart(
     console.error('Error adding item to cart.');
   }
 }
+
+export async function removeFromCart(id: bigint) {
+  const resp = await fetch(`${BASE_URL}/api/v1/carts/rmItem/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+
+  if (resp.ok) {
+    console.log('item removed');
+  } else {
+    console.log('item failed to remove');
+  }
+}

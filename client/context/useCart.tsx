@@ -13,8 +13,11 @@ const CartProvider = ({ children }: { children: any }) => {
   const [cartItems, setCartItems] = useState([]);
   const [itemData, setItemData] = useState([]);
   const [cLoading, setcLoading] = useState(true);
+  const [cartChange, setCartChange] = useState({});
 
   useEffect(() => {
+    console.log('change');
+    console.log(cartChange);
     async function fetchCart() {
       setcLoading(true);
       const cItems = await getCart();
@@ -22,13 +25,20 @@ const CartProvider = ({ children }: { children: any }) => {
     }
     async function fetchItemData() {
       const cItems = await fetchCart();
+      if (!cItems) {
+        console.log('hit this');
+        setCartItems([]);
+        setItemData([]);
+        setcLoading(false);
+        return;
+      }
       const iData = await getArrOfItems(cItems);
       setItemData(iData);
       setCartItems(cItems);
       setcLoading(false);
     }
     fetchItemData();
-  }, []);
+  }, [cartChange]);
   return (
     <CartContext.Provider
       value={{
@@ -37,6 +47,8 @@ const CartProvider = ({ children }: { children: any }) => {
         itemData,
         cLoading,
         setcLoading,
+        cartChange,
+        setCartChange,
       }}
     >
       {children}

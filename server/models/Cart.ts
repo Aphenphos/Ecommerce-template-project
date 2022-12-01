@@ -34,6 +34,16 @@ const Cart = class Cart {
     return new Cart(rows[0]);
   }
 
+  static async removeFrom(id: bigint, user_id: bigint) {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM carts WHERE id=$1 AND user_id=$2
+      RETURNING *
+      `,
+      [id, user_id]
+    );
+    return new Cart(rows[0]);
+  }
   static async getCartByUserId(user_id: bigint) {
     const { rows } = await pool.query(
       `

@@ -32,6 +32,22 @@ const cartController = Router()
         next(err);
       }
     }
+  )
+
+  .delete(
+    '/rmItem/:id',
+    [authenticate],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const rmItem = await Cart.removeFrom(
+          (req as any).params.id,
+          (req as any).user.id
+        );
+        res.send(rmItem);
+      } catch (err) {
+        next(err);
+      }
+    }
   );
 
 export default cartController;
