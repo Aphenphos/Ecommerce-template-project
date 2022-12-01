@@ -15,7 +15,7 @@ export async function getCart() {
 
 export async function addToCart(
   item_id: bigint,
-  item_quantity: bigint
+  item_quantity: number
 ) {
   const itemObj = {
     item_id,

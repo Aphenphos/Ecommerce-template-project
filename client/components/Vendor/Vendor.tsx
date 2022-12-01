@@ -1,19 +1,33 @@
 import e from 'express';
 import { FC, ReactElement, useState } from 'react';
+import { useUser } from '../../context/useUser';
 import {
   deleteItem,
   postItem,
   updateItem,
 } from '../../services/item';
+import { Navigate } from 'react-router-dom';
+
 export type Props = {};
 export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
+    const { user, loading, vendor } = useUser();
     const [itemName, setItemName] = useState('');
     const [itemPrice, setItemPrice] = useState('');
     const [itemList, setItemList] = useState([]);
     const [selectedItem, setSelectedItem] = useState(-1);
+    if (loading) {
+      return <>LOADING</>;
+    }
+    if (!user) {
+      return <Navigate replace to="/auth/sign-in" />;
+    }
+
+    if (!vendor) {
+      return <Navigate replace to="/" />;
+    }
 
     const submitItem = async (e: any) => {
       e.preventDefault();

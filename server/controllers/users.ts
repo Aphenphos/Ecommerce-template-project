@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import authenticate from '../middleware/authenticate.js';
+import authVendor from '../middleware/authvendor.js';
+import Vendor from '../models/Vendor.js';
 import UserService from '../services/UserService.js';
 
 const ONEHOURINMS = 1000 * 60 * 60;
@@ -96,6 +98,24 @@ const userController = Router()
       })
       .status(204)
       .send();
-  });
+  })
+
+  .get(
+    '/isVendor',
+    [authenticate, authVendor],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const curUser = (req as any).user.id;
+        const resp = await Vendor.checkIfVendor(curUser);
+        if (resp.vendor_id === curUser) {
+          res.json(true);
+        } else {
+          res.json(false);
+        }
+      } catch (err) {
+        next(err);
+      }
+    }
+  );
 
 export default userController;

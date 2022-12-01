@@ -12,11 +12,15 @@ export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
     const { cartItems, cLoading, itemData } = useCartItems();
-    if (loading || cLoading) {
+    console.log(user);
+    if (loading) {
       return <>LOADING</>;
     }
     if (!user) {
       return <Navigate replace to="/auth/sign-in" />;
+    }
+    if (cLoading) {
+      return <>Loading Items</>;
     }
 
     function accessItemData(itemId: number) {
@@ -38,13 +42,12 @@ export default (): FC<Props> => {
           {cartItems.map((item: any, index: number) => (
             <div key={item.id} className="cart-item">
               <span>{accessItemData(item.item_id).item_name}</span>
-              <span>{item.item_quantity}</span>
               <span>{accessItemData(item.item_id).item_price}</span>
               <input
                 name="quant"
                 type="number"
                 value={item.quant}
-                defaultValue={1}
+                defaultValue={item.item_quantity}
               ></input>
             </div>
           ))}

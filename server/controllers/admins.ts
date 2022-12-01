@@ -1,9 +1,10 @@
-import { NextFunction, Request, Response } from 'express';
+import e, { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import authorize from '../middleware/authorize.js';
 import authenticate from '../middleware/authenticate.js';
 import User from '../models/User.js';
 import Vendor from '../models/Vendor.js';
+import Admin from '../models/Admin.js';
 
 const adminController = Router()
   .delete(
@@ -38,6 +39,24 @@ const adminController = Router()
         console.log(req.body);
         const data = await Vendor.makeVendor(req.body.id);
         res.json(data);
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
+
+  .get(
+    '/isAdmin',
+    [authenticate, authorize],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const curUser = (req as any).user.id;
+        const resp = await Admin.checkIfAdmin(curUser);
+        if (resp.admin_id === curUser) {
+          res.json(true);
+        } else {
+          res.json(false);
+        }
       } catch (err) {
         next(err);
       }

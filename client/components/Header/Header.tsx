@@ -9,7 +9,15 @@ export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const { user, setUser, loading } = useUser();
+    const {
+      user,
+      vendor,
+      admin,
+      setUser,
+      loading,
+      setAdmin,
+      setVendor,
+    } = useUser();
     if (loading) {
       return <div>loading</div>;
     }
@@ -17,21 +25,22 @@ export default (): FC<Props> => {
     const logOut = async () => {
       await logoutUser();
       setUser(null);
+      setAdmin(false);
+      setVendor(false);
     };
     return (
       <div id={styles.header}>
         <Link to="/">Home</Link>
-        <Link to="/auth/sign-in">Sign-In</Link>
-        <Link to="/admin">Admin</Link>
-        <Link to="/vendor">Vendor</Link>
         <Link to="/checkout">Cart</Link>
+        {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
+        {admin ? <Link to="/admin">Admin</Link> : <></>}
         {user ? (
           <>
             <span>{user.email}</span>
             <button onClick={logOut}>Log Out</button>{' '}
           </>
         ) : (
-          <></>
+          <Link to="/auth/sign-in">Sign-In</Link>
         )}
       </div>
     );

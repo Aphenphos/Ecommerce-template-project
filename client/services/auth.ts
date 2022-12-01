@@ -53,6 +53,8 @@ export async function getUser() {
   if (resp.ok) {
     const user = await resp.json();
     return user;
+  } else {
+    return null;
   }
 }
 
@@ -63,5 +65,20 @@ export async function logoutUser() {
   });
   if (resp.ok) {
     console.log('logged out');
+  }
+}
+
+export async function verifyVendor() {
+  const resp = await fetch(`${BASE_URL}/api/v1/users/isVendor`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+
+  if (resp.ok) {
+    const data = await resp.json();
+    console.log(data);
+    return data;
+  } else {
+    return false;
   }
 }

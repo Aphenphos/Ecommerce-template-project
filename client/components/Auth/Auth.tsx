@@ -24,6 +24,7 @@ export default (): FC<Props> => {
       e.preventDefault();
       const userData = await signUpUser(type!, email, password);
       setUser(userData);
+      window.location.reload();
     };
     const logOut = async () => {
       await logoutUser();

@@ -17,7 +17,7 @@ export default (): FC<Props> => {
 
     const handleAddToCart = async (e: any) => {
       e.preventDefault();
-      await addToCart(e.target.id.value, e.target.quant.value);
+      await addToCart(e.target.id.value, 1);
     };
     return (
       <div id={styles.displayContainer}>
@@ -26,12 +26,6 @@ export default (): FC<Props> => {
             <span>{item.item_name}</span>
             <span>{item.item_price}</span>
             <form onSubmit={handleAddToCart}>
-              <input
-                name="quant"
-                type="number"
-                value={item.quant}
-                defaultValue={1}
-              ></input>
               <button value={item.id} name="id">
                 +
               </button>
