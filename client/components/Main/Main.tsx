@@ -19,8 +19,8 @@ export default (): FC<Props> => {
 
     const handleAddToCart = async (e: any) => {
       e.preventDefault();
-      await setCartChange({ newItem: e.target.id.value });
       await addToCart(e.target.id.value, 1);
+      setCartChange({ newItem: e.target.id.value });
     };
     return (
       <div id={styles.displayContainer}>

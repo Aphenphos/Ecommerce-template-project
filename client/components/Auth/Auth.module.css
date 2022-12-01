@@ -35,3 +35,7 @@
   padding: 10px;
   cursor: pointer;
 }
+
+#type {
+  font-size: 2.5rem;
+}

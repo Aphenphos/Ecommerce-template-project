@@ -26,14 +26,11 @@ export default (): FC<Props> => {
       setUser(userData);
       window.location.reload();
     };
-    const logOut = async () => {
-      await logoutUser();
-    };
-
     return (
       <div id={styles.auth}>
-        <span>{type}</span>
-        <button onClick={logOut}>LogOut</button>
+        <span id={styles.type}>
+          {type === 'sign-in' ? 'Sign In' : 'Sign Up'}
+        </span>
         <div id={styles.signUpContainer}>
           <form className={styles.form} onSubmit={submitSign}>
             <label>
@@ -62,9 +59,15 @@ export default (): FC<Props> => {
             <button className={styles.submitButton}>Submit</button>
           </form>
           {type === 'sign-in' ? (
-            <Link to="/auth/sign-up">Sign Up</Link>
+            <>
+              Dont have an account?{' '}
+              <Link to="/auth/sign-up">Sign Up</Link>
+            </>
           ) : (
-            <Link to="/auth/sign-in">Sign In</Link>
+            <>
+              Already have an account?
+              <Link to="/auth/sign-in">Sign In</Link>
+            </>
           )}
         </div>
       </div>

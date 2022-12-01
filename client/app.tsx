@@ -15,6 +15,7 @@ import {
 import { UserProvider } from './context/useUser';
 import { CartProvider } from './context/useCart';
 import { ItemProvider } from './context/useItem';
+import { VendorProvider } from './context/useVendor';
 const Admin = adminFn();
 const Auth = authFn();
 const Vendor = vendorFn();
@@ -29,18 +30,20 @@ root.render(
   <React.StrictMode>
     <Router>
       <UserProvider>
-        <ItemProvider>
-          <CartProvider>
-            <Header />
-            <Routes>
-              <Route path="" element={<Main />}></Route>
-              <Route path="auth/:type" element={<Auth />}></Route>
-              <Route path="admin" element={<Admin />}></Route>
-              <Route path="vendor" element={<Vendor />}></Route>
-              <Route path="checkout" element={<Checkout />}></Route>
-            </Routes>
-          </CartProvider>
-        </ItemProvider>
+        <VendorProvider>
+          <ItemProvider>
+            <CartProvider>
+              <Header />
+              <Routes>
+                <Route path="" element={<Main />}></Route>
+                <Route path="auth/:type" element={<Auth />}></Route>
+                <Route path="admin" element={<Admin />}></Route>
+                <Route path="vendor" element={<Vendor />}></Route>
+                <Route path="checkout" element={<Checkout />}></Route>
+              </Routes>
+            </CartProvider>
+          </ItemProvider>
+        </VendorProvider>
       </UserProvider>
     </Router>
   </React.StrictMode>
