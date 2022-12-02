@@ -14,7 +14,7 @@ export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const [vendorList, setVendorList] = useState([]);
+    const [vendorList, setVendorList] = useState([] as any);
     const [userList, setUserList] = useState([]);
     const { user, loading, admin, setLoading } = useUser();
     const submitUserSearch = async (e: any) => {
@@ -22,6 +22,7 @@ export default (): FC<Props> => {
       const result = await searchUsersByEmail(
         e.target.searchParams.value
       );
+      console.log(result);
       setUserList(result);
     };
     const submitNewVendor = async (e: any) => {
@@ -32,6 +33,24 @@ export default (): FC<Props> => {
       e.preventDefault();
       await removeVendor(e.target.value);
     };
+    function isVendor(userId: number) {
+      let aVendor;
+      for (let i = 0; i < vendorList.length; i++) {
+        if (userId === vendorList[i].vendor_id) {
+          aVendor = true;
+        }
+
+        if (aVendor === true) {
+          return <div>Is a vendor</div>;
+        } else {
+          return (
+            <button value={user.id} onClick={submitNewVendor}>
+              Make Vendor
+            </button>
+          );
+        }
+      }
+    }
     if (loading) {
       return <>LOADING</>;
     }
@@ -45,7 +64,6 @@ export default (): FC<Props> => {
     useEffect(() => {
       async function fetchVendors() {
         const vendorsInfo = await getVendors();
-        console.log(vendorsInfo);
         setVendorList(vendorsInfo);
       }
       fetchVendors();
@@ -79,7 +97,7 @@ export default (): FC<Props> => {
             userList.map((user: any, index) => (
               <div key={user.id + index}>
                 <span>{user.email}</span>
-                <button value={user.id}>Make Vendor</button>
+                {isVendor(user.id)}
               </div>
             ))
           ) : (
