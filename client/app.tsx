@@ -30,20 +30,25 @@ root.render(
   <React.StrictMode>
     <Router>
       <UserProvider>
-        <VendorProvider>
-          <ItemProvider>
-            <CartProvider>
-              <Header />
-              <Routes>
-                <Route path="" element={<Main />}></Route>
-                <Route path="auth/:type" element={<Auth />}></Route>
-                <Route path="admin" element={<Admin />}></Route>
-                <Route path="vendor" element={<Vendor />}></Route>
-                <Route path="checkout" element={<Checkout />}></Route>
-              </Routes>
-            </CartProvider>
-          </ItemProvider>
-        </VendorProvider>
+        <ItemProvider>
+          <CartProvider>
+            <Header />
+            <Routes>
+              <Route path="" element={<Main />}></Route>
+              <Route path="auth/:type" element={<Auth />}></Route>
+              <Route path="admin" element={<Admin />}></Route>
+              <Route
+                path="vendor"
+                element={
+                  <VendorProvider>
+                    <Vendor />
+                  </VendorProvider>
+                }
+              ></Route>
+              <Route path="checkout" element={<Checkout />}></Route>
+            </Routes>
+          </CartProvider>
+        </ItemProvider>
       </UserProvider>
     </Router>
   </React.StrictMode>

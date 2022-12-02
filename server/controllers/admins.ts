@@ -46,12 +46,31 @@ const adminController = Router()
       }
     }
   )
+
+  .post(
+    '/searchByEmail',
+    [authenticate, authorize],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        console.log(req.body);
+        const results = await User.getByEmailSearch(
+          req.body.searchParams
+        );
+        if (results) {
+          res.json(results);
+        } else {
+          res.json(null);
+        }
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
   .post(
     '/addVendor',
     authorize,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log(req.body);
         const data = await Vendor.makeVendor(req.body.id);
         res.json(data);
       } catch (err) {

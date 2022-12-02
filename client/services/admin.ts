@@ -71,3 +71,47 @@ export async function removeVendor(id: bigint) {
     console.error('Error removing vendor');
   }
 }
+
+export async function addVendor(id: bigint) {
+  const resp = await fetch(`${BASE_URL}/api/v1/admins/addVendor`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(id),
+    credentials: 'include',
+  });
+
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    console.error('Error posting new vendor');
+  }
+}
+
+export async function searchUsersByEmail(searchParams: string) {
+  const searchObj = {
+    searchParams,
+  };
+  const resp = await fetch(
+    `${BASE_URL}/api/v1/admins/searchByEmail`,
+    {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(searchObj),
+      credentials: 'include',
+    }
+  );
+
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return null;
+  }
+}

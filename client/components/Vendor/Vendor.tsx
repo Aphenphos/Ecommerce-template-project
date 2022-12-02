@@ -35,6 +35,7 @@ export default (): FC<Props> => {
       e.preventDefault();
       const itemPInt = parseInt(itemPrice);
       await postItem(itemName, itemPInt);
+      setChange(itemName);
     };
     const submitDeleteItem = async (e: any) => {
       e.preventDefault();
@@ -44,7 +45,7 @@ export default (): FC<Props> => {
 
     const submitUpdateItem = async (e: any) => {
       e.preventDefault();
-      updateItem(e.target.value, itemName);
+      await updateItem(e.target.value, itemName);
     };
     return (
       <>
@@ -81,7 +82,7 @@ export default (): FC<Props> => {
               </div>
             ))
           ) : (
-            <>Post an Item!</>
+            <>Post Your First Items!</>
           )}
         </div>
       </>

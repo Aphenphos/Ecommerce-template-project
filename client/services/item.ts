@@ -16,9 +16,10 @@ export async function postItem(itemName: string, itemPrice: number) {
     credentials: 'include',
   });
 
-  const data = await resp.json();
   if (resp.ok) {
+    const data = await resp.json();
     console.log('added item');
+    return data;
   } else {
     console.log('item not added');
   }
