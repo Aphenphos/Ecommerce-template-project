@@ -13,6 +13,9 @@ const PopupProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     setMessage(mchange);
+    setTimeout(() => {
+      setmChange('');
+    }, 2000);
   }, [mchange]);
 
   return (

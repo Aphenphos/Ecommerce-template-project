@@ -31,12 +31,12 @@ export async function addToCart(
     credentials: 'include',
   });
 
-  const data = await resp.json();
   if (resp.ok) {
-    console.log(data);
-    return data;
+    const message = 'Item Added To Cart';
+    return message;
   } else {
-    console.error('Error adding item to cart.');
+    const message = 'Error Cdding to Cart';
+    return message;
   }
 }
 
