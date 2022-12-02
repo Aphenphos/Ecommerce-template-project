@@ -7,7 +7,7 @@ import {
 import { getItemByVendor } from '../services/item';
 
 const VendorContext = createContext([] as any);
-
+//If a user is a vendor this context will grab all items that belong to them.
 const VendorProvider = ({ children }: { children: any }) => {
   const [vItems, setvItems] = useState([]);
   const [viLoading, setviLoading] = useState(true);

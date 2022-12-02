@@ -8,7 +8,7 @@ import { verifyAdmin } from '../services/admin';
 import { getUser, verifyVendor } from '../services/auth';
 
 const UserContext = createContext({} as any);
-
+//allows fetching of all information of a user to check their access to various pages.
 const UserProvider = ({ children }: { children: any }) => {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
