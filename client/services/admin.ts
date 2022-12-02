@@ -112,6 +112,6 @@ export async function searchUsersByEmail(searchParams: string) {
     const data = await resp.json();
     return data;
   } else {
-    return null;
+    return [];
   }
 }

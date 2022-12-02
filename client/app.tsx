@@ -16,6 +16,7 @@ import { UserProvider } from './context/useUser';
 import { CartProvider } from './context/useCart';
 import { ItemProvider } from './context/useItem';
 import { VendorProvider } from './context/useVendor';
+import { PopupProvider } from './context/usePopup';
 const Admin = adminFn();
 const Auth = authFn();
 const Vendor = vendorFn();
@@ -33,20 +34,22 @@ root.render(
         <ItemProvider>
           <CartProvider>
             <Header />
-            <Routes>
-              <Route path="" element={<Main />}></Route>
-              <Route path="auth/:type" element={<Auth />}></Route>
-              <Route path="admin" element={<Admin />}></Route>
-              <Route
-                path="vendor"
-                element={
-                  <VendorProvider>
-                    <Vendor />
-                  </VendorProvider>
-                }
-              ></Route>
-              <Route path="checkout" element={<Checkout />}></Route>
-            </Routes>
+            <PopupProvider>
+              <Routes>
+                <Route path="" element={<Main />}></Route>
+                <Route path="auth/:type" element={<Auth />}></Route>
+                <Route path="admin" element={<Admin />}></Route>
+                <Route
+                  path="vendor"
+                  element={
+                    <VendorProvider>
+                      <Vendor />
+                    </VendorProvider>
+                  }
+                ></Route>
+                <Route path="checkout" element={<Checkout />}></Route>
+              </Routes>
+            </PopupProvider>
           </CartProvider>
         </ItemProvider>
       </UserProvider>

@@ -25,7 +25,7 @@ export async function signUpUser(
       const user = data;
       return user;
     } else {
-      console.error(data.message);
+      return data;
     }
   }
   if (type === 'sign-in') {
@@ -38,9 +38,11 @@ export async function signUpUser(
       body: JSON.stringify(userObj),
       credentials: 'include',
     });
+    const data = await resp.json();
     if (resp.ok) {
-      const user = await resp.json();
-      return user;
+      return data;
+    } else {
+      return data;
     }
   }
 }

@@ -22,7 +22,6 @@ export default (): FC<Props> => {
       const result = await searchUsersByEmail(
         e.target.searchParams.value
       );
-      console.log(result);
       setUserList(result);
     };
     const submitNewVendor = async (e: any) => {
@@ -72,17 +71,21 @@ export default (): FC<Props> => {
       <>
         <div>
           Current Vendors
-          {vendorList.map((vendor: any) => (
-            <div key={vendor.vendor_id}>
-              <span>{vendor.vendor_email}</span>
-              <button
-                value={vendor.vendor_id}
-                onClick={submitRMVendor}
-              >
-                Remove Vendor
-              </button>
-            </div>
-          ))}
+          {vendorList[0] ? (
+            vendorList.map((vendor: any) => (
+              <div key={vendor.vendor_id}>
+                <span>{vendor.vendor_email}</span>
+                <button
+                  value={vendor.vendor_id}
+                  onClick={submitRMVendor}
+                >
+                  Remove Vendor
+                </button>
+              </div>
+            ))
+          ) : (
+            <div>No Vendors</div>
+          )}
         </div>
         <div>
           <form onSubmit={submitUserSearch}>
@@ -93,7 +96,7 @@ export default (): FC<Props> => {
           </form>
         </div>
         <div>
-          {userList[0] ? (
+          {userList ? (
             userList.map((user: any, index) => (
               <div key={user.id + index}>
                 <span>{user.email}</span>
@@ -101,7 +104,7 @@ export default (): FC<Props> => {
               </div>
             ))
           ) : (
-            <></>
+            <>No users found</>
           )}
         </div>
       </>
