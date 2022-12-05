@@ -5,12 +5,14 @@ import { useUser } from '../../context/useUser';
 import { checkoutUser } from '../../services/checkout';
 import { Navigate } from 'react-router-dom';
 import { removeFromCart } from '../../services/cart';
+import styles from './Checkout.module.css';
 
 export type Props = {};
 export type Component = FC<Props>;
 
 export default (): FC<Props> => {
-  //fix this not updating properly despite using context
+  //also adress difficulty of increasing/decreasing quantity
+  //potentially spamming server
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
     const { cartItems, cLoading, itemData, setCartChange } =
@@ -41,19 +43,19 @@ export default (): FC<Props> => {
       await removeFromCart(e.target.value);
       setCartChange({ change: e.target.value });
     };
+
     return (
       <div>
-        <div id="cart-container">
+        <div id={styles.cartContainer}>
           {cartItems.map((item: any) => (
-            <div key={item.id} className="cart-item">
-              <span>{accessItemData(item.item_id).item_name}</span>
-              <span>{accessItemData(item.item_id).item_price}</span>
-              <input
-                name="quant"
-                type="number"
-                value={item.quant}
-                defaultValue={item.item_quantity}
-              ></input>
+            <div key={item.id} className={styles.cartItem}>
+              <div>{accessItemData(item.item_id).item_name}</div>
+              <div>{accessItemData(item.item_id).item_price}</div>
+              <div>Quantity:{item.item_quantity}</div>
+              <div>
+                <button value={item.id}>+</button>
+                <button value={item.id}>-</button>
+              </div>
               <button value={item.id} onClick={handleRemove}>
                 Remove
               </button>

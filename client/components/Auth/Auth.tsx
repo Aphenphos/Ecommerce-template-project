@@ -3,6 +3,9 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { useUser } from '../../context/useUser';
 import { logoutUser, signUpUser } from '../../services/auth';
 import styles from './Auth.module.css';
+import popupFn from '../Popup/Popup';
+import { usePopup } from '../../context/usePopup';
+const Popup = popupFn();
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -12,6 +15,7 @@ export default (): FC<Props> => {
     const { type } = useParams();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { message, setmChange } = usePopup();
 
     if (loading) {
       return <>LOADING</>;
@@ -23,17 +27,18 @@ export default (): FC<Props> => {
     const submitSign = async (e: any) => {
       e.preventDefault();
       const userData = await signUpUser(type!, email, password);
-      setUser(userData);
-      window.location.reload();
+      if (userData.message) {
+        setmChange(userData.message);
+      } else {
+        setUser(userData);
+        window.location.reload();
+      }
     };
-    const logOut = async () => {
-      await logoutUser();
-    };
-
     return (
       <div id={styles.auth}>
-        <span>{type}</span>
-        <button onClick={logOut}>LogOut</button>
+        <span id={styles.type}>
+          {type === 'sign-in' ? 'Sign In' : 'Sign Up'}
+        </span>
         <div id={styles.signUpContainer}>
           <form className={styles.form} onSubmit={submitSign}>
             <label>
@@ -62,11 +67,18 @@ export default (): FC<Props> => {
             <button className={styles.submitButton}>Submit</button>
           </form>
           {type === 'sign-in' ? (
-            <Link to="/auth/sign-up">Sign Up</Link>
+            <>
+              Dont have an account?{' '}
+              <Link to="/auth/sign-up">Sign Up</Link>
+            </>
           ) : (
-            <Link to="/auth/sign-in">Sign In</Link>
+            <>
+              Already have an account?
+              <Link to="/auth/sign-in">Sign In</Link>
+            </>
           )}
         </div>
+        {message && <Popup></Popup>}
       </div>
     );
   };

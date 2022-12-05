@@ -3,6 +3,7 @@ import { Router } from 'express';
 import authenticate from '../middleware/authenticate.js';
 import authVendor from '../middleware/authvendor.js';
 import authVendorItem from '../middleware/vendorItemAuth.js';
+import Cart from '../models/Cart.js';
 import Item from '../models/Item.js';
 const itemController = Router()
   .post(
@@ -27,7 +28,9 @@ const itemController = Router()
     [authenticate, authVendor, authVendorItem],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const rmItem = await Item.delete((req as any).params.id);
+        const itemId = (req as any).params.id;
+        const rmFromCarts = await Cart.removedFromStore(itemId);
+        const rmItem = await Item.delete(itemId);
         res.send(rmItem);
       } catch (err) {
         next(err);
@@ -39,7 +42,6 @@ const itemController = Router()
     [authenticate, authVendor, authVendorItem],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log('------ in controller');
         const upItem = await Item.updateById(
           (req as any).params.id,
           req.body
@@ -70,6 +72,20 @@ const itemController = Router()
       try {
         const arrToGet = req.body;
         const arrOfItems = await Item.getManyById(arrToGet);
+        return res.json(arrOfItems);
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
+
+  .get(
+    '/getByVendor',
+    [authenticate, authVendor],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const vendor_id = await (req as any).user.id;
+        const arrOfItems = await Item.getAllByVendorId(vendor_id);
         return res.json(arrOfItems);
       } catch (err) {
         next(err);

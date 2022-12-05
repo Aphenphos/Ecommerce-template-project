@@ -6,7 +6,10 @@ import {
 } from 'react';
 import { getCart } from '../services/cart';
 import { getArrOfItems } from '../services/item';
-
+//Used to track a users cart across pages allowing
+//for quicker loadtimes upon opening the Checkout page as well as
+//'future proofing' for features like viewing total items in cart
+//and viewing a small preview of what is in your cart on hover
 const CartContext = createContext([] as any);
 
 const CartProvider = ({ children }: { children: any }) => {
@@ -26,7 +29,6 @@ const CartProvider = ({ children }: { children: any }) => {
     async function fetchItemData() {
       const cItems = await fetchCart();
       if (!cItems) {
-        console.log('hit this');
         setCartItems([]);
         setItemData([]);
         setcLoading(false);

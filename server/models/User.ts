@@ -42,6 +42,19 @@ const User = class User {
     return new User(rows[0]);
   }
 
+  static async getByEmailSearch(email: string) {
+    const emailInp = `%${email}%`;
+    const { rows } = await pool.query(
+      `
+      SELECT * FROM users WHERE email LIKE $1
+      `,
+      [emailInp]
+    );
+    if (!rows[0]) return null;
+
+    return rows.map((row) => new User(row));
+  }
+
   static async removeUser(id: bigint) {
     console.log('in user');
     const { rows } = await pool.query(
@@ -57,6 +70,16 @@ const User = class User {
   get passwordHash(): string {
     return this.#passwordHash;
   }
-};
 
+  static async getAll() {
+    const { rows } = await pool.query(
+      `
+    SELECT * FROM users`
+    );
+
+    if (!rows[0]) return null;
+
+    return rows.map((row) => new User(row));
+  }
+};
 export default User;

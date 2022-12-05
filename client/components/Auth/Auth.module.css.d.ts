@@ -8,6 +8,7 @@ interface CssExports {
   'signUpContainer': string;
   'submit-button': string;
   'submitButton': string;
+  'type': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

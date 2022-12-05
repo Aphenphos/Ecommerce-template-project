@@ -105,6 +105,16 @@ const Item = class Item {
     return new Item(rows[0]);
   }
 
+  static async deleteByVendorId(vendor_id: bigint) {
+    const { rows } = await pool.query(
+      `
+    DELETE FROM items WHERE vendor_id=$1 
+    RETURNING * 
+    `,
+      [vendor_id]
+    );
+    return new Item(rows[0]);
+  }
   static async getAll() {
     const { rows } = await pool.query(
       `

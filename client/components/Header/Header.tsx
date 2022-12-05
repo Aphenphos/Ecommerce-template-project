@@ -1,5 +1,5 @@
 import { FC, ReactElement, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useUser } from '../../context/useUser';
 import { logoutUser } from '../../services/auth';
 import styles from './Header.module.css';
@@ -27,6 +27,7 @@ export default (): FC<Props> => {
       setUser(null);
       setAdmin(false);
       setVendor(false);
+      return <Navigate replace to="/" />;
     };
     return (
       <div id={styles.header}>

@@ -1,5 +1,4 @@
 const BASE_URL = 'http://localhost:7891';
-import e from 'express';
 import type { CartItem } from '../../common/types';
 export async function postItem(itemName: string, itemPrice: number) {
   console.log(itemPrice);
@@ -17,9 +16,10 @@ export async function postItem(itemName: string, itemPrice: number) {
     credentials: 'include',
   });
 
-  const data = await resp.json();
   if (resp.ok) {
+    const data = await resp.json();
     console.log('added item');
+    return data;
   } else {
     console.log('item not added');
   }
@@ -86,6 +86,20 @@ export async function getArrOfItems(items: Array<CartItem>) {
       'Content-type': 'application/json',
     },
     body: JSON.stringify(toGet),
+    credentials: 'include',
+  });
+
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return console.error('Error Fetching Items');
+  }
+}
+
+export async function getItemByVendor() {
+  const resp = await fetch(`${BASE_URL}/api/v1/items/getByVendor`, {
+    method: 'GET',
     credentials: 'include',
   });
 

@@ -44,6 +44,17 @@ const Cart = class Cart {
     );
     return new Cart(rows[0]);
   }
+
+  static async removedFromStore(id: bigint) {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM carts WHERE item_id=$1
+      RETURNING *
+      `,
+      [id]
+    );
+    return new Cart(rows[0]);
+  }
   static async getCartByUserId(user_id: bigint) {
     const { rows } = await pool.query(
       `
@@ -54,7 +65,6 @@ const Cart = class Cart {
     if (!rows[0]) {
       return null;
     } else {
-      console.log(rows);
       return rows;
     }
   }

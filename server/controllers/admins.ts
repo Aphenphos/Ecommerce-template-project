@@ -5,6 +5,8 @@ import authenticate from '../middleware/authenticate.js';
 import User from '../models/User.js';
 import Vendor from '../models/Vendor.js';
 import Admin from '../models/Admin.js';
+import Item from '../models/Item.js';
+import Cart from '../models/Cart.js';
 
 const adminController = Router()
   .delete(
@@ -21,22 +23,54 @@ const adminController = Router()
     }
   )
 
-  .delete('/rmVendor/:id', authorize, async (req, res, next) => {
-    try {
-      const rmVendor = await Vendor.removeVendor(
-        (req as any).params.id
-      );
-      res.send(rmVendor);
-    } catch (err) {
-      next(err);
+  .delete(
+    '/rmVendor/:id',
+    [authenticate, authorize],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const vendorId = (req as any).params.id;
+        const vendorsItems = await Item.getAllByVendorId(vendorId);
+        if (vendorsItems) {
+          for (let i = 0; i < vendorsItems?.length; i++) {
+            const rmFromCart = await Cart.removedFromStore(
+              vendorsItems[i]!.id
+            );
+            const deleteItem = await Item.delete(vendorsItems[i]!.id);
+          }
+        }
+
+        const rmVendor = await Vendor.removeVendor(vendorId);
+        res.send(rmVendor);
+      } catch (err) {
+        next(err);
+      }
     }
-  })
+  )
+
+  .post(
+    '/searchByEmail',
+    [authenticate, authorize],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        console.log(req.body);
+        const results = await User.getByEmailSearch(
+          req.body.searchParams
+        );
+        if (results) {
+          res.json(results);
+        } else {
+          res.json(null);
+        }
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
   .post(
     '/addVendor',
     authorize,
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log(req.body);
         const data = await Vendor.makeVendor(req.body.id);
         res.json(data);
       } catch (err) {
@@ -57,6 +91,18 @@ const adminController = Router()
         } else {
           res.json(false);
         }
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
+  .get(
+    '/allVendors',
+    [authenticate, authorize],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const vendorArr = await Vendor.getAllVendors();
+        res.json(vendorArr);
       } catch (err) {
         next(err);
       }
