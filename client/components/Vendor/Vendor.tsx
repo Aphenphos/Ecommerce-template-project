@@ -30,6 +30,10 @@ export default (): FC<Props> => {
     if (viLoading) {
       return <>Loading Your Items</>;
     }
+    const handleNewImage = async (e: any) => {
+      e.preventDefault();
+      console.log(e.target.value, e.target.files);
+    };
 
     const submitItem = async (e: any) => {
       e.preventDefault();
@@ -76,6 +80,36 @@ export default (): FC<Props> => {
               <div key={item.id}>
                 <span>{item.item_name}</span>
                 <span>{item.item_price}</span>
+                {item.images.length >= 3 ? (
+                  item.images.map((image: any, index: number) => (
+                    <div key={index}>
+                      <span>picture {index} is here</span>
+                      <button>Remove Pic</button>
+                      <img src={image.image_url}></img>
+                    </div>
+                  ))
+                ) : (
+                  <div>
+                    {item.images.map((image: any, index: number) => (
+                      <div key={index}>
+                        <span>picture {index} is here</span>
+                        <button>Remove Pic</button>
+                        <img src={image.image_url}></img>
+                      </div>
+                    ))}
+                    <form>
+                      <input
+                        type="file"
+                        accept=".png, .jpeg, .jpg"
+                        name="img_file"
+                      ></input>
+                      <button
+                        onClick={handleNewImage}
+                        value={item.id}
+                      ></button>
+                    </form>
+                  </div>
+                )}
                 <button value={item.id} onClick={submitDeleteItem}>
                   Delete Item
                 </button>

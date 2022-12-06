@@ -6,12 +6,14 @@ const Item = class Item {
   item_name: string;
   item_price: number;
   vendor_id: bigint;
+  images?: Array<string>;
 
   constructor(row: any) {
     this.id = row.id;
     this.item_name = row.item_name;
     this.item_price = row.item_price;
     this.vendor_id = row.vendor_id;
+    this.images = row.images;
   }
 
   static async insert({
@@ -47,7 +49,17 @@ const Item = class Item {
 
   static async getManyById(id: Array<number>) {
     const { rows } = await pool.query(
-      `SELECT * FROM items WHERE id = ANY ($1)`,
+      `
+      SELECT items.*, 
+      COALESCE(
+      json_agg(to_jsonb(item_images.image_url))
+         FILTER (WHERE item_images.image_url IS NOT NULL), '[]'
+      ) as images from items
+      LEFT JOIN item_images
+      ON items.id = item_images.item_id
+      WHERE items.id = ANY ($1)
+      GROUP BY items.id;
+      `,
       [id]
     );
     if (!rows[0]) {
@@ -60,13 +72,22 @@ const Item = class Item {
   static async getAllByVendorId(vendor_id: bigint) {
     const { rows } = await pool.query(
       `
-    SELECT * FROM items WHERE vendor_id=$1
+      SELECT items.*, 
+      COALESCE(
+      json_agg(to_jsonb(item_images.image_url))
+         FILTER (WHERE item_images.image_url IS NOT NULL), '[]'
+      ) as images from items
+      LEFT JOIN item_images
+      ON items.id = item_images.item_id
+      WHERE vendor_id=$1
+      GROUP BY items.id;
     `,
       [vendor_id]
     );
     if (!rows[0]) {
       return null;
     } else {
+      console.log(rows);
       return rows.map((row) => new Item(row));
     }
   }
@@ -118,7 +139,14 @@ const Item = class Item {
   static async getAll() {
     const { rows } = await pool.query(
       `
-      SELECT * FROM items;
+      SELECT items.*, 
+      COALESCE(
+      json_agg(to_jsonb(item_images.image_url))
+         FILTER (WHERE item_images.image_url IS NOT NULL), '[]'
+      ) as images from items
+      LEFT JOIN item_images
+      ON items.id = item_images.item_id
+      GROUP BY items.id;
       `
     );
     return rows.map((row) => new Item(row));

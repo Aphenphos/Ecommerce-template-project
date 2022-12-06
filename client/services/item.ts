@@ -105,6 +105,7 @@ export async function getItemByVendor() {
 
   if (resp.ok) {
     const data = await resp.json();
+    console.log(data);
     return data;
   } else {
     return console.error('Error Fetching Items');

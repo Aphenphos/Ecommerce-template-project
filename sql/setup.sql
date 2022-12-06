@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS vendors CASCADE;
 DROP TABLE IF EXISTS admins CASCADE;
 DROP TABLE IF EXISTS items CASCADE;
 DROP TABLE IF EXISTS carts CASCADE;
+DROP TABLE IF EXISTS item_images CASCADE;
 
 
 CREATE TABLE users (
@@ -29,6 +30,13 @@ CREATE TABLE items (
   item_price BIGINT NOT NULL,
   vendor_id BIGINT NOT NULL,
   FOREIGN KEY (vendor_id) REFERENCES users(id)
+);
+
+CREATE TABLE item_images (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
+  image_url TEXT NOT NULL,
+  item_id BIGINT NOT NULL,
+  FOREIGN KEY (item_id) REFERENCES items(id)
 );
 
 CREATE TABLE carts (
@@ -70,6 +78,15 @@ INSERT INTO items (
 VALUES 
   ('Test Item','1000','1'),
   ('Another Item','10000','1');
+
+INSERT INTO item_images (
+  image_url,
+  item_id
+)
+VALUES
+  ('www.google.com', '1'),
+  ('www.google.com', '1'),
+  ('www.google.com', '1');
 
 INSERT INTO carts (
   user_id,

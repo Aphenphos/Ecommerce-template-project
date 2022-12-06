@@ -17,6 +17,7 @@ const VendorProvider = ({ children }: { children: any }) => {
     async function fetchItems() {
       setviLoading(true);
       const pvItems = await getItemByVendor();
+      console.log(pvItems);
       setvItems(pvItems);
       setviLoading(false);
     }
