@@ -26,3 +26,6 @@ logfile
 
 # Ignore environment variables files.
 .env
+
+# Ignore holding images for cloudinary upload
+/tmp

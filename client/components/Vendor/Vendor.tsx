@@ -8,6 +8,7 @@ import {
 } from '../../services/item';
 import { Navigate } from 'react-router-dom';
 import { useVendor } from '../../context/useVendor';
+import { postImage } from '../../services/itemImage';
 
 export type Props = {};
 export type Component = FC<Props>;
@@ -18,6 +19,20 @@ export default (): FC<Props> => {
     const { vItems, setChange, viLoading } = useVendor();
     const [itemName, setItemName] = useState('');
     const [itemPrice, setItemPrice] = useState('');
+
+    const [files, setFiles] = useState<any[]>([]);
+
+    function handleChange(event: any, id: bigint) {
+      event.target.files[0].tempId = id;
+      const newImage = event.target.files[0];
+      //insures there is only image uploaded per item at a time.
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].tempId === newImage.tempId) {
+          files.splice(i, 1);
+        }
+      }
+      setFiles([newImage, ...files]);
+    }
     if (loading) {
       return <>LOADING</>;
     }
@@ -30,11 +45,17 @@ export default (): FC<Props> => {
     if (viLoading) {
       return <>Loading Your Items</>;
     }
-    const handleNewImage = async (e: any) => {
-      e.preventDefault();
-      console.log(e.target.value, e.target.files);
-    };
 
+    const handleImageSubmit = async (e: any) => {
+      e.preventDefault();
+      //matches the image file with selected item to upload by the items ID
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].tempId === e.target.value) {
+          console.log(files[i]);
+          await postImage(files[i], files[i].tempId);
+        }
+      }
+    };
     const submitItem = async (e: any) => {
       e.preventDefault();
       const itemPInt = parseInt(itemPrice);
@@ -101,12 +122,15 @@ export default (): FC<Props> => {
                       <input
                         type="file"
                         accept=".png, .jpeg, .jpg"
-                        name="img_file"
+                        name="imgForm"
+                        onChange={(e) => handleChange(e, item.id)}
                       ></input>
                       <button
-                        onClick={handleNewImage}
                         value={item.id}
-                      ></button>
+                        onClick={handleImageSubmit}
+                      >
+                        SubmitNewImage
+                      </button>
                     </form>
                   </div>
                 )}

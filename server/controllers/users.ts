@@ -101,7 +101,19 @@ const userController = Router()
       .status(204)
       .send();
   })
-
+  .delete(
+    '/rmSelf',
+    [authenticate],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const curUser = (req as any).user.id;
+        const resp = await User.removeUser(curUser);
+        res.json('Account Deleted');
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
   .get(
     '/isVendor',
     [authenticate, authVendor],

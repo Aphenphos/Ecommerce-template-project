@@ -36,6 +36,7 @@ CREATE TABLE item_images (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
   image_url TEXT NOT NULL,
   item_id BIGINT NOT NULL,
+  cloud_id VARCHAR NOT NULL,
   FOREIGN KEY (item_id) REFERENCES items(id)
 );
 

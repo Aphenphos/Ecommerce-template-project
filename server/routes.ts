@@ -12,6 +12,7 @@ import adminController from './controllers/admins.js';
 import itemController from './controllers/items.js';
 import stripeController from './controllers/stripe.js';
 import cartController from './controllers/carts.js';
+import itemImageController from './controllers/itemImages.js';
 
 export default (): Router => {
   const prefixRouter = express.Router();
@@ -20,6 +21,7 @@ export default (): Router => {
   prefixRouter.use('/items', itemController);
   prefixRouter.use('/stripe', stripeController);
   prefixRouter.use('/carts', cartController);
+  prefixRouter.use('/itemImages', itemImageController);
 
   return prefixRouter;
 };

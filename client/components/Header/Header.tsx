@@ -36,10 +36,10 @@ export default (): FC<Props> => {
         {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
         {admin ? <Link to="/admin">Admin</Link> : <></>}
         {user ? (
-          <>
+          <div id={styles.userInfo}>
             <span>{user.email}</span>
             <button onClick={logOut}>Log Out</button>{' '}
-          </>
+          </div>
         ) : (
           <Link to="/auth/sign-in">Sign-In</Link>
         )}

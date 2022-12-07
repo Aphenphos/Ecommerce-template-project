@@ -12,7 +12,7 @@ import path from 'node:path';
 import routes from './routes.js';
 import errorHandler from './middleware/error.js';
 import cookieParser from 'cookie-parser';
-
+import multer from 'multer';
 dotenv.config();
 
 const app = express();
