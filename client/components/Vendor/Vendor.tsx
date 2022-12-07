@@ -8,8 +8,8 @@ import {
 } from '../../services/item';
 import { Navigate } from 'react-router-dom';
 import { useVendor } from '../../context/useVendor';
-import { postImage } from '../../services/itemImage';
-
+import { postImage, rmImage } from '../../services/itemImage';
+import styles from './Vendor.module.css';
 export type Props = {};
 export type Component = FC<Props>;
 
@@ -45,17 +45,6 @@ export default (): FC<Props> => {
     if (viLoading) {
       return <>Loading Your Items</>;
     }
-
-    const handleImageSubmit = async (e: any) => {
-      e.preventDefault();
-      //matches the image file with selected item to upload by the items ID
-      for (let i = 0; i < files.length; i++) {
-        if (files[i].tempId === e.target.value) {
-          console.log(files[i]);
-          await postImage(files[i], files[i].tempId);
-        }
-      }
-    };
     const submitItem = async (e: any) => {
       e.preventDefault();
       const itemPInt = parseInt(itemPrice);
@@ -67,10 +56,26 @@ export default (): FC<Props> => {
       await deleteItem(e.target.value);
       setChange({ id: e.target.value });
     };
-
     const submitUpdateItem = async (e: any) => {
       e.preventDefault();
       await updateItem(e.target.value, itemName);
+    };
+
+    const handleImageSubmit = async (e: any) => {
+      e.preventDefault();
+      //matches the image file with selected item to upload by the items ID
+      for (let i = 0; i < files.length; i++) {
+        if (files[i].tempId === e.target.value) {
+          await postImage(files[i], files[i].tempId);
+          setChange(files[i].tempId + Math.random());
+        }
+      }
+    };
+
+    const handleImageRm = async (e: any) => {
+      e.preventDefault();
+      await rmImage(e.target.value);
+      setChange(e.target.value);
     };
     return (
       <>
@@ -104,18 +109,28 @@ export default (): FC<Props> => {
                 {item.images.length >= 3 ? (
                   item.images.map((image: any, index: number) => (
                     <div key={index}>
-                      <span>picture {index} is here</span>
-                      <button>Remove Pic</button>
-                      <img src={image.image_url}></img>
+                      <button value={image} onClick={handleImageRm}>
+                        Remove Pic
+                      </button>
+                      <img
+                        src={image}
+                        key={index}
+                        className={styles.prodImage}
+                      ></img>
                     </div>
                   ))
                 ) : (
                   <div>
                     {item.images.map((image: any, index: number) => (
                       <div key={index}>
-                        <span>picture {index} is here</span>
-                        <button>Remove Pic</button>
-                        <img src={image.image_url}></img>
+                        <img
+                          src={image}
+                          key={index}
+                          className={styles.prodImage}
+                        ></img>
+                        <button value={image} onClick={handleImageRm}>
+                          Remove Pic
+                        </button>
                       </div>
                     ))}
                     <form>

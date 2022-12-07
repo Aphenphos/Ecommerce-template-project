@@ -52,7 +52,6 @@ const adminController = Router()
     [authenticate, authorize],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log(req.body);
         const results = await User.getByEmailSearch(
           req.body.searchParams
         );

@@ -25,14 +25,12 @@ const UserProvider = ({ children }: { children: any }) => {
     async function fetchVendor() {
       setLoading(true);
       const pVendor = await verifyVendor();
-      console.log('vendor?', pVendor);
       setVendor(pVendor);
       setLoading(false);
     }
     async function fetchAdmin() {
       setLoading(true);
       const pAdmin = await verifyAdmin();
-      console.log(pAdmin);
       setAdmin(pAdmin);
       setLoading(false);
     }

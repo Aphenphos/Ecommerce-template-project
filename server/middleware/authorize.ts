@@ -7,9 +7,7 @@ const authorize = async (
   next: NextFunction
 ) => {
   try {
-    console.log((req as any).user.id);
     const check = await Admin.checkIfAdmin((req as any).user.id);
-    console.log(check.admin_id, (req as any).user.id);
     if (check.admin_id === (req as any).user.id) {
       next();
     } else {

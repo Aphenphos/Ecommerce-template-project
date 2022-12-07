@@ -24,7 +24,7 @@ const ItemImage = class ItemImage {
     const { rows } = await pool.query(
       `
         INSERT INTO item_images (image_url, item_id, cloud_id)
-        VALUES ($1, $2, 3)
+        VALUES ($1, $2, $3)
         RETURNING *
     `,
       [image_url, item_id, cloud_id]

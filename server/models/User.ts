@@ -56,7 +56,6 @@ const User = class User {
   }
 
   static async removeUser(id: bigint) {
-    console.log('in user');
     const { rows } = await pool.query(
       `
     DELETE FROM users WHERE id=$1

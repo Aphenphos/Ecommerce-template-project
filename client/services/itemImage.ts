@@ -11,5 +11,21 @@ export async function postImage(imgFile: File, itemId: bigint) {
       body: formdata,
     }
   );
-  console.log(resp);
+}
+export async function rmImage(img_url: string) {
+  const resp = await fetch(
+    `${BASE_URL}/api/v1/itemImages/rmImage/${encodeURIComponent(
+      img_url
+    )}`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+    }
+  );
+
+  if (resp.ok) {
+    console.log('image deleted');
+  } else {
+    console.log('error deleting image');
+  }
 }

@@ -80,15 +80,6 @@ VALUES
   ('Test Item','1000','1'),
   ('Another Item','10000','1');
 
-INSERT INTO item_images (
-  image_url,
-  item_id
-)
-VALUES
-  ('www.google.com', '1'),
-  ('www.google.com', '1'),
-  ('www.google.com', '1');
-
 INSERT INTO carts (
   user_id,
   item_id,

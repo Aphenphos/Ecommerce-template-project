@@ -11,7 +11,6 @@ const itemController = Router()
     [authenticate, authVendor],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log(req.body);
         const newItem = await Item.insert({
           vendor_id: (req as any).user.id,
           ...req.body,

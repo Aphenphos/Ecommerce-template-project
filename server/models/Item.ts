@@ -87,7 +87,6 @@ const Item = class Item {
     if (!rows[0]) {
       return null;
     } else {
-      console.log(rows);
       return rows.map((row) => new Item(row));
     }
   }

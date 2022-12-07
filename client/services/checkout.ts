@@ -9,7 +9,6 @@ export async function checkoutUser(itemArr: Array<any>) {
       quantity: itemArr[i].item_quantity,
     };
     toCheckout.push(itemObj);
-    console.log(itemObj);
   }
   const resp = await fetch(`${BASE_URL}/api/v1/stripe/checkout`, {
     method: 'POST',

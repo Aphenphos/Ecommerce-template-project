@@ -19,8 +19,6 @@ const CartProvider = ({ children }: { children: any }) => {
   const [cartChange, setCartChange] = useState({});
 
   useEffect(() => {
-    console.log('change');
-    console.log(cartChange);
     async function fetchCart() {
       setcLoading(true);
       const cItems = await getCart();
