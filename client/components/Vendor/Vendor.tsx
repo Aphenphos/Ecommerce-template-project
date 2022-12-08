@@ -68,6 +68,7 @@ export default (): FC<Props> => {
         if (files[i].tempId === e.target.value) {
           await postImage(files[i], files[i].tempId);
           setChange(files[i].tempId + Math.random());
+          files.splice(i, 1);
         }
       }
     };

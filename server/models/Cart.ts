@@ -53,7 +53,11 @@ const Cart = class Cart {
       `,
       [id]
     );
-    return new Cart(rows[0]);
+    if (rows[0]) {
+      return new Cart(rows[0]);
+    } else {
+      return null;
+    }
   }
   static async getCartByUserId(user_id: bigint) {
     const { rows } = await pool.query(

@@ -52,6 +52,30 @@ const ItemImage = class ItemImage {
     );
     return new ItemImage(rows[0]);
   }
+
+  static async getByItemId(item_id: bigint) {
+    const { rows } = await pool.query(
+      `
+      SELECT * FROM item_images WHERE item_id = $1
+    `,
+      [item_id]
+    );
+    if (!rows[0]) {
+      return null;
+    } else {
+      return rows.map((row) => new ItemImage(row));
+    }
+  }
+  static async deleteByItemId(item_id: bigint) {
+    const { rows } = await pool.query(
+      `
+      DELETE FROM item_images WHERE item_id = $1
+      RETURNING *
+      `,
+      [item_id]
+    );
+    return new ItemImage(rows[0]);
+  }
 };
 
 export default ItemImage;

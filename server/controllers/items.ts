@@ -5,6 +5,15 @@ import authVendor from '../middleware/authvendor.js';
 import authVendorItem from '../middleware/vendorItemAuth.js';
 import Cart from '../models/Cart.js';
 import Item from '../models/Item.js';
+import ItemImage from '../models/ItemImages.js';
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUIDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+  secure: true,
+});
+
 const itemController = Router()
   .post(
     '/addItem',
@@ -27,8 +36,18 @@ const itemController = Router()
     [authenticate, authVendor, authVendorItem],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
+        //remove the images
         const itemId = (req as any).params.id;
-        const rmFromCarts = await Cart.removedFromStore(itemId);
+        const allImages = await ItemImage.getByItemId(itemId);
+        if (allImages) {
+          for (let i = 0; i < allImages!.length; i++) {
+            await cloudinary.uploader.destroy(allImages[i]!.cloud_id);
+          }
+          await ItemImage.deleteByItemId(itemId);
+        }
+        //remove from users carts
+        await Cart.removedFromStore(itemId);
+        //remove from the database
         const rmItem = await Item.delete(itemId);
         res.send(rmItem);
       } catch (err) {
