@@ -11,8 +11,12 @@ interface CssExports {
   'checkout-container': string;
   'checkoutButton': string;
   'checkoutContainer': string;
+  'item-quantity': string;
+  'itemQuantity': string;
   'page-container': string;
   'pageContainer': string;
+  'remove-cart': string;
+  'removeCart': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

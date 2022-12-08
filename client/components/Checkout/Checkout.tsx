@@ -1,10 +1,11 @@
 import e from 'express';
-import { FC, ReactElement } from 'react';
+import { FC, ReactElement, useEffect, useState } from 'react';
 import { useCartItems } from '../../context/useCart';
 import { useUser } from '../../context/useUser';
 import { checkoutUser } from '../../services/checkout';
 import { Navigate } from 'react-router-dom';
 import { removeFromCart } from '../../services/cart';
+import { BsFillCartDashFill } from 'react-icons/bs';
 import styles from './Checkout.module.css';
 
 export type Props = {};
@@ -15,7 +16,7 @@ export default (): FC<Props> => {
   //potentially spamming server
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
-    const { cartItems, cLoading, itemData, setCartChange } =
+    const { cartItems, cLoading, itemData, setCartChange, total } =
       useCartItems();
     if (loading) {
       return <>LOADING</>;
@@ -54,16 +55,22 @@ export default (): FC<Props> => {
             <div key={item.id} className={styles.cartItem}>
               <img src={accessItemData(item.item_id).images[0]}></img>
               <div className={styles.cartItemInfo}>
-                <div>{accessItemData(item.item_id).item_name}</div>
-                <div>{accessItemData(item.item_id).item_price}</div>
+                <div>{item.item_name}</div>
+                <div>${(item.item_price / 100).toFixed(2)}</div>
                 <div>
-                  <div>Quantity:{item.item_quantity}</div>
+                  <div className={styles.itemQuantity}>
+                    Quantity:{item.item_quantity}
+                  </div>
                   <button value={item.id}>+</button>
                   <button value={item.id}>-</button>
                 </div>
               </div>
-              <button value={item.id} onClick={handleRemove}>
-                Remove
+              <button
+                value={item.id}
+                onClick={handleRemove}
+                className={styles.removeCart}
+              >
+                <BsFillCartDashFill />
               </button>
             </div>
           ))}
@@ -73,7 +80,10 @@ export default (): FC<Props> => {
           {cartItems[0] ? (
             <>
               <span>Items(Amount)</span>
-              <span>Subtotal: (Amount)</span>
+              <div>
+                <span>Subtotal</span>
+                <span>${(total / 100).toFixed(2)}</span>
+              </div>
               <button
                 onClick={handleCheckout}
                 id={styles.checkoutButton}

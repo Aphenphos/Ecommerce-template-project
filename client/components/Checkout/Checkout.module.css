@@ -1,3 +1,17 @@
+#page-container {
+  display: flex;
+  position: absolute;
+  margin-left: 5vw;
+  margin-right: 5vw;
+  margin-top: 2.5vh;
+}
+
+#cart-container {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(1fr));
+  width: 50vw;
+}
+
 .cart-item {
   border: 1px solid black;
   display: flex;
@@ -17,19 +31,12 @@
   width: auto;
   object-fit: contain;
 }
-
-#cart-container {
-  display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(1fr));
-  width: 50vw;
+.remove-cart {
+  font-size: 2rem;
 }
 
-#page-container {
-  display: flex;
-  position: absolute;
-  margin-left: 5vw;
-  margin-right: 5vw;
-  margin-top: 2.5vh;
+.item-quantity {
+  font-size: 0.8rem;
 }
 
 #checkout-container {
@@ -40,6 +47,7 @@
   justify-content: space-around;
   justify-items: center;
 }
+
 #checkout-container span {
   text-align: center;
   align-items: center;

@@ -5,12 +5,16 @@ const Cart = class Cart {
   user_id: bigint;
   item_id: bigint;
   item_quantity: bigint;
+  item_price?: bigint;
+  item_name?: string;
 
   constructor(row: any) {
     this.id = row.id;
     this.user_id = row.user_id;
     this.item_id = row.item_id;
     this.item_quantity = row.item_quantity;
+    this.item_price = row.item_price || null;
+    this.item_name = row.item_name || null;
   }
 
   static async addTo({
@@ -62,10 +66,15 @@ const Cart = class Cart {
   static async getCartByUserId(user_id: bigint) {
     const { rows } = await pool.query(
       `
-    SELECT * FROM carts WHERE user_id=$1
+      SELECT carts.id, carts.user_id, carts.item_id, carts.item_quantity, items.item_price, items.item_name
+      FROM carts
+      LEFT JOIN items
+      ON carts.item_id = items.id
+      WHERE user_id=$1      
     `,
       [user_id]
     );
+    console.log(rows);
     if (!rows[0]) {
       return null;
     } else {
