@@ -35,6 +35,9 @@ export default (): FC<Props> => {
       }
       return item;
     }
+    const handleIncrease = async () => {};
+    const handleDecrease = async () => {};
+
     const handleCheckout = async () => {
       await checkoutUser(cartItems);
     };
@@ -45,16 +48,19 @@ export default (): FC<Props> => {
     };
 
     return (
-      <div>
+      <div id={styles.pageContainer}>
         <div id={styles.cartContainer}>
           {cartItems.map((item: any) => (
             <div key={item.id} className={styles.cartItem}>
-              <div>{accessItemData(item.item_id).item_name}</div>
-              <div>{accessItemData(item.item_id).item_price}</div>
-              <div>Quantity:{item.item_quantity}</div>
-              <div>
-                <button value={item.id}>+</button>
-                <button value={item.id}>-</button>
+              <img src={accessItemData(item.item_id).images[0]}></img>
+              <div className={styles.cartItemInfo}>
+                <div>{accessItemData(item.item_id).item_name}</div>
+                <div>{accessItemData(item.item_id).item_price}</div>
+                <div>
+                  <div>Quantity:{item.item_quantity}</div>
+                  <button value={item.id}>+</button>
+                  <button value={item.id}>-</button>
+                </div>
               </div>
               <button value={item.id} onClick={handleRemove}>
                 Remove
@@ -63,13 +69,22 @@ export default (): FC<Props> => {
           ))}
         </div>
 
-        {cartItems[0] ? (
-          <>
-            <button onClick={handleCheckout}>Checkout</button>
-          </>
-        ) : (
-          <>Your Cart is Empty!</>
-        )}
+        <div id={styles.checkoutContainer}>
+          {cartItems[0] ? (
+            <>
+              <span>Items(Amount)</span>
+              <span>Subtotal: (Amount)</span>
+              <button
+                onClick={handleCheckout}
+                id={styles.checkoutButton}
+              >
+                Checkout
+              </button>
+            </>
+          ) : (
+            <>Your Cart is Empty!</>
+          )}
+        </div>
       </div>
     );
   };

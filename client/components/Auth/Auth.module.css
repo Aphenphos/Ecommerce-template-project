@@ -1,28 +1,38 @@
+@import '../../styles/reset.css';
 #auth {
+  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 5px;
 }
 
 #sign-up-container {
-  display: flex;
+  display: grid;
   flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.label {
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .input {
   background: rgb(22, 22, 22);
   border: 1px solid rgb(66, 66, 66);
-  padding: 15px;
+  padding: 1.2rem;
   size: 2rem;
-  color: white;
+  color: var(--white);
   box-shadow: none;
   margin: 15px;
   transition: border 0.5s ease-out;
 }
 
 .input:focus {
-  border: 1px solid white;
+  border: 1px solid var(--white);
 }
 
 .form {
@@ -31,11 +41,29 @@
 }
 
 .submit-button {
-  border: 1px solid rgb(150, 150, 0);
+  background-color: var(--midPurple);
+  border: 1px solid black;
   padding: 10px;
   cursor: pointer;
 }
 
 #type {
   font-size: 2.5rem;
+}
+
+#prompt {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#sign-button {
+  color: var(--purpWhite);
+  transition: all 0.2s ease-in;
+}
+
+#sign-button:hover {
+  color: var(--darkPurpWhite);
+  transform: scale(1.1);
 }

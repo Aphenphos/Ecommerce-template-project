@@ -41,44 +41,47 @@ export default (): FC<Props> => {
         </span>
         <div id={styles.signUpContainer}>
           <form className={styles.form} onSubmit={submitSign}>
-            <label>
-              Email:
-              <input
-                type="email"
-                className={styles.input}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
-                placeholder="Email"
-              ></input>
-            </label>
+            <label className={styles.label}>Email</label>
+            <input
+              type="email"
+              className={styles.input}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              placeholder="Email"
+            ></input>
 
-            <label>
-              Password:
-              <input
-                type="password"
-                className={styles.input}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-                placeholder="Password"
-              ></input>
-            </label>
+            <label className={styles.label}>Password</label>
+            <input
+              type="password"
+              className={styles.input}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              placeholder="Password"
+            ></input>
+
             <button className={styles.submitButton}>Submit</button>
           </form>
-          {type === 'sign-in' ? (
-            <>
-              Dont have an account?{' '}
-              <Link to="/auth/sign-up">Sign Up</Link>
-            </>
-          ) : (
-            <>
-              Already have an account?
-              <Link to="/auth/sign-in">Sign In</Link>
-            </>
-          )}
+          <div>
+            {type === 'sign-in' ? (
+              <div id={styles.prompt}>
+                <span>Dont have an account?</span>
+                <Link to="/auth/sign-up" id={styles.signButton}>
+                  Sign Up
+                </Link>
+              </div>
+            ) : (
+              <div id={styles.prompt}>
+                <span>Already have an account?</span>
+                <Link to="/auth/sign-in" id={styles.signButton}>
+                  Sign In
+                </Link>
+              </div>
+            )}
+          </div>
+          {message && <Popup></Popup>}
         </div>
-        {message && <Popup></Popup>}
       </div>
     );
   };

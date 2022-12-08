@@ -2,6 +2,7 @@ import { FC, ReactElement, useContext } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { useUser } from '../../context/useUser';
 import { logoutUser } from '../../services/auth';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import styles from './Header.module.css';
 
 export type Props = {};
@@ -32,7 +33,9 @@ export default (): FC<Props> => {
     return (
       <div id={styles.header}>
         <Link to="/">Home</Link>
-        <Link to="/checkout">Cart</Link>
+        <Link to="/checkout" id={styles.cart}>
+          <AiOutlineShoppingCart />
+        </Link>
         {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
         {admin ? <Link to="/admin">Admin</Link> : <></>}
         {user ? (
@@ -41,7 +44,7 @@ export default (): FC<Props> => {
             <button onClick={logOut}>Log Out</button>{' '}
           </div>
         ) : (
-          <Link to="/auth/sign-in">Sign-In</Link>
+          <Link to="/auth/sign-in">Sign-In/Sign-Up</Link>
         )}
       </div>
     );

@@ -1,10 +1,14 @@
 #header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin: 0;
+  border-bottom: 2px solid var(--offDarkGray);
+  width: 100vw;
+  height: 6vh;
+  font-size: 1.3rem;
 }
+
 a {
   text-decoration: none;
 }
@@ -12,4 +16,10 @@ a {
 #user-info {
   display: flex;
   flex-direction: column;
+}
+
+#cart {
+  display: flex;
+  font-size: 2rem;
+  text-align: center;
 }

@@ -4,7 +4,11 @@ interface CssExports {
   'display-container': string;
   'displayContainer': string;
   'item-container': string;
+  'item-name': string;
   'itemContainer': string;
+  'itemName': string;
+  'to-cart': string;
+  'toCart': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

@@ -4,7 +4,11 @@ interface CssExports {
   'auth': string;
   'form': string;
   'input': string;
+  'label': string;
+  'prompt': string;
+  'sign-button': string;
   'sign-up-container': string;
+  'signButton': string;
   'signUpContainer': string;
   'submit-button': string;
   'submitButton': string;

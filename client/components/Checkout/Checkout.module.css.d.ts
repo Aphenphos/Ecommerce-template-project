@@ -3,8 +3,16 @@
 interface CssExports {
   'cart-container': string;
   'cart-item': string;
+  'cart-item-info': string;
   'cartContainer': string;
   'cartItem': string;
+  'cartItemInfo': string;
+  'checkout-button': string;
+  'checkout-container': string;
+  'checkoutButton': string;
+  'checkoutContainer': string;
+  'page-container': string;
+  'pageContainer': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
