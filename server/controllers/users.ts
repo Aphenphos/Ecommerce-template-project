@@ -121,6 +121,9 @@ const userController = Router()
       try {
         const curUser = (req as any).user.id;
         const resp = await Vendor.checkIfVendor(curUser);
+        if (resp === null) {
+          return null;
+        }
         if (resp.vendor_id === curUser) {
           res.json(true);
         } else {

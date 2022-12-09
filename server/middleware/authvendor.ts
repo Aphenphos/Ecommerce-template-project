@@ -8,6 +8,9 @@ const authVendor = async (
 ) => {
   try {
     const check = await Vendor.checkIfVendor((req as any).user.id);
+    if (check === null) {
+      return null;
+    }
     if (check.vendor_id === (req as any).user.id) {
       next();
     } else {

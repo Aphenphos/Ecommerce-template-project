@@ -41,7 +41,7 @@ const Vendor = class Vendor {
     );
 
     if (!rows[0]) {
-      throw new Error('Failed to auth');
+      return null;
     } else {
       return new Vendor(rows[0]);
     }

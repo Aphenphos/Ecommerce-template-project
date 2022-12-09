@@ -18,7 +18,7 @@ const Admin = class Admin {
       [id]
     );
     if (!rows[0]) {
-      throw new Error('Failed to Auth');
+      return null;
     } else {
       return new Admin(rows[0]);
     }

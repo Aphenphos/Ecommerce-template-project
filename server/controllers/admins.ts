@@ -85,6 +85,9 @@ const adminController = Router()
       try {
         const curUser = (req as any).user.id;
         const resp = await Admin.checkIfAdmin(curUser);
+        if (resp === null) {
+          return res.json(false);
+        }
         if (resp.admin_id === curUser) {
           res.json(true);
         } else {
