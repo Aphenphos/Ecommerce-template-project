@@ -111,3 +111,20 @@ export async function getItemByVendor() {
     return console.error('Error Fetching Items');
   }
 }
+
+export async function getItemBySearch(search: string) {
+  const resp = await fetch(
+    `${BASE_URL}/api/v1/items/getBySearch/${search}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+    }
+  );
+
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    throw new Error('Failed to search items');
+  }
+}

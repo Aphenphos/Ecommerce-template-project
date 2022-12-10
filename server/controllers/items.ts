@@ -75,7 +75,6 @@ const itemController = Router()
     '/getAll',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        console.log('fetching all items');
         const allItems = await Item.getAll();
         res.json(allItems);
       } catch (err) {
@@ -83,7 +82,22 @@ const itemController = Router()
       }
     }
   )
-
+  .get(
+    '/getBySearch/:search',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const searchParams = req.params.search;
+        const items = await Item.getBySearch(searchParams!);
+        if (items) {
+          res.json(items);
+        } else {
+          res.json([]);
+        }
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
   .post(
     '/getByArr',
     async (req: Request, res: Response, next: NextFunction) => {

@@ -7,6 +7,7 @@ interface CssExports {
   'item-name': string;
   'itemContainer': string;
   'itemName': string;
+  'searchbar': string;
   'to-cart': string;
   'toCart': string;
 }

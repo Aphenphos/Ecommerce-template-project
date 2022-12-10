@@ -36,6 +36,7 @@ export default (): FC<Props> => {
       }
       return item;
     }
+    //handle quantity increase/decrease
     const handleIncrease = async () => {};
     const handleDecrease = async () => {};
 
@@ -56,7 +57,6 @@ export default (): FC<Props> => {
               <img src={accessItemData(item.item_id).images[0]}></img>
               <div className={styles.cartItemInfo}>
                 <div>{item.item_name}</div>
-                <div>${(item.item_price / 100).toFixed(2)}</div>
                 <div>
                   <div className={styles.itemQuantity}>
                     Quantity:{item.item_quantity}
@@ -64,6 +64,7 @@ export default (): FC<Props> => {
                   <button value={item.id}>+</button>
                   <button value={item.id}>-</button>
                 </div>
+                <div>${(item.item_price / 100).toFixed(2)}</div>
               </div>
               <button
                 value={item.id}

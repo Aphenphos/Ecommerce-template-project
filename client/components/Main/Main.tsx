@@ -8,21 +8,33 @@ import { addToCart } from '../../services/cart';
 import { BsFillCartPlusFill } from 'react-icons/bs';
 import styles from './Main.module.css';
 import popupFn from '../Popup/Popup';
+import { getItemBySearch } from '../../services/item';
 const Popup = popupFn();
 
 export type Props = {};
 export type Component = FC<Props>;
-
+//something is missing from this main page, unsure what.
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
-    const { items, iLoading } = useItems();
+    const { items, iLoading, setItems } = useItems();
     const { setCartChange } = useCartItems();
     const { message, setmChange } = usePopup();
+    const [searchParams, setSearchParams] = useState('');
     const nav = useNavigate();
     if (loading || iLoading) {
       return <div>loading</div>;
     }
+    const submitItemSearch = async (e: any) => {
+      e.preventDefault();
+      const result = await getItemBySearch(
+        e.target.searchParams.value
+      );
+      if (!result) {
+        //put popup here.
+      }
+      setItems(result);
+    };
 
     const handleAddToCart = async (e: any) => {
       e.preventDefault();
@@ -34,24 +46,34 @@ export default (): FC<Props> => {
       setCartChange({ newItem: e.target.id.value });
       setmChange(resp);
     };
+    //put a react magnifying glass next to the search
     return (
-      <div id={styles.displayContainer}>
-        {items.map((item: any) => (
-          <div key={item.id} className={styles.itemContainer}>
-            <span className={styles.itemName}>{item.item_name}</span>
-            <img src={item.images[0]}></img>
-            <div className={styles.toCart}>
-              <span>{item.item_price / 100}</span>
-              <form onSubmit={handleAddToCart}>
-                <button value={item.id} name="id">
-                  <BsFillCartPlusFill />
-                </button>
-              </form>
+      <>
+        <div>
+          <label>
+            <input type="text"></input>
+          </label>
+        </div>
+        <div id={styles.displayContainer}>
+          {items.map((item: any) => (
+            <div key={item.id} className={styles.itemContainer}>
+              <img src={item.images[0]}></img>
+              <span className={styles.itemName}>
+                {item.item_name}
+              </span>
+              <div className={styles.toCart}>
+                <span>${(item.item_price / 100).toFixed(2)}</span>
+                <form onSubmit={handleAddToCart}>
+                  <button value={item.id} name="id">
+                    <BsFillCartPlusFill />
+                  </button>
+                </form>
+              </div>
             </div>
-          </div>
-        ))}
-        {message && <Popup />}
-      </div>
+          ))}
+          {message && <Popup />}
+        </div>
+      </>
     );
   };
   component.displayName = 'Main';

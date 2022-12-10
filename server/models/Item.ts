@@ -114,6 +114,25 @@ const Item = class Item {
     return new Item(rows[0]);
   }
 
+  static async getBySearch(search: string) {
+    const pSearch = `%${search}%`;
+    const { rows } = await pool.query(
+      `
+      SELECT items.*,
+      COALESCE(
+      json_agg(to_jsonb(item_images.image_url))
+         FILTER (WHERE item_images.image_url IS NOT NULL), '[]'
+      ) as images from items
+      LEFT JOIN item_images
+      ON items.id = item_images.item_id
+      WHERE item_name LIKE $1
+      GROUP BY items.id
+      `,
+      [pSearch]
+    );
+    if (!rows[0]) return null;
+    return rows.map((row) => new Item(row));
+  }
   static async delete(id: bigint) {
     const { rows } = await pool.query(
       `
