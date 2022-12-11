@@ -7,6 +7,10 @@ interface CssExports {
   'item-name': string;
   'itemContainer': string;
   'itemName': string;
+  'magnifying-glass': string;
+  'magnifyingGlass': string;
+  'search-container': string;
+  'searchContainer': string;
   'searchbar': string;
   'to-cart': string;
   'toCart': string;

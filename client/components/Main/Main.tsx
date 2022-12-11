@@ -6,6 +6,7 @@ import { usePopup } from '../../context/usePopup';
 import { useUser } from '../../context/useUser';
 import { addToCart } from '../../services/cart';
 import { BsFillCartPlusFill } from 'react-icons/bs';
+import { SlMagnifier } from 'react-icons/sl';
 import styles from './Main.module.css';
 import popupFn from '../Popup/Popup';
 import { getItemBySearch } from '../../services/item';
@@ -25,14 +26,18 @@ export default (): FC<Props> => {
     if (loading || iLoading) {
       return <div>loading</div>;
     }
+    function handleChange(e: any) {
+      setSearchParams(e.target.value);
+    }
     const submitItemSearch = async (e: any) => {
       e.preventDefault();
-      const result = await getItemBySearch(
-        e.target.searchParams.value
-      );
+      const result = await getItemBySearch(searchParams);
       if (!result) {
         //put popup here.
       }
+      if (!result[0]) {
+      }
+      console.log(result);
       setItems(result);
     };
 
@@ -49,11 +54,16 @@ export default (): FC<Props> => {
     //put a react magnifying glass next to the search
     return (
       <>
-        <div>
-          <label>
-            <input type="text"></input>
-          </label>
-        </div>
+        <form onSubmit={submitItemSearch} id={styles.searchContainer}>
+          <input
+            type="text"
+            id={styles.searchbar}
+            onChange={(e) => handleChange(e)}
+          ></input>
+          <button>
+            <SlMagnifier id={styles.magnifyingGlass} />
+          </button>
+        </form>
         <div id={styles.displayContainer}>
           {items.map((item: any) => (
             <div key={item.id} className={styles.itemContainer}>

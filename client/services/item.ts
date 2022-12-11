@@ -1,4 +1,5 @@
 const BASE_URL = 'http://localhost:7891';
+import e from 'express';
 import type { CartItem } from '../../common/types';
 export async function postItem(itemName: string, itemPrice: number) {
   console.log(itemPrice);
@@ -113,8 +114,15 @@ export async function getItemByVendor() {
 }
 
 export async function getItemBySearch(search: string) {
+  let params;
+  if (!search) {
+    params = 'noSearch';
+  } else {
+    params = search;
+  }
+  console.log(params);
   const resp = await fetch(
-    `${BASE_URL}/api/v1/items/getBySearch/${search}`,
+    `${BASE_URL}/api/v1/items/getBySearch/${params}`,
     {
       method: 'GET',
       credentials: 'include',
