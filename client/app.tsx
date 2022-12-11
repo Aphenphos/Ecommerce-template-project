@@ -31,27 +31,27 @@ root.render(
   <React.StrictMode>
     <Router>
       <UserProvider>
-        <Header />
-        <Routes>
-          <ItemProvider>
-            <CartProvider>
-              <PopupProvider>
+        <ItemProvider>
+          <CartProvider>
+            <Header />
+            <PopupProvider>
+              <Routes>
                 <Route path="" element={<Main />}></Route>
+                <Route path="auth/:type" element={<Auth />}></Route>
+                <Route path="admin" element={<Admin />}></Route>
+                <Route
+                  path="vendor"
+                  element={
+                    <VendorProvider>
+                      <Vendor />
+                    </VendorProvider>
+                  }
+                ></Route>
                 <Route path="checkout" element={<Checkout />}></Route>
-              </PopupProvider>
-            </CartProvider>
-          </ItemProvider>
-          <Route
-            path="vendor"
-            element={
-              <VendorProvider>
-                <Vendor />
-              </VendorProvider>
-            }
-          ></Route>
-          <Route path="auth/:type" element={<Auth />}></Route>
-          <Route path="admin" element={<Admin />}></Route>
-        </Routes>
+              </Routes>
+            </PopupProvider>
+          </CartProvider>
+        </ItemProvider>
       </UserProvider>
     </Router>
   </React.StrictMode>

@@ -26,6 +26,7 @@ export default (): FC<Props> => {
     if (loading || iLoading) {
       return <div>loading</div>;
     }
+
     function handleChange(e: any) {
       setSearchParams(e.target.value);
     }
@@ -65,22 +66,26 @@ export default (): FC<Props> => {
           </button>
         </form>
         <div id={styles.displayContainer}>
-          {items.map((item: any) => (
-            <div key={item.id} className={styles.itemContainer}>
-              <img src={item.images[0]}></img>
-              <span className={styles.itemName}>
-                {item.item_name}
-              </span>
-              <div className={styles.toCart}>
-                <span>${(item.item_price / 100).toFixed(2)}</span>
-                <form onSubmit={handleAddToCart}>
-                  <button value={item.id} name="id">
-                    <BsFillCartPlusFill />
-                  </button>
-                </form>
+          {items[0] ? (
+            items.map((item: any) => (
+              <div key={item.id} className={styles.itemContainer}>
+                <img src={item.images[0]}></img>
+                <span className={styles.itemName}>
+                  {item.item_name}
+                </span>
+                <div className={styles.toCart}>
+                  <span>${(item.item_price / 100).toFixed(2)}</span>
+                  <form onSubmit={handleAddToCart}>
+                    <button value={item.id} name="id">
+                      <BsFillCartPlusFill />
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div>No Results Found</div>
+          )}
           {message && <Popup />}
         </div>
       </>
