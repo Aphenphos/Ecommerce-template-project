@@ -125,7 +125,7 @@ const Item = class Item {
       ) as images from items
       LEFT JOIN item_images
       ON items.id = item_images.item_id
-      WHERE item_name LIKE $1
+      WHERE item_name ILIKE $1
       GROUP BY items.id
       `,
       [pSearch]
