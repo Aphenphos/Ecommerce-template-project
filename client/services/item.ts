@@ -1,10 +1,21 @@
 const BASE_URL = 'http://localhost:7891';
 import e from 'express';
 import type { CartItem } from '../../common/types';
-export async function postItem(itemName: string, itemPrice: number) {
-  console.log(itemPrice);
+export async function postItem(
+  itemName: string,
+  itemDescription: string,
+  itemPrice: number
+) {
+  if (
+    itemDescription === null ||
+    itemDescription === undefined ||
+    itemDescription === ''
+  ) {
+    itemDescription = '';
+  }
   const itemObj = {
     item_name: itemName,
+    item_description: itemDescription,
     item_price: itemPrice,
   };
   const resp = await fetch(`${BASE_URL}/api/v1/items/addItem`, {
@@ -36,6 +47,20 @@ export async function deleteItem(id: number) {
     console.log('item deleted');
   } else {
     console.log('item not deleted');
+  }
+}
+
+export async function getItemById(id: number) {
+  console.log(id);
+  const resp = await fetch(`${BASE_URL}/api/v1/items/getById/${id}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return null;
   }
 }
 

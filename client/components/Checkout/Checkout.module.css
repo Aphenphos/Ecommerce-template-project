@@ -69,8 +69,8 @@ position remove from cart
   align-items: center;
   height: 60px;
   width: 240px;
-  background-color: var(--midPurple);
-  color: var(--background-color);
+  background-color: var(--submitButton);
+  color: var(--color);
   border: 1px solid black;
   padding: 10px;
   cursor: pointer;

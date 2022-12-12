@@ -6,6 +6,7 @@ import adminFn from './components/Admin/Admin';
 import vendorFn from './components/Vendor/Vendor';
 import headerFn from './components/Header/Header';
 import mainFn from './components/Main/Main';
+import detailFn from './components/Detail/Detail';
 import checkoutFn from './components/Checkout/Checkout';
 import {
   Route,
@@ -23,6 +24,7 @@ const Vendor = vendorFn();
 const Header = headerFn();
 const Main = mainFn();
 const Checkout = checkoutFn();
+const Detail = detailFn();
 const container =
   document.getElementById('app') || document.createElement('div');
 container.id = 'app';
@@ -39,6 +41,7 @@ root.render(
                 <Route path="" element={<Main />}></Route>
                 <Route path="auth/:type" element={<Auth />}></Route>
                 <Route path="admin" element={<Admin />}></Route>
+                <Route path="detail/:id" element={<Detail />}></Route>
                 <Route
                   path="vendor"
                   element={

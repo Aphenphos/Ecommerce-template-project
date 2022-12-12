@@ -8,6 +8,7 @@
   --darkPurple: rgb(33, 0, 55);
   --midPurple: rgb(60, 5, 105);
   --vibrantPurple: rgb(80, 10, 140);
+  --lightPurple: rgb(190, 120, 240);
   --darkGray: rgb(33, 33, 33);
   --offDarkGray: rgb(44, 44, 44);
   --white: rgb(245, 245, 245);
@@ -17,7 +18,7 @@
 }
 @media (prefers-color-scheme: light) {
   :root {
-    --submitButton: var(--vibrantPurple);
+    --submitButton: var(--lightPurple);
     --color: var(--offDarkGray);
     --background-color: var(--white);
     --purpleButtons: var(--midPurple);
@@ -34,7 +35,7 @@
     --purpleButtons: var(--darkPurpWhite);
     --backgroundInput: var(--black);
     --borderColor: var(--offDarkGray);
-    --textHighlight: var(--midPurple);
+    --textHighlight: var(--lightPurple);
   }
 }
 html,

@@ -1,5 +1,5 @@
 import { FC, ReactElement, useContext, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useCartItems } from '../../context/useCart';
 import { useItems } from '../../context/useItem';
 import { usePopup } from '../../context/usePopup';
@@ -69,10 +69,12 @@ export default (): FC<Props> => {
           {items[0] ? (
             items.map((item: any) => (
               <div key={item.id} className={styles.itemContainer}>
-                <img src={item.images[0]}></img>
-                <span className={styles.itemName}>
-                  {item.item_name}
-                </span>
+                <Link to={`/detail/${item.id}`}>
+                  <img src={item.images[0]}></img>
+                  <span className={styles.itemName}>
+                    {item.item_name}
+                  </span>
+                </Link>
                 <div className={styles.toCart}>
                   <span>${(item.item_price / 100).toFixed(2)}</span>
                   <form onSubmit={handleAddToCart}>

@@ -28,6 +28,7 @@ CREATE TABLE items (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY UNIQUE,
   item_name VARCHAR NOT NULL,
   item_price BIGINT NOT NULL,
+  item_description VARCHAR,
   vendor_id BIGINT NOT NULL,
   FOREIGN KEY (vendor_id) REFERENCES users(id)
 );

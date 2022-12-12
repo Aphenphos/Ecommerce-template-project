@@ -4,6 +4,7 @@ import type { ItemObject } from '../../common/types';
 const Item = class Item {
   id: bigint;
   item_name: string;
+  item_description?: string;
   item_price: number;
   vendor_id: bigint;
   images?: Array<string>;
@@ -12,6 +13,7 @@ const Item = class Item {
     this.id = row.id;
     this.item_name = row.item_name;
     this.item_price = row.item_price;
+    this.item_description = row.item_description;
     this.vendor_id = row.vendor_id;
     this.images = row.images;
   }
@@ -19,24 +21,33 @@ const Item = class Item {
   static async insert({
     item_name,
     item_price,
+    item_description,
     vendor_id,
   }: ItemObject) {
     const { rows } = await pool.query(
       `
-      INSERT INTO items (item_name, item_price, vendor_id)
-      VALUES ($1, $2, $3)
+      INSERT INTO items (item_name, item_price, item_description, vendor_id)
+      VALUES ($1, $2, $3, $4)
       RETURNING *
     `,
-      [item_name, item_price, vendor_id]
+      [item_name, item_price, item_description, vendor_id]
     );
 
     return new Item(rows[0]);
   }
 
-  static async getById(id: bigint) {
+  static async getById(id: number) {
     const { rows } = await pool.query(
       `
-    SELECT * FROM items WHERE id=$1
+      SELECT items.*, 
+      COALESCE(
+      json_agg(to_jsonb(item_images.image_url))
+         FILTER (WHERE item_images.image_url IS NOT NULL), '[]'
+      ) as images from items
+      LEFT JOIN item_images
+      ON items.id = item_images.item_id
+      WHERE items.id=$1
+      GROUP BY items.id;
     `,
       [id]
     );
@@ -91,7 +102,7 @@ const Item = class Item {
     }
   }
 
-  static async updateById(id: bigint, attrs: ItemObject) {
+  static async updateById(id: number, attrs: ItemObject) {
     const toUpdate = await Item.getById(id);
     const updatedObj: ItemObject = { ...toUpdate, ...attrs };
     const { rows } = await pool.query(
@@ -99,13 +110,15 @@ const Item = class Item {
     UPDATE items
     SET 
     item_name=$1,
-    item_price=$2
-    vendor_id=$3
-    WHERE id=$4
+    item_description=$2
+    item_price=$3
+    vendor_id=$4
+    WHERE id=$5
     RETURNING *
     `,
       [
         updatedObj.item_name,
+        updatedObj.item_description,
         updatedObj.item_price,
         updatedObj.vendor_id,
         id,

@@ -19,6 +19,7 @@ export default (): FC<Props> => {
     const { vItems, setChange, viLoading } = useVendor();
     const [itemName, setItemName] = useState('');
     const [itemPrice, setItemPrice] = useState('');
+    const [itemDescrip, setItemDescrip] = useState('');
 
     const [files, setFiles] = useState<any[]>([]);
 
@@ -48,7 +49,7 @@ export default (): FC<Props> => {
     const submitItem = async (e: any) => {
       e.preventDefault();
       const itemPInt = parseInt(itemPrice);
-      await postItem(itemName, itemPInt);
+      await postItem(itemName, itemDescrip, itemPInt);
       setChange(itemName);
     };
     const submitDeleteItem = async (e: any) => {
@@ -91,6 +92,11 @@ export default (): FC<Props> => {
                 }}
                 placeholder="Item Name"
               ></input>
+              <textarea
+                onChange={(e) => {
+                  setItemDescrip(e.target.value);
+                }}
+              ></textarea>
               <input
                 type="number"
                 onChange={(e) => {

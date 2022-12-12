@@ -43,7 +43,7 @@
 
 .submit-button {
   background-color: var(--submitButton);
-  color: var(--backgroundInput);
+  color: var(--color);
   border: 1px solid;
   border-color: var(--borderColor);
   padding: 10px;

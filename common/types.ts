@@ -33,6 +33,7 @@ export type ExpandRecursively<T> = T extends (
 export type ItemObject = {
   id?: bigint;
   item_name: string;
+  item_description?: string;
   item_price: bigint;
   vendor_id: bigint;
 };

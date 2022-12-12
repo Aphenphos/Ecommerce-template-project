@@ -83,6 +83,21 @@ const itemController = Router()
     }
   )
   .get(
+    '/getById/:id',
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        const id = parseInt(req.params.id!);
+        const itemDetails = await Item.getById(id);
+        if (!itemDetails || !id) {
+          throw new Error('Failed to find item');
+        }
+        res.json(itemDetails);
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
+  .get(
     '/getBySearch/:search',
     async (req: Request, res: Response, next: NextFunction) => {
       try {
