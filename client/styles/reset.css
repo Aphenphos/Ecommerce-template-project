@@ -9,10 +9,33 @@
   --midPurple: rgb(60, 5, 105);
   --vibrantPurple: rgb(80, 10, 140);
   --darkGray: rgb(33, 33, 33);
-  --offDarkGray: rgba(44, 44, 44);
-  --white: rgb(230, 230, 240);
+  --offDarkGray: rgb(44, 44, 44);
+  --white: rgb(245, 245, 245);
   --purpWhite: rgb(230, 220, 255);
-  --darkPurpWhite: rgb(220, 210, 245);
+  --dark-purp-white: rgb(220, 210, 245);
+  --black: rgb(22, 22, 22);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --submitButton: var(--vibrantPurple);
+    --color: var(--offDarkGray);
+    --background-color: var(--white);
+    --purpleButtons: var(--midPurple);
+    --backgroundInput: var(--purpWhite);
+    --borderColor: var(--darkGray);
+    --textHighlight: var(--vibrantPurple);
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --submitButton: var(--midPurple);
+    --color: var(--white);
+    --background-color: var(--darkGray);
+    --purpleButtons: var(--darkPurpWhite);
+    --backgroundInput: var(--black);
+    --borderColor: var(--offDarkGray);
+    --textHighlight: var(--midPurple);
+  }
 }
 html,
 body,
@@ -102,8 +125,8 @@ video {
   font-size: 100%;
   font-family: 'Inter', sans-serif;
   vertical-align: baseline;
-  background-color: var(--darkGray);
-  color: var(--white);
+  background-color: var(--background-color);
+  color: var(--color);
 }
 
 /* HTML5 display-role reset for older browsers */

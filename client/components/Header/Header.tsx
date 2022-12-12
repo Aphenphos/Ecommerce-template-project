@@ -33,9 +33,6 @@ export default (): FC<Props> => {
     return (
       <div id={styles.header}>
         <Link to="/">Home</Link>
-        <Link to="/checkout" id={styles.cart}>
-          <AiOutlineShoppingCart />
-        </Link>
         {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
         {admin ? <Link to="/admin">Admin</Link> : <></>}
         {user ? (
@@ -44,8 +41,11 @@ export default (): FC<Props> => {
             <button onClick={logOut}>Log Out</button>{' '}
           </div>
         ) : (
-          <Link to="/auth/sign-in">Sign-In/Sign-Up</Link>
+          <Link to="/auth/sign-in">Sign-In/Up</Link>
         )}
+        <Link to="/checkout" id={styles.cart}>
+          <AiOutlineShoppingCart />
+        </Link>
       </div>
     );
   };
