@@ -78,11 +78,11 @@ export async function updateItem(id: number, data: string) {
     credentials: 'include',
   });
   if (resp.ok) {
-    console.log(resp.json);
-    console.log('updated!');
-    return resp.json();
+    const data = await resp.json();
+    return data;
   } else {
     console.log('update failed');
+    return null;
   }
 }
 

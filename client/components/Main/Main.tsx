@@ -8,8 +8,8 @@ import { addToCart } from '../../services/cart';
 import { BsFillCartPlusFill } from 'react-icons/bs';
 import { SlMagnifier } from 'react-icons/sl';
 import styles from './Main.module.css';
-import popupFn from '../Popup/Popup';
 import { getItemBySearch } from '../../services/item';
+import popupFn from '../Popup/Popup';
 const Popup = popupFn();
 
 export type Props = {};

@@ -4,9 +4,12 @@ import { useCartItems } from '../../context/useCart';
 import { useUser } from '../../context/useUser';
 import { checkoutUser } from '../../services/checkout';
 import { Navigate } from 'react-router-dom';
-import { removeFromCart } from '../../services/cart';
+import { removeFromCart, updateQuant } from '../../services/cart';
 import { BsFillCartDashFill } from 'react-icons/bs';
 import styles from './Checkout.module.css';
+import { usePopup } from '../../context/usePopup';
+import popupFn from '../Popup/Popup';
+const Popup = popupFn();
 
 export type Props = {};
 export type Component = FC<Props>;
@@ -16,6 +19,7 @@ export default (): FC<Props> => {
   //potentially spamming server
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
+    const { message, setmChange } = usePopup();
     const { cartItems, cLoading, itemData, setCartChange, total } =
       useCartItems();
     if (loading) {
@@ -37,8 +41,27 @@ export default (): FC<Props> => {
       return item;
     }
     //handle quantity increase/decrease
-    const handleIncrease = async () => {};
-    const handleDecrease = async () => {};
+    const handleIncrease = async (e: any) => {
+      const newQuant =
+        parseInt(cartItems[e.target.value[2]].item_quantity) + 1;
+      if (newQuant > 5) {
+        setmChange('Cannot exceed maximum quantity');
+        return;
+      }
+      await updateQuant(e.target.value[0], newQuant);
+      setCartChange({ newQuant, change: 'increase' });
+      console.log('quant increased');
+    };
+    const handleDecrease = async (e: any) => {
+      const newQuant =
+        parseInt(cartItems[e.target.value[2]].item_quantity) - 1;
+      if (newQuant < 1) {
+        setmChange('Cannot exceed minimum quantity');
+        return;
+      }
+      await updateQuant(e.target.value[0], newQuant);
+      setCartChange({ newQuant, change: 'decrease' });
+    };
 
     const handleCheckout = async () => {
       await checkoutUser(cartItems);
@@ -52,7 +75,7 @@ export default (): FC<Props> => {
     return (
       <div id={styles.pageContainer}>
         <div id={styles.cartContainer}>
-          {cartItems.map((item: any) => (
+          {cartItems.map((item: any, index: number) => (
             <div key={item.id} className={styles.cartItem}>
               <img src={accessItemData(item.item_id).images[0]}></img>
               <div className={styles.cartItemInfo}>
@@ -61,8 +84,18 @@ export default (): FC<Props> => {
                   <div className={styles.itemQuantity}>
                     Quantity:{item.item_quantity}
                   </div>
-                  <button value={item.id}>+</button>
-                  <button value={item.id}>-</button>
+                  <button
+                    value={[item.id, index]}
+                    onClick={handleIncrease}
+                  >
+                    +
+                  </button>
+                  <button
+                    value={[item.id, index]}
+                    onClick={handleDecrease}
+                  >
+                    -
+                  </button>
                 </div>
                 <div>${(item.item_price / 100).toFixed(2)}</div>
               </div>
@@ -96,6 +129,7 @@ export default (): FC<Props> => {
             <>Your Cart is Empty!</>
           )}
         </div>
+        {message && <Popup />}
       </div>
     );
   };

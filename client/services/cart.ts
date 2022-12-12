@@ -52,3 +52,27 @@ export async function removeFromCart(id: bigint) {
     console.log('item failed to remove');
   }
 }
+
+export async function updateQuant(cartId: number, quant: number) {
+  const updateObj = {
+    quant,
+  };
+  const resp = await fetch(
+    `${BASE_URL}/api/v1/carts/upCart/${cartId}`,
+    {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updateObj),
+      credentials: 'include',
+    }
+  );
+  if (resp.ok) {
+    const data = await resp.json();
+    return data;
+  } else {
+    return null;
+  }
+}

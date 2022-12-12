@@ -19,6 +19,29 @@ const cartController = Router()
       }
     }
   )
+  .put(
+    '/upCart/:id',
+    [authenticate],
+    async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        if (!req.params.id || Number.isNaN(req.params.id)) {
+          throw new Error('Failed to update quantity');
+        }
+        const cartId = parseInt(req.params.id!);
+        const userId = (req as any).user.id;
+        const quant = req.body.quant;
+        console.log(cartId, userId, quant);
+        const update = await Cart.updateQuantity(
+          cartId,
+          quant,
+          userId
+        );
+        res.json(update);
+      } catch (err) {
+        next(err);
+      }
+    }
+  )
 
   .get(
     '/getCart',

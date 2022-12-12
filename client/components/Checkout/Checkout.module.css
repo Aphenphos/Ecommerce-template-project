@@ -19,7 +19,6 @@ position remove from cart
 }
 
 .cart-item {
-  border: 1px solid black;
   display: flex;
   margin-top: 1rem;
   margin-bottom: 1rem;

@@ -81,6 +81,25 @@ const Cart = class Cart {
       return rows;
     }
   }
+
+  static async updateQuantity(
+    id: number,
+    quantity: number,
+    userId: number
+  ) {
+    const { rows } = await pool.query(
+      `
+      UPDATE carts
+      SET
+      item_quantity=$1
+      WHERE id=$2 AND user_id=$3
+      RETURNING *
+      `,
+      [quantity, id, userId]
+    );
+    console.log(rows);
+    return new Cart(rows[0]);
+  }
 };
 
 export default Cart;
