@@ -8,6 +8,7 @@ import { addToCart } from '../../services/cart';
 import { BsFillCartPlusFill } from 'react-icons/bs';
 import { SlMagnifier } from 'react-icons/sl';
 import styles from './Main.module.css';
+import loader from '../../styles/loader.module.css';
 import { getItemBySearch } from '../../services/item';
 import popupFn from '../Popup/Popup';
 const Popup = popupFn();
@@ -23,8 +24,12 @@ export default (): FC<Props> => {
     const { message, setmChange } = usePopup();
     const [searchParams, setSearchParams] = useState('');
     const nav = useNavigate();
-    if (loading || iLoading) {
-      return <div>loading</div>;
+    if (!loading || iLoading) {
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
 
     function handleChange(e: any) {

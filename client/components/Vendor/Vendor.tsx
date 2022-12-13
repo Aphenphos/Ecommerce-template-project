@@ -9,6 +9,7 @@ import {
 import { Navigate } from 'react-router-dom';
 import { useVendor } from '../../context/useVendor';
 import { postImage, rmImage } from '../../services/itemImage';
+import loader from '../../styles/loader.module.css';
 import styles from './Vendor.module.css';
 export type Props = {};
 export type Component = FC<Props>;
@@ -35,7 +36,11 @@ export default (): FC<Props> => {
       setFiles([newImage, ...files]);
     }
     if (loading) {
-      return <>LOADING</>;
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
     if (!user) {
       return <Navigate replace to="/auth/sign-in" />;
@@ -44,7 +49,11 @@ export default (): FC<Props> => {
       return <Navigate replace to="/" />;
     }
     if (viLoading) {
-      return <>Loading Your Items</>;
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
     const submitItem = async (e: any) => {
       e.preventDefault();
