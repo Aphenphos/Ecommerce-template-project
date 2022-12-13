@@ -171,7 +171,10 @@ export default {
           {
             loader: 'css-modules-typescript-loader',
             options: {
-              mode: process.env.CI ? 'verify' : 'emit',
+              mode:
+                process.env.CI || process.env.NODE_ENV == 'production'
+                  ? 'verify'
+                  : 'emit',
             },
           },
           {
