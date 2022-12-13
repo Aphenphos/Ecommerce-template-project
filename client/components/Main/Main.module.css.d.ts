@@ -9,6 +9,8 @@ interface CssExports {
   'itemName': string;
   'magnifying-glass': string;
   'magnifyingGlass': string;
+  'no-results': string;
+  'noResults': string;
   'search-container': string;
   'searchContainer': string;
   'searchbar': string;

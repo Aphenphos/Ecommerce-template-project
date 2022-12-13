@@ -18,6 +18,7 @@ const CartProvider = ({ children }: { children: any }) => {
   const [cLoading, setcLoading] = useState(true);
   const [cartChange, setCartChange] = useState({});
   const [total, setTotal] = useState(0);
+  const [numOfItems, setNumOfItems] = useState(0);
 
   useEffect(() => {
     async function fetchCart() {
@@ -37,7 +38,12 @@ const CartProvider = ({ children }: { children: any }) => {
         (acc: number, n: any) => acc + n.item_price * n.item_quantity,
         0
       );
+      const num = cItems.reduce(
+        (acc: number, n: any) => acc + parseInt(n.item_quantity),
+        0
+      );
       const iData = await getArrOfItems(cItems);
+      setNumOfItems(num);
       setTotal(t);
       setItemData(iData);
       setCartItems(cItems);
@@ -56,6 +62,7 @@ const CartProvider = ({ children }: { children: any }) => {
         cartChange,
         setCartChange,
         total,
+        numOfItems,
       }}
     >
       {children}

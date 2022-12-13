@@ -11,6 +11,7 @@ interface CssExports {
   'checkout-container': string;
   'checkoutButton': string;
   'checkoutContainer': string;
+  'empty': string;
   'item-quantity': string;
   'itemQuantity': string;
   'page-container': string;

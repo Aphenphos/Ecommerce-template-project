@@ -54,12 +54,14 @@ export default (): FC<Props> => {
     return (
       <div id={styles.container}>
         <h1 id={styles.itemName}>{item.item_name}</h1>
-        {item.images.map((img: string, index: number) => (
-          <img className={styles.image} src={img}></img>
-        ))}
+        <div id={styles.imageContainer}>
+          {item.images.map((img: string, index: number) => (
+            <img className={styles.image} src={img}></img>
+          ))}
+        </div>
+        <p id={styles.descrip}>{item.item_description}</p>
         <h1>${(item.item_price / 100).toFixed(2)}</h1>
-        <p>{item.item_description}</p>
-        <form onSubmit={handleAddToCart}>
+        <form onSubmit={handleAddToCart} id={styles.cartContainer}>
           <input
             type="number"
             max="5"
@@ -70,7 +72,7 @@ export default (): FC<Props> => {
             }}
           ></input>
           <button value={item.id} name="id" id={styles.toCart}>
-            <BsFillCartPlusFill />
+            Add To Cart
           </button>
         </form>
         {message && <Popup />}

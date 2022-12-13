@@ -82,88 +82,111 @@ export default (): FC<Props> => {
     return (
       <>
         <div>
-          <form onSubmit={submitItem}>
-            <label>
-              Item Name
-              <input
-                type="text"
-                onChange={(e) => {
-                  setItemName(e.target.value);
-                }}
-                placeholder="Item Name"
-              ></input>
-              <textarea
-                onChange={(e) => {
-                  setItemDescrip(e.target.value);
-                }}
-              ></textarea>
-              <input
-                type="number"
-                onChange={(e) => {
-                  setItemPrice(e.target.value);
-                }}
-                placeholder="Item Price"
-              ></input>
-            </label>
-            <button>Submit New Item</button>
-          </form>
+          <form onSubmit={submitItem} id={styles.creationInputs}>
+            <label className={styles.label}>Item Name</label>
+            <input
+              className={styles.input}
+              type="text"
+              onChange={(e) => {
+                setItemName(e.target.value);
+              }}
+              placeholder="Item Name"
+            ></input>
 
-          {vItems ? (
-            vItems.map((item: any) => (
-              <div key={item.id}>
-                <span>{item.item_name}</span>
-                <span>{item.item_price}</span>
-                {item.images.length >= 3 ? (
-                  item.images.map((image: any, index: number) => (
-                    <div key={index}>
-                      <button value={image} onClick={handleImageRm}>
-                        Remove Pic
-                      </button>
-                      <img
-                        src={image}
-                        key={index}
-                        className={styles.prodImage}
-                      ></img>
-                    </div>
-                  ))
-                ) : (
-                  <div>
-                    {item.images.map((image: any, index: number) => (
+            <label className={styles.label}>Item Description</label>
+            <textarea
+              className={styles.input}
+              onChange={(e) => {
+                setItemDescrip(e.target.value);
+              }}
+            ></textarea>
+            <label className={styles.label}>
+              Item Price In Pennies
+            </label>
+            <input
+              className={styles.input}
+              type="number"
+              onChange={(e) => {
+                setItemPrice(e.target.value);
+              }}
+              placeholder="Item Price In Pennies"
+            ></input>
+            <button className={styles.submit}>Submit New Item</button>
+          </form>
+          <div id={styles.activeItemsContainer}>
+            {vItems ? (
+              vItems.map((item: any) => (
+                <div key={item.id} className={styles.item}>
+                  <h1>{item.item_name}</h1>
+                  <h2>${(item.item_price / 100).toFixed(2)}</h2>
+                  {item.images.length >= 3 ? (
+                    item.images.map((image: any, index: number) => (
                       <div key={index}>
+                        <button
+                          value={image}
+                          onClick={handleImageRm}
+                          className={styles.remove}
+                        >
+                          Remove Pic
+                        </button>
                         <img
                           src={image}
                           key={index}
                           className={styles.prodImage}
                         ></img>
-                        <button value={image} onClick={handleImageRm}>
-                          Remove Pic
-                        </button>
                       </div>
-                    ))}
-                    <form>
-                      <input
-                        type="file"
-                        accept=".png, .jpeg, .jpg"
-                        name="imgForm"
-                        onChange={(e) => handleChange(e, item.id)}
-                      ></input>
-                      <button
-                        value={item.id}
-                        onClick={handleImageSubmit}
-                      >
-                        SubmitNewImage
-                      </button>
-                    </form>
-                  </div>
-                )}
-                <button value={item.id} onClick={submitDeleteItem}>
-                  Delete Item
-                </button>
-              </div>
-            ))
-          ) : (
-            <>Post Your First Items!</>
-          )}
+                    ))
+                  ) : (
+                    <div>
+                      {' '}
+                      <form>
+                        <input
+                          type="file"
+                          accept=".png, .jpeg, .jpg"
+                          name="imgForm"
+                          onChange={(e) => handleChange(e, item.id)}
+                        ></input>
+                        <button
+                          className={styles.submit}
+                          value={item.id}
+                          onClick={handleImageSubmit}
+                        >
+                          Submit New Image
+                        </button>
+                      </form>
+                      {item.images.map(
+                        (image: any, index: number) => (
+                          <div key={index}>
+                            <img
+                              src={image}
+                              key={index}
+                              className={styles.prodImage}
+                            ></img>
+                            <button
+                              className={styles.remove}
+                              value={image}
+                              onClick={handleImageRm}
+                            >
+                              Remove Pic
+                            </button>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  )}
+                  <button
+                    value={item.id}
+                    onClick={submitDeleteItem}
+                    className={styles.remove}
+                  >
+                    Delete Item
+                  </button>
+                </div>
+              ))
+            ) : (
+              <>Post Your First Items!</>
+            )}
+          </div>
         </div>
       </>
     );

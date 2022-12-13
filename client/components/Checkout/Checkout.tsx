@@ -20,8 +20,14 @@ export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const { user, loading } = useUser();
     const { message, setmChange } = usePopup();
-    const { cartItems, cLoading, itemData, setCartChange, total } =
-      useCartItems();
+    const {
+      cartItems,
+      cLoading,
+      itemData,
+      setCartChange,
+      total,
+      numOfItems,
+    } = useCartItems();
     if (loading) {
       return <>LOADING</>;
     }
@@ -113,7 +119,7 @@ export default (): FC<Props> => {
         <div id={styles.checkoutContainer}>
           {cartItems[0] ? (
             <>
-              <span>Items(Amount)</span>
+              <span>{numOfItems} Items</span>
               <div>
                 <span>Subtotal</span>
                 <span>${(total / 100).toFixed(2)}</span>
@@ -126,7 +132,7 @@ export default (): FC<Props> => {
               </button>
             </>
           ) : (
-            <>Your Cart is Empty!</>
+            <div id={styles.empty}>Your Cart is Empty!</div>
           )}
         </div>
         {message && <Popup />}

@@ -86,7 +86,7 @@ export default (): FC<Props> => {
               </div>
             ))
           ) : (
-            <div>No Results Found</div>
+            <div id={styles.noResults}>No Results Found</div>
           )}
           {message && <Popup />}
         </div>

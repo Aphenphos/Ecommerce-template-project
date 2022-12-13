@@ -18,6 +18,7 @@ export default (): FC<Props> => {
       loading,
       setAdmin,
       setVendor,
+      setUChange,
     } = useUser();
     if (loading) {
       return <div>loading</div>;
@@ -28,7 +29,7 @@ export default (): FC<Props> => {
       setUser(null);
       setAdmin(false);
       setVendor(false);
-      return <Navigate replace to="/" />;
+      setUChange({ action: 'logout' });
     };
     return (
       <div id={styles.header}>

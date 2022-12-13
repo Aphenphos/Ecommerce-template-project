@@ -14,6 +14,7 @@ const UserProvider = ({ children }: { children: any }) => {
   const [loading, setLoading] = useState(true);
   const [admin, setAdmin] = useState(false);
   const [vendor, setVendor] = useState(false);
+  const [uChange, setUChange] = useState({});
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +40,7 @@ const UserProvider = ({ children }: { children: any }) => {
       fetchVendor();
       fetchAdmin();
     }
-  }, []);
+  }, [uChange]);
   return (
     <UserContext.Provider
       value={{
@@ -47,9 +48,11 @@ const UserProvider = ({ children }: { children: any }) => {
         setUser,
         loading,
         setLoading,
+        setVendor,
         admin,
         setAdmin,
         vendor,
+        setUChange,
       }}
     >
       {children}
