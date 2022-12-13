@@ -9,7 +9,7 @@ export async function getCart() {
     const items = await resp.json();
     return items;
   } else {
-    console.error('Failed to fetch items');
+    throw new Error('Failed fetching cart.');
   }
 }
 
@@ -35,7 +35,7 @@ export async function addToCart(
     const message = 'Item Added To Cart';
     return message;
   } else {
-    const message = 'Error Cdding to Cart';
+    const message = 'Error adding to Cart';
     return message;
   }
 }
@@ -47,9 +47,11 @@ export async function removeFromCart(id: bigint) {
   });
 
   if (resp.ok) {
-    console.log('item removed');
+    const data = resp.json();
+    return data;
   } else {
-    console.log('item failed to remove');
+    const message = 'Error removing item from cart.';
+    return message;
   }
 }
 
@@ -73,6 +75,6 @@ export async function updateQuant(cartId: number, quant: number) {
     const data = await resp.json();
     return data;
   } else {
-    return null;
+    throw new Error('Error updating cart.');
   }
 }

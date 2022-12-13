@@ -66,9 +66,10 @@ export async function removeVendor(id: bigint) {
   );
 
   if (resp.ok) {
-    console.log(`userID: ${id} is no longer a vendor.`);
+    const message = `User: ${id} is no longer a vendor`;
+    return message;
   } else {
-    console.error('Error removing vendor');
+    throw new Error('Error removing vendor.');
   }
 }
 
@@ -87,7 +88,7 @@ export async function addVendor(id: bigint) {
     const data = await resp.json();
     return data;
   } else {
-    console.error('Error posting new vendor');
+    throw new Error('Error posting vendor.');
   }
 }
 

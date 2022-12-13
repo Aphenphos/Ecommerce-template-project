@@ -74,7 +74,11 @@ export default (): FC<Props> => {
     };
 
     const handleRemove = async (e: any) => {
-      await removeFromCart(e.target.value);
+      const rmFromCart = await removeFromCart(e.target.value);
+      if (!rmFromCart) {
+        setmChange('Failed to remove item from cart.');
+        return;
+      }
       setCartChange({ change: e.target.value });
     };
 

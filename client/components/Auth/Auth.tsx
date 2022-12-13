@@ -27,8 +27,8 @@ export default (): FC<Props> => {
     const submitSign = async (e: any) => {
       e.preventDefault();
       const userData = await signUpUser(type!, email, password);
-      if (userData.message) {
-        setmChange(userData.message);
+      if (!userData) {
+        setmChange('Invalid username or password.');
       } else {
         setUser(userData);
         window.location.reload();

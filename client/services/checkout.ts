@@ -24,6 +24,6 @@ export async function checkoutUser(itemArr: Array<any>) {
     const link = await resp.json();
     return window.open(link.url, '_blank');
   } else {
-    console.error('could not checkout');
+    throw new Error('Error generating checkout.');
   }
 }

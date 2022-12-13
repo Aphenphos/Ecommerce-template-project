@@ -25,7 +25,7 @@ export async function signUpUser(
       const user = data;
       return user;
     } else {
-      return data;
+      return null;
     }
   }
   if (type === 'sign-in') {
@@ -42,7 +42,7 @@ export async function signUpUser(
     if (resp.ok) {
       return data;
     } else {
-      return data;
+      return null;
     }
   }
 }

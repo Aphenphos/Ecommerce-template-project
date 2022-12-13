@@ -30,10 +30,9 @@ export async function postItem(
 
   if (resp.ok) {
     const data = await resp.json();
-    console.log('added item');
     return data;
   } else {
-    console.log('item not added');
+    throw new Error('Failed to add item.');
   }
 }
 
@@ -44,9 +43,10 @@ export async function deleteItem(id: number) {
   });
 
   if (resp.ok) {
-    console.log('item deleted');
+    const data = await resp.json();
+    return data;
   } else {
-    console.log('item not deleted');
+    throw new Error('Failed to delete item.');
   }
 }
 
@@ -81,8 +81,7 @@ export async function updateItem(id: number, data: string) {
     const data = await resp.json();
     return data;
   } else {
-    console.log('update failed');
-    return null;
+    throw new Error('Failed to update item.');
   }
 }
 
@@ -95,7 +94,7 @@ export async function getAllItems() {
     const data = await resp.json();
     return data;
   } else {
-    return console.error('Error Fetching Items');
+    throw new Error('Failed to fetch items.');
   }
 }
 
@@ -119,7 +118,7 @@ export async function getArrOfItems(items: Array<CartItem>) {
     const data = await resp.json();
     return data;
   } else {
-    return console.error('Error Fetching Items');
+    throw new Error('Failed to fetch items.');
   }
 }
 
@@ -131,10 +130,9 @@ export async function getItemByVendor() {
 
   if (resp.ok) {
     const data = await resp.json();
-    console.log(data);
     return data;
   } else {
-    return console.error('Error Fetching Items');
+    return null;
   }
 }
 
@@ -158,6 +156,6 @@ export async function getItemBySearch(search: string) {
     const data = await resp.json();
     return data;
   } else {
-    throw new Error('Failed to search items');
+    return null;
   }
 }

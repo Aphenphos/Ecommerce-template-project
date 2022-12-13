@@ -6,7 +6,7 @@ import { usePopup } from '../../context/usePopup';
 import { useUser } from '../../context/useUser';
 import { useCartItems } from '../../context/useCart';
 import { addToCart } from '../../services/cart';
-import { BsFillCartPlusFill } from 'react-icons/bs';
+import loader from '../../styles/loader.module.css';
 import popupFn from '../Popup/Popup';
 
 export type Props = {};
@@ -45,9 +45,12 @@ export default (): FC<Props> => {
       fetchItemDetails();
     }, [id]);
     if (loading) {
-      return <>Loading</>;
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
-    console.log(item.item_description);
     if (!id) {
       return <Navigate replace to="/" />;
     }

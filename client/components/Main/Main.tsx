@@ -24,7 +24,7 @@ export default (): FC<Props> => {
     const { message, setmChange } = usePopup();
     const [searchParams, setSearchParams] = useState('');
     const nav = useNavigate();
-    if (!loading || iLoading) {
+    if (loading || iLoading) {
       return (
         <div id={loader.center}>
           <div className={loader.loader}></div>
@@ -39,7 +39,7 @@ export default (): FC<Props> => {
       e.preventDefault();
       const result = await getItemBySearch(searchParams);
       if (!result) {
-        //put popup here.
+        setmChange('No results found.');
       }
       if (!result[0]) {
       }
