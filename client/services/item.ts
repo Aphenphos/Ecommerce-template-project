@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:7891';
-import e from 'express';
 import type { CartItem } from '../../common/types';
 export async function postItem(
   itemName: string,
@@ -18,7 +16,7 @@ export async function postItem(
     item_description: itemDescription,
     item_price: itemPrice,
   };
-  const resp = await fetch(`${BASE_URL}/api/v1/items/addItem`, {
+  const resp = await fetch(`/api/v1/items/addItem`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -37,7 +35,7 @@ export async function postItem(
 }
 
 export async function deleteItem(id: number) {
-  const resp = await fetch(`${BASE_URL}/api/v1/items/rmItem/${id}`, {
+  const resp = await fetch(`/api/v1/items/rmItem/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -52,7 +50,7 @@ export async function deleteItem(id: number) {
 
 export async function getItemById(id: number) {
   console.log(id);
-  const resp = await fetch(`${BASE_URL}/api/v1/items/getById/${id}`, {
+  const resp = await fetch(`/api/v1/items/getById/${id}`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -68,7 +66,7 @@ export async function updateItem(id: number, data: string) {
   const updateObj = {
     item_name: data,
   };
-  const resp = await fetch(`${BASE_URL}/api/v1/items/upItem/${id}`, {
+  const resp = await fetch(`/api/v1/items/upItem/${id}`, {
     method: 'PUT',
     headers: {
       Accept: 'application/json',
@@ -86,7 +84,7 @@ export async function updateItem(id: number, data: string) {
 }
 
 export async function getAllItems() {
-  const resp = await fetch(`${BASE_URL}/api/v1/items/getAll`, {
+  const resp = await fetch(`/api/v1/items/getAll`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -104,7 +102,7 @@ export async function getArrOfItems(items: Array<CartItem>) {
     const itemId = items[i]!.item_id;
     toGet.push(itemId);
   }
-  const resp = await fetch(`${BASE_URL}/api/v1/items/getByArr`, {
+  const resp = await fetch(`/api/v1/items/getByArr`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -123,7 +121,7 @@ export async function getArrOfItems(items: Array<CartItem>) {
 }
 
 export async function getItemByVendor() {
-  const resp = await fetch(`${BASE_URL}/api/v1/items/getByVendor`, {
+  const resp = await fetch(`/api/v1/items/getByVendor`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -144,13 +142,10 @@ export async function getItemBySearch(search: string) {
     params = search;
   }
   console.log(params);
-  const resp = await fetch(
-    `${BASE_URL}/api/v1/items/getBySearch/${params}`,
-    {
-      method: 'GET',
-      credentials: 'include',
-    }
-  );
+  const resp = await fetch(`/api/v1/items/getBySearch/${params}`, {
+    method: 'GET',
+    credentials: 'include',
+  });
 
   if (resp.ok) {
     const data = await resp.json();

@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:7891';
-
 export async function checkoutUser(itemArr: Array<any>) {
   const toCheckout = [];
 
@@ -10,7 +8,7 @@ export async function checkoutUser(itemArr: Array<any>) {
     };
     toCheckout.push(itemObj);
   }
-  const resp = await fetch(`${BASE_URL}/api/v1/stripe/checkout`, {
+  const resp = await fetch(`/api/v1/stripe/checkout`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',

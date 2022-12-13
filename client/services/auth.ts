@@ -1,5 +1,3 @@
-const BASE_URL = 'http://localhost:7891';
-
 export async function signUpUser(
   type: string,
   email: string,
@@ -10,7 +8,7 @@ export async function signUpUser(
     password: password,
   };
   if (type === 'sign-up') {
-    const resp = await fetch(`${BASE_URL}/api/v1/users`, {
+    const resp = await fetch(`/api/v1/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -29,7 +27,7 @@ export async function signUpUser(
     }
   }
   if (type === 'sign-in') {
-    const resp = await fetch(`${BASE_URL}/api/v1/users/sessions`, {
+    const resp = await fetch(`/api/v1/users/sessions`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -48,7 +46,7 @@ export async function signUpUser(
 }
 
 export async function getUser() {
-  const resp = await fetch(`${BASE_URL}/api/v1/users/me`, {
+  const resp = await fetch(`/api/v1/users/me`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -61,7 +59,7 @@ export async function getUser() {
 }
 
 export async function logoutUser() {
-  const resp = await fetch(`${BASE_URL}/api/v1/users/sessions`, {
+  const resp = await fetch(`/api/v1/users/sessions`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -71,7 +69,7 @@ export async function logoutUser() {
 }
 
 export async function verifyVendor() {
-  const resp = await fetch(`${BASE_URL}/api/v1/users/isVendor`, {
+  const resp = await fetch(`/api/v1/users/isVendor`, {
     method: 'GET',
     credentials: 'include',
   });

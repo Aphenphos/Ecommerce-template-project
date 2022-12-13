@@ -1,7 +1,5 @@
-const BASE_URL = 'http://localhost:7891';
-
 export async function deleteUser(id: string) {
-  const resp = await fetch(`${BASE_URL}/api/v1/admins/rmUser/${id}`, {
+  const resp = await fetch(`/api/v1/admins/rmUser/${id}`, {
     method: 'DELETE',
     credentials: 'include',
   });
@@ -14,7 +12,7 @@ export async function deleteUser(id: string) {
 }
 
 export async function verifyAdmin() {
-  const resp = await fetch(`${BASE_URL}/api/v1/admins/isAdmin`, {
+  const resp = await fetch(`/api/v1/admins/isAdmin`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -29,7 +27,7 @@ export async function verifyAdmin() {
 }
 
 // export async function getUsers() {
-//   const resp = await fetch(`${BASE_URL}/api/v1/admins/allUsers`, {
+//   const resp = await fetch(`$/api/v1/admins/allUsers`, {
 //     method: 'GET',
 //     credentials: 'include',
 //   });
@@ -43,7 +41,7 @@ export async function verifyAdmin() {
 // }
 
 export async function getVendors() {
-  const resp = await fetch(`${BASE_URL}/api/v1/admins/allVendors`, {
+  const resp = await fetch(`/api/v1/admins/allVendors`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -57,13 +55,10 @@ export async function getVendors() {
 }
 
 export async function removeVendor(id: bigint) {
-  const resp = await fetch(
-    `${BASE_URL}/api/v1/admins/rmVendor/${id}`,
-    {
-      method: 'DELETE',
-      credentials: 'include',
-    }
-  );
+  const resp = await fetch(`/api/v1/admins/rmVendor/${id}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
 
   if (resp.ok) {
     const message = `User: ${id} is no longer a vendor`;
@@ -74,7 +69,7 @@ export async function removeVendor(id: bigint) {
 }
 
 export async function addVendor(id: bigint) {
-  const resp = await fetch(`${BASE_URL}/api/v1/admins/addVendor`, {
+  const resp = await fetch(`/api/v1/admins/addVendor`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
@@ -96,18 +91,15 @@ export async function searchUsersByEmail(searchParams: string) {
   const searchObj = {
     searchParams,
   };
-  const resp = await fetch(
-    `${BASE_URL}/api/v1/admins/searchByEmail`,
-    {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(searchObj),
-      credentials: 'include',
-    }
-  );
+  const resp = await fetch(`/api/v1/admins/searchByEmail`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(searchObj),
+    credentials: 'include',
+  });
 
   if (resp.ok) {
     const data = await resp.json();
