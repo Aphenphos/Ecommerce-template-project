@@ -28,10 +28,10 @@ const Cart = class Cart {
   }) {
     const { rows } = await pool.query(
       `
-            INSERT INTO carts (user_id, item_id, item_quantity)
-            VALUES($1, $2, $3)
-            RETURNING *
-            `,
+      INSERT INTO carts (user_id, item_id, item_quantity)
+      VALUES($1, $2, $3)
+      RETURNING *
+      `,
       [user_id, item_id, item_quantity]
     );
 

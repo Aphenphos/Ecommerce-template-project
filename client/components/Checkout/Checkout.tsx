@@ -47,25 +47,23 @@ export default (): FC<Props> => {
       return item;
     }
     //handle quantity increase/decrease
-    const handleIncrease = async (e: any) => {
-      const newQuant =
-        parseInt(cartItems[e.target.value[2]].item_quantity) + 1;
+    const handleIncrease = async (itemId: number, index: number) => {
+      const newQuant = parseInt(cartItems[index].item_quantity) + 1;
       if (newQuant > 5) {
         setmChange('Cannot exceed maximum quantity');
         return;
       }
-      await updateQuant(e.target.value[0], newQuant);
+      await updateQuant(itemId, newQuant);
       setCartChange({ newQuant, change: 'increase' });
       console.log('quant increased');
     };
-    const handleDecrease = async (e: any) => {
-      const newQuant =
-        parseInt(cartItems[e.target.value[2]].item_quantity) - 1;
+    const handleDecrease = async (itemId: number, index: number) => {
+      const newQuant = parseInt(cartItems[index].item_quantity) - 1;
       if (newQuant < 1) {
         setmChange('Cannot exceed minimum quantity');
         return;
       }
-      await updateQuant(e.target.value[0], newQuant);
+      await updateQuant(itemId, newQuant);
       setCartChange({ newQuant, change: 'decrease' });
     };
 
@@ -73,15 +71,16 @@ export default (): FC<Props> => {
       await checkoutUser(cartItems);
     };
 
-    const handleRemove = async (e: any) => {
-      const rmFromCart = await removeFromCart(e.target.value);
+    const handleRemove = async (itemid: bigint) => {
+      console.log(itemid);
+      const rmFromCart = await removeFromCart(itemid);
       if (!rmFromCart) {
         setmChange('Failed to remove item from cart.');
         return;
       }
-      setCartChange({ change: e.target.value });
+      setCartChange({ change: itemid });
     };
-
+    //fix way of inc dec functions
     return (
       <div id={styles.pageContainer}>
         <div id={styles.cartContainer}>
@@ -95,14 +94,13 @@ export default (): FC<Props> => {
                     Quantity:{item.item_quantity}
                   </div>
                   <button
-                    value={[item.id, index]}
-                    onClick={handleIncrease}
+                    onClick={(e) => handleIncrease(item.id, index)}
                   >
                     +
                   </button>
                   <button
                     value={[item.id, index]}
-                    onClick={handleDecrease}
+                    onClick={(e) => handleDecrease(item.id, index)}
                   >
                     -
                   </button>
@@ -110,8 +108,7 @@ export default (): FC<Props> => {
                 <div>${(item.item_price / 100).toFixed(2)}</div>
               </div>
               <button
-                value={item.id}
-                onClick={handleRemove}
+                onClick={(e) => handleRemove(item.id)}
                 className={styles.removeCart}
               >
                 <BsFillCartDashFill />
