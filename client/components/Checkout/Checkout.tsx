@@ -105,7 +105,13 @@ export default (): FC<Props> => {
                     -
                   </button>
                 </div>
-                <div>${(item.item_price / 100).toFixed(2)}</div>
+                <div>
+                  $
+                  {(
+                    (item.item_quantity * item.item_price) /
+                    100
+                  ).toFixed(2)}
+                </div>
               </div>
               <button
                 onClick={(e) => handleRemove(item.id)}
@@ -122,8 +128,7 @@ export default (): FC<Props> => {
             <>
               <span>{numOfItems} Items</span>
               <div>
-                <span>Subtotal</span>
-                <span>${(total / 100).toFixed(2)}</span>
+                <span>Subtotal: ${(total / 100).toFixed(2)}</span>
               </div>
               <button
                 onClick={handleCheckout}
