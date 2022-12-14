@@ -7,6 +7,7 @@ import { Navigate } from 'react-router-dom';
 import { removeFromCart, updateQuant } from '../../services/cart';
 import { BsFillCartDashFill } from 'react-icons/bs';
 import styles from './Checkout.module.css';
+import loader from '../../styles/loader.module.css';
 import { usePopup } from '../../context/usePopup';
 import popupFn from '../Popup/Popup';
 const Popup = popupFn();
@@ -28,14 +29,15 @@ export default (): FC<Props> => {
       total,
       numOfItems,
     } = useCartItems();
-    if (loading) {
-      return <>LOADING</>;
+    if (loading || cLoading) {
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
     if (!user) {
       return <Navigate replace to="/auth/sign-in" />;
-    }
-    if (cLoading) {
-      return <>Loading Items</>;
     }
     function accessItemData(itemId: number) {
       let item;

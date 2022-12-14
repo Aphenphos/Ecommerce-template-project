@@ -43,7 +43,6 @@ export default (): FC<Props> => {
       }
       if (!result[0]) {
       }
-      console.log(result);
       setItems(result);
     };
 
