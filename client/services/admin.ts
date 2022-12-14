@@ -69,6 +69,7 @@ export async function removeVendor(id: bigint) {
 }
 
 export async function addVendor(id: bigint) {
+  const idObj = { id };
   const resp = await fetch(`/api/v1/admins/addVendor`, {
     method: 'POST',
     headers: {
