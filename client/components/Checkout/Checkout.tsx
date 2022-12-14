@@ -59,6 +59,7 @@ export default (): FC<Props> => {
       console.log('quant increased');
     };
     const handleDecrease = async (e: any) => {
+      console.log(e.target.value[2]);
       const newQuant =
         parseInt(cartItems[e.target.value[2]].item_quantity) - 1;
       if (newQuant < 1) {
@@ -73,15 +74,16 @@ export default (): FC<Props> => {
       await checkoutUser(cartItems);
     };
 
-    const handleRemove = async (e: any) => {
-      const rmFromCart = await removeFromCart(e.target.value);
+    const handleRemove = async (itemid: bigint) => {
+      console.log(itemid);
+      const rmFromCart = await removeFromCart(itemid);
       if (!rmFromCart) {
         setmChange('Failed to remove item from cart.');
         return;
       }
-      setCartChange({ change: e.target.value });
+      setCartChange({ change: itemid });
     };
-
+    //fix way of inc dec functions
     return (
       <div id={styles.pageContainer}>
         <div id={styles.cartContainer}>
@@ -110,8 +112,7 @@ export default (): FC<Props> => {
                 <div>${(item.item_price / 100).toFixed(2)}</div>
               </div>
               <button
-                value={item.id}
-                onClick={handleRemove}
+                onClick={(e) => handleRemove(item.id)}
                 className={styles.removeCart}
               >
                 <BsFillCartDashFill />

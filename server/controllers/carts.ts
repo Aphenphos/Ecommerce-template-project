@@ -62,10 +62,10 @@ const cartController = Router()
     [authenticate],
     async (req: Request, res: Response, next: NextFunction) => {
       try {
-        const rmItem = await Cart.removeFrom(
-          (req as any).params.id,
-          (req as any).user.id
-        );
+        const userId = (req as any).user.id;
+        const itemId = (req as any).params.id;
+        console.log(userId, itemId);
+        const rmItem = await Cart.removeFrom(itemId, userId);
         res.send(rmItem);
       } catch (err) {
         next(err);
