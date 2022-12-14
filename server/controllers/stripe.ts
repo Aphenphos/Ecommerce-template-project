@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response, Router } from 'express';
-import authenticate from '../middleware/authenticate.js';
 import Stripe from 'stripe';
 import Item from '../models/Item.js';
 
@@ -32,8 +31,8 @@ const stripeController = Router().post(
         payment_method_types: ['card'],
         mode: 'payment',
         line_items: lineItems,
-        success_url: `${process.env.API_URL}:7891/success`,
-        cancel_url: `${process.env.API_URL}:7891/cancel`,
+        success_url: `${process.env.API_URL}/success`,
+        cancel_url: `${process.env.API_URL}/cancel`,
       });
       return res.json({ url: session.url });
     } catch (err) {

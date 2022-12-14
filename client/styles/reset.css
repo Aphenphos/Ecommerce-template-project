@@ -39,7 +39,7 @@
     --backgroundInput: var(--black);
     --borderColor: var(--offDarkGray);
     --textHighlight: var(--lightPurple);
-    --popupBackground: rgba(20, 20, 20, 0.4);
+    --popupBackground: rgba(20, 20, 20, 0.6);
     --popupFont: var(--white);
   }
 }
