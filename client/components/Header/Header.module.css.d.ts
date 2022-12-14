@@ -3,6 +3,7 @@
 interface CssExports {
   'cart': string;
   'header': string;
+  'home': string;
   'user-info': string;
   'userInfo': string;
 }

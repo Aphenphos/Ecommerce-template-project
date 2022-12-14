@@ -15,6 +15,7 @@
   --purpWhite: rgb(230, 220, 255);
   --dark-purp-white: rgb(220, 210, 245);
   --black: rgb(22, 22, 22);
+  --lightGray: rgb(150, 150, 150);
 }
 @media (prefers-color-scheme: light) {
   :root {
@@ -25,6 +26,8 @@
     --backgroundInput: var(--purpWhite);
     --borderColor: var(--darkGray);
     --textHighlight: var(--vibrantPurple);
+    --popupBackground: rgba(150, 150, 150, 0.6);
+    --popupFont: var(--black);
   }
 }
 @media (prefers-color-scheme: dark) {
@@ -36,6 +39,8 @@
     --backgroundInput: var(--black);
     --borderColor: var(--offDarkGray);
     --textHighlight: var(--lightPurple);
+    --popupBackground: rgba(20, 20, 20, 0.4);
+    --popupFont: var(--white);
   }
 }
 html,
