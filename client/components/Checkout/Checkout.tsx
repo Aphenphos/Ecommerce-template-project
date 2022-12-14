@@ -47,26 +47,23 @@ export default (): FC<Props> => {
       return item;
     }
     //handle quantity increase/decrease
-    const handleIncrease = async (e: any) => {
-      const newQuant =
-        parseInt(cartItems[e.target.value[2]].item_quantity) + 1;
+    const handleIncrease = async (itemId: number, index: number) => {
+      const newQuant = parseInt(cartItems[index].item_quantity) + 1;
       if (newQuant > 5) {
         setmChange('Cannot exceed maximum quantity');
         return;
       }
-      await updateQuant(e.target.value[0], newQuant);
+      await updateQuant(itemId, newQuant);
       setCartChange({ newQuant, change: 'increase' });
       console.log('quant increased');
     };
-    const handleDecrease = async (e: any) => {
-      console.log(e.target.value[2]);
-      const newQuant =
-        parseInt(cartItems[e.target.value[2]].item_quantity) - 1;
+    const handleDecrease = async (itemId: number, index: number) => {
+      const newQuant = parseInt(cartItems[index].item_quantity) - 1;
       if (newQuant < 1) {
         setmChange('Cannot exceed minimum quantity');
         return;
       }
-      await updateQuant(e.target.value[0], newQuant);
+      await updateQuant(itemId, newQuant);
       setCartChange({ newQuant, change: 'decrease' });
     };
 
@@ -97,14 +94,13 @@ export default (): FC<Props> => {
                     Quantity:{item.item_quantity}
                   </div>
                   <button
-                    value={[item.id, index]}
-                    onClick={handleIncrease}
+                    onClick={(e) => handleIncrease(item.id, index)}
                   >
                     +
                   </button>
                   <button
                     value={[item.id, index]}
-                    onClick={handleDecrease}
+                    onClick={(e) => handleDecrease(item.id, index)}
                   >
                     -
                   </button>
