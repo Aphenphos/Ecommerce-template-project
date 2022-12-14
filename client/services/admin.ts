@@ -5,9 +5,10 @@ export async function deleteUser(id: string) {
   });
 
   if (resp.ok) {
-    console.log('deleted user');
+    const data = await resp.json();
+    return data;
   } else {
-    console.log('uhoh');
+    return null;
   }
 }
 
