@@ -8,6 +8,7 @@ import {
   searchUsersByEmail,
 } from '../../services/admin';
 import { Navigate } from 'react-router-dom';
+import loader from '../../styles/loader.module.css';
 
 export type Props = {};
 export type Component = FC<Props>;
@@ -16,7 +17,19 @@ export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
     const [vendorList, setVendorList] = useState([] as any);
     const [userList, setUserList] = useState([]);
+    const [change, setChange] = useState({});
     const { user, loading, admin, setLoading } = useUser();
+
+    useEffect(() => {
+      async function fetchVendors() {
+        setLoading(true);
+        const vendorsInfo = await getVendors();
+        setVendorList(vendorsInfo);
+        setLoading(false);
+      }
+      fetchVendors();
+    }, [change]);
+
     const submitUserSearch = async (e: any) => {
       e.preventDefault();
       const result = await searchUsersByEmail(
@@ -27,31 +40,37 @@ export default (): FC<Props> => {
     const submitNewVendor = async (e: any) => {
       e.preventDefault();
       await addVendor(e.target.value);
+      setChange({ change: e.target.value });
     };
     const submitRMVendor = async (e: any) => {
       e.preventDefault();
       await removeVendor(e.target.value);
+      setChange({ change: e.target.value });
     };
     function isVendor(userId: number) {
-      let aVendor;
-      for (let i = 0; i < vendorList.length; i++) {
-        if (userId === vendorList[i].vendor_id) {
-          aVendor = true;
-        }
-
-        if (aVendor === true) {
-          return <div>Is a vendor</div>;
-        } else {
-          return (
-            <button value={user.id} onClick={submitNewVendor}>
-              Make Vendor
-            </button>
-          );
+      let aVendor = false;
+      if (vendorList[0]) {
+        for (let i = 0; i < vendorList.length; i++) {
+          if (userId === vendorList[i].vendor_id) {
+            aVendor = true;
+          }
+          if (aVendor === true) {
+            return <div>Is a vendor</div>;
+          }
         }
       }
+      return (
+        <button value={userId} onClick={submitNewVendor}>
+          Make Vendor
+        </button>
+      );
     }
     if (loading) {
-      return <>LOADING</>;
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
     if (!user) {
       return <Navigate replace to="/auth/sign-in" />;
@@ -59,14 +78,6 @@ export default (): FC<Props> => {
     if (!admin) {
       return <Navigate replace to="/" />;
     }
-
-    useEffect(() => {
-      async function fetchVendors() {
-        const vendorsInfo = await getVendors();
-        setVendorList(vendorsInfo);
-      }
-      fetchVendors();
-    }, []);
     return (
       <>
         <div>

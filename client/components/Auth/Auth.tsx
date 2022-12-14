@@ -28,7 +28,7 @@ export default (): FC<Props> => {
       e.preventDefault();
       const userData = await signUpUser(type!, email, password);
       if (!userData) {
-        setmChange('Invalid username or password.');
+        setmChange('Invalid username or password');
       } else {
         setUser(userData);
         window.location.reload();
@@ -53,7 +53,9 @@ export default (): FC<Props> => {
 
             <label className={styles.label}>Password</label>
             <input
+              title="Password must contain at least 9 characters. A upper and lower case letter, a symbol, and a number."
               type="password"
+              pattern="^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{9,}$"
               className={styles.input}
               onChange={(e) => {
                 setPassword(e.target.value);

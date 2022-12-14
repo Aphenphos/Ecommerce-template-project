@@ -57,7 +57,7 @@ const Vendor = class Vendor {
     );
 
     if (!rows[0]) {
-      throw new Error('Failed to grab vendors');
+      return [];
     } else {
       return rows.map((row) => {
         const newObj = {

@@ -57,6 +57,7 @@ export async function getVendors() {
 }
 
 export async function removeVendor(id: bigint) {
+  console.log(id);
   const resp = await fetch(
     `${BASE_URL}/api/v1/admins/rmVendor/${id}`,
     {
@@ -74,13 +75,17 @@ export async function removeVendor(id: bigint) {
 }
 
 export async function addVendor(id: bigint) {
+  console.log(id);
+  const idObj = {
+    id,
+  };
   const resp = await fetch(`${BASE_URL}/api/v1/admins/addVendor`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(idObj),
     credentials: 'include',
   });
 
