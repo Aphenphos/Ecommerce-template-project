@@ -3,13 +3,18 @@ import { Link, Navigate } from 'react-router-dom';
 import { useUser } from '../../context/useUser';
 import { logoutUser } from '../../services/auth';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { BiHome } from 'react-icons/bi';
 import styles from './Header.module.css';
+import popupFn from '../Popup/Popup';
+import { usePopup } from '../../context/usePopup';
+const Popup = popupFn();
 
 export type Props = {};
 export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
+    const { message, setmChange } = usePopup();
     const {
       user,
       vendor,
@@ -33,7 +38,10 @@ export default (): FC<Props> => {
     };
     return (
       <div id={styles.header}>
-        <Link to="/">Home</Link>
+        {message && <Popup />}
+        <Link to="/">
+          <BiHome id={styles.home} />
+        </Link>
         {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
         {admin ? <Link to="/admin">Admin</Link> : <></>}
         {user ? (

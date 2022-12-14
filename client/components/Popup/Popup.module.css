@@ -4,9 +4,10 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
   height: 15vh;
   width: 60vw;
-  background-color: rgba(0, 0, 0, 0.11);
+  background-color: var(--popupBackground);
+  color: var(--popupFont);
   border-radius: 20px;
+  z-index: 10;
 }
