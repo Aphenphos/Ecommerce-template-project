@@ -75,7 +75,7 @@ export async function addVendor(id: bigint) {
       Accept: 'application/json',
       'Content-type': 'application/json',
     },
-    body: JSON.stringify(id),
+    body: JSON.stringify(idObj),
     credentials: 'include',
   });
 

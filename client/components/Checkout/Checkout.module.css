@@ -12,7 +12,8 @@ position remove from cart
 #cart-container {
   display: flex;
   flex-direction: column;
-  width: 44vw;
+  width: 40vw;
+  margin-left: 5vw;
 }
 
 .cart-item {
