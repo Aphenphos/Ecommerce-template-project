@@ -1,5 +1,6 @@
 .image {
   max-width: 70vw;
+  max-height: 65vh;
 }
 
 #to-cart {
@@ -31,6 +32,7 @@
 }
 #descrip {
   margin: 10px;
+  text-align: center;
 }
 
 #quant-input {
