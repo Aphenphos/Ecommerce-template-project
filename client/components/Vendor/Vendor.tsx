@@ -155,7 +155,6 @@ export default (): FC<Props> => {
                     ))
                   ) : (
                     <div>
-                      {' '}
                       <form>
                         <input
                           type="file"
@@ -191,6 +190,7 @@ export default (): FC<Props> => {
                       )}
                     </div>
                   )}
+                  <span>{item.item_description}</span>
                   <button
                     value={item.id}
                     onClick={submitDeleteItem}
