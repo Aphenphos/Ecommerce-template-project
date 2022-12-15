@@ -91,21 +91,24 @@ export default (): FC<Props> => {
               <img src={accessItemData(item.item_id).images[0]}></img>
               <div className={styles.cartItemInfo}>
                 <div>{item.item_name}</div>
-                <div>
+                <div id={styles.quantContainer}>
                   <div className={styles.itemQuantity}>
                     Quantity:{item.item_quantity}
                   </div>
-                  <button
-                    onClick={(e) => handleIncrease(item.id, index)}
-                  >
-                    +
-                  </button>
-                  <button
-                    value={[item.id, index]}
-                    onClick={(e) => handleDecrease(item.id, index)}
-                  >
-                    -
-                  </button>
+                  <div id={styles.quantButtonsContainer}>
+                    <button
+                      className={styles.quantButtons}
+                      onClick={(e) => handleIncrease(item.id, index)}
+                    >
+                      +
+                    </button>
+                    <button
+                      className={styles.quantButtons}
+                      onClick={(e) => handleDecrease(item.id, index)}
+                    >
+                      -
+                    </button>
+                  </div>
                 </div>
                 <div>
                   $

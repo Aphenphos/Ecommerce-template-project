@@ -10,6 +10,8 @@ interface CssExports {
   'imageContainer': string;
   'item-name': string;
   'itemName': string;
+  'quant-input': string;
+  'quantInput': string;
   'to-cart': string;
   'toCart': string;
 }

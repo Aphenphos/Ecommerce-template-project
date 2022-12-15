@@ -16,7 +16,7 @@ export type Component = FC<Props>;
 
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const { user, loading, vendor } = useUser();
+    const { user, loading, vendor, setLoading } = useUser();
     const { vItems, setChange, viLoading } = useVendor();
     const [itemName, setItemName] = useState('');
     const [itemPrice, setItemPrice] = useState('');
@@ -57,14 +57,18 @@ export default (): FC<Props> => {
     }
     const submitItem = async (e: any) => {
       e.preventDefault();
+      setLoading(true);
       const itemPInt = parseInt(itemPrice);
       await postItem(itemName, itemDescrip, itemPInt);
       setChange(itemName);
+      setLoading(false);
     };
     const submitDeleteItem = async (e: any) => {
       e.preventDefault();
+      setLoading(true);
       await deleteItem(e.target.value);
       setChange({ id: e.target.value });
+      setLoading(false);
     };
     const submitUpdateItem = async (e: any) => {
       e.preventDefault();
@@ -73,6 +77,7 @@ export default (): FC<Props> => {
 
     const handleImageSubmit = async (e: any) => {
       e.preventDefault();
+      setLoading(true);
       //matches the image file with selected item to upload by the items ID
       for (let i = 0; i < files.length; i++) {
         if (files[i].tempId === e.target.value) {
@@ -81,12 +86,15 @@ export default (): FC<Props> => {
           files.splice(i, 1);
         }
       }
+      setLoading(false);
     };
 
     const handleImageRm = async (e: any) => {
       e.preventDefault();
+      setLoading(true);
       await rmImage(e.target.value);
       setChange(e.target.value);
+      setLoading(false);
     };
     return (
       <>

@@ -42,8 +42,10 @@ export default (): FC<Props> => {
         <Link to="/">
           <BiHome id={styles.home} />
         </Link>
-        {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
-        {admin ? <Link to="/admin">Admin</Link> : <></>}
+        <div id={styles.tools}>
+          {vendor ? <Link to="/vendor">Vendor Tools</Link> : <></>}
+          {admin ? <Link to="/admin">Admin Tools</Link> : <></>}
+        </div>
         {user ? (
           <div id={styles.userInfo}>
             <span>{user.email}</span>

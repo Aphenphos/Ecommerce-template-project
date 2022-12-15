@@ -16,6 +16,12 @@ interface CssExports {
   'itemQuantity': string;
   'page-container': string;
   'pageContainer': string;
+  'quant-buttons': string;
+  'quant-buttons-container': string;
+  'quant-container': string;
+  'quantButtons': string;
+  'quantButtonsContainer': string;
+  'quantContainer': string;
   'remove-cart': string;
   'removeCart': string;
 }

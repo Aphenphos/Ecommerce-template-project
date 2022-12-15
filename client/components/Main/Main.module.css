@@ -102,3 +102,19 @@
   width: 100vw;
   text-align: center;
 }
+
+@media only screen and (max-width: 600px) {
+  #display-container {
+    justify-content: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(80vw, 1fr));
+  }
+  #search-container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .item-container img {
+    max-width: 90vw;
+  }
+}

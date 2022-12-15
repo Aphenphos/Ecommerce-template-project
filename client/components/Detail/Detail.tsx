@@ -66,6 +66,7 @@ export default (): FC<Props> => {
         <h1>${(item.item_price / 100).toFixed(2)}</h1>
         <form onSubmit={handleAddToCart} id={styles.cartContainer}>
           <input
+            id={styles.quantInput}
             type="number"
             max="5"
             min="1"
