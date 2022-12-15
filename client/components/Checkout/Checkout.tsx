@@ -29,7 +29,7 @@ export default (): FC<Props> => {
       total,
       numOfItems,
     } = useCartItems();
-    if (loading || cLoading) {
+    if (loading) {
       return (
         <div id={loader.center}>
           <div className={loader.loader}></div>
@@ -38,6 +38,14 @@ export default (): FC<Props> => {
     }
     if (!user) {
       return <Navigate replace to="/auth/sign-in" />;
+    }
+
+    if (cLoading) {
+      return (
+        <div id={loader.center}>
+          <div className={loader.loader}></div>
+        </div>
+      );
     }
     function accessItemData(itemId: number) {
       let item;
