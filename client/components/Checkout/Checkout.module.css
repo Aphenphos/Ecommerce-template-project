@@ -31,7 +31,7 @@ position remove from cart
 
 .cart-item img {
   max-height: 150px;
-  width: auto;
+  max-width: 100vw;
   object-fit: contain;
 }
 .remove-cart {
@@ -58,6 +58,20 @@ position remove from cart
   align-items: center;
   justify-content: center;
 }
+.quant-buttons {
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+#quant-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#quant-buttons-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
 #checkout-button {
   font-size: 1.3rem;
   display: flex;
@@ -78,4 +92,24 @@ position remove from cart
   width: 100%;
   top: 0;
   left: 0;
+}
+
+@media only screen and (max-width: 600px) {
+  #cart-container {
+    width: 80vw;
+  }
+  .cart-item img {
+    max-width: 60vw;
+  }
+  #checkout-container {
+    width: 80vw;
+    align-items: center;
+    margin-left: 10vw;
+    height: 20vh;
+  }
+
+  #page-container {
+    display: flex;
+    flex-direction: column;
+  }
 }

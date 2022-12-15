@@ -17,6 +17,11 @@ a {
   font-size: 2rem;
 }
 
+#tools {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 #user-info {
   display: flex;
   flex-direction: column;
@@ -26,4 +31,17 @@ a {
   display: flex;
   font-size: 2rem;
   text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+  #tools {
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  #user-info {
+    font-size: 0.8rem;
+  }
 }

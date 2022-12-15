@@ -4,6 +4,7 @@ interface CssExports {
   'cart': string;
   'header': string;
   'home': string;
+  'tools': string;
   'user-info': string;
   'userInfo': string;
 }

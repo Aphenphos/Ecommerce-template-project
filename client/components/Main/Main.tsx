@@ -18,7 +18,7 @@ export type Component = FC<Props>;
 //something is missing from this main page, unsure what.
 export default (): FC<Props> => {
   const component = (props: Props): ReactElement => {
-    const { user, loading } = useUser();
+    const { user, loading, setLoading } = useUser();
     const { items, iLoading, setItems } = useItems();
     const { setCartChange } = useCartItems();
     const { message, setmChange } = usePopup();
@@ -37,14 +37,11 @@ export default (): FC<Props> => {
     }
     const submitItemSearch = async (e: any) => {
       e.preventDefault();
+      setLoading(true);
       const result = await getItemBySearch(searchParams);
-      if (!result) {
-        setmChange('No results found.');
-      }
-      if (!result[0]) {
-      }
-      console.log(result);
+
       setItems(result);
+      setLoading(false);
     };
 
     const handleAddToCart = async (e: any) => {
