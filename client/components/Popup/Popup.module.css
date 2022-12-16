@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: center;
   height: 15vh;
-  width: 60vw;
+  margin-left: 25vw;
+  width: 50vw;
   background-color: var(--popupBackground);
   color: var(--popupFont);
   border-radius: 20px;
