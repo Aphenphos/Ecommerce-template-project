@@ -26,20 +26,6 @@ export async function verifyAdmin() {
   }
 }
 
-// export async function getUsers() {
-//   const resp = await fetch(`$/api/v1/admins/allUsers`, {
-//     method: 'GET',
-//     credentials: 'include',
-//   });
-
-//   if (resp.ok) {
-//     const data = await resp.json();
-//     return data;
-//   } else {
-//     throw new Error('Failed to grab users');
-//   }
-// }
-
 export async function getVendors() {
   const resp = await fetch(`/api/v1/admins/allVendors`, {
     method: 'GET',

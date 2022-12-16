@@ -55,32 +55,34 @@ export default (): FC<Props> => {
       return <Navigate replace to="/" />;
     }
     return (
-      <div id={styles.container}>
-        <h1 id={styles.itemName}>{item.item_name}</h1>
-        <div id={styles.imageContainer}>
-          {item.images.map((img: string, index: number) => (
-            <img className={styles.image} src={img}></img>
-          ))}
-        </div>
-        <p id={styles.descrip}>{item.item_description}</p>
-        <h1>${(item.item_price / 100).toFixed(2)}</h1>
-        <form onSubmit={handleAddToCart} id={styles.cartContainer}>
-          <input
-            id={styles.quantInput}
-            type="number"
-            max="5"
-            min="1"
-            defaultValue="1"
-            onChange={(e) => {
-              setQuant(parseInt(e.target.value));
-            }}
-          ></input>
-          <button value={item.id} name="id" id={styles.toCart}>
-            Add To Cart
-          </button>
-        </form>
+      <>
         {message && <Popup />}
-      </div>
+        <div id={styles.container}>
+          <h1 id={styles.itemName}>{item.item_name}</h1>
+          <div id={styles.imageContainer}>
+            {item.images.map((img: string, index: number) => (
+              <img className={styles.image} src={img}></img>
+            ))}
+          </div>
+          <p id={styles.descrip}>{item.item_description}</p>
+          <h1>${(item.item_price / 100).toFixed(2)}</h1>
+          <form onSubmit={handleAddToCart} id={styles.cartContainer}>
+            <input
+              id={styles.quantInput}
+              type="number"
+              max="5"
+              min="1"
+              defaultValue="1"
+              onChange={(e) => {
+                setQuant(parseInt(e.target.value));
+              }}
+            ></input>
+            <button value={item.id} name="id" id={styles.toCart}>
+              Add To Cart
+            </button>
+          </form>
+        </div>
+      </>
     );
   };
   component.displayName = 'Detail';
