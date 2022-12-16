@@ -62,6 +62,7 @@ export default (): FC<Props> => {
     //put a react magnifying glass next to the search
     return (
       <>
+        {message && <Popup />}
         <form onSubmit={submitItemSearch} id={styles.searchContainer}>
           <button id={styles.resetButton} onClick={resetSearchParams}>
             Reset
@@ -98,7 +99,6 @@ export default (): FC<Props> => {
           ) : (
             <div id={styles.noResults}>No Results Found</div>
           )}
-          {message && <Popup />}
         </div>
       </>
     );
