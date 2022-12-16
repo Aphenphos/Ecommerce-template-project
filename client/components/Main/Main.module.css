@@ -4,7 +4,19 @@
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   grid-gap: 0.5rem;
 }
-
+#reset-button {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: var(--backgroundInput);
+  color: var(--color);
+  border: 1px solid;
+  font-size: 1rem;
+  border-color: var(--borderColor);
+  margin: 0;
+  border-right: none;
+}
 #display-container button {
   border: none;
   padding-top: 5px;
