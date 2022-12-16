@@ -42,6 +42,7 @@
   padding-right: 2rem;
   outline: none;
 }
+
 #search-container {
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -50,7 +51,9 @@
   align-items: center;
   align-content: center;
 }
+
 #magnifying-glass {
+  cursor: pointer;
   padding: 5.5px 15px;
   width: auto;
   margin: 0;
