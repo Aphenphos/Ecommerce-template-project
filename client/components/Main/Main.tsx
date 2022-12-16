@@ -31,7 +31,12 @@ export default (): FC<Props> => {
         </div>
       );
     }
-
+    async function resetSearchParams() {
+      setLoading(true);
+      const result = await getItemBySearch('');
+      setItems(result);
+      setLoading(false);
+    }
     function handleChange(e: any) {
       setSearchParams(e.target.value);
     }
@@ -58,6 +63,9 @@ export default (): FC<Props> => {
     return (
       <>
         <form onSubmit={submitItemSearch} id={styles.searchContainer}>
+          <button id={styles.resetButton} onClick={resetSearchParams}>
+            Reset
+          </button>
           <input
             type="text"
             id={styles.searchbar}

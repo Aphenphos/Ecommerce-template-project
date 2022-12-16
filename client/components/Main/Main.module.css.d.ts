@@ -11,6 +11,8 @@ interface CssExports {
   'magnifyingGlass': string;
   'no-results': string;
   'noResults': string;
+  'reset-button': string;
+  'resetButton': string;
   'search-container': string;
   'searchContainer': string;
   'searchbar': string;
