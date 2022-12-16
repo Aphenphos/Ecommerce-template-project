@@ -136,7 +136,7 @@ export async function getItemByVendor() {
 
 export async function getItemBySearch(search: string) {
   let params;
-  if (!search) {
+  if (!search || search === '' || search === undefined) {
     params = 'noSearch';
   } else {
     params = search;
