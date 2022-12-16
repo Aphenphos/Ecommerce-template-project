@@ -35,56 +35,58 @@ export default (): FC<Props> => {
       }
     };
     return (
-      <div id={styles.auth}>
-        <span id={styles.type}>
-          {type === 'sign-in' ? 'Sign In' : 'Sign Up'}
-        </span>
-        <div id={styles.signUpContainer}>
-          <form className={styles.form} onSubmit={submitSign}>
-            <label className={styles.label}>Email</label>
-            <input
-              type="email"
-              className={styles.input}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              placeholder="Email"
-            ></input>
+      <>
+        {message && <Popup />}
+        <div id={styles.auth}>
+          <span id={styles.type}>
+            {type === 'sign-in' ? 'Sign In' : 'Sign Up'}
+          </span>
+          <div id={styles.signUpContainer}>
+            <form className={styles.form} onSubmit={submitSign}>
+              <label className={styles.label}>Email</label>
+              <input
+                type="email"
+                className={styles.input}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                placeholder="Email"
+              ></input>
 
-            <label className={styles.label}>Password</label>
-            <input
-              title="Password must contain at least 9 characters. A upper and lower case letter, a symbol, and a number."
-              type="password"
-              pattern="^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{9,}$"
-              className={styles.input}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              placeholder="Password"
-            ></input>
+              <label className={styles.label}>Password</label>
+              <input
+                title="Password must contain at least 9 characters. A upper and lower case letter, a symbol, and a number."
+                type="password"
+                pattern="^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{9,}$"
+                className={styles.input}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                placeholder="Password"
+              ></input>
 
-            <button className={styles.submitButton}>Submit</button>
-          </form>
-          <div>
-            {type === 'sign-in' ? (
-              <div id={styles.prompt}>
-                <span>Dont have an account?</span>
-                <Link to="/auth/sign-up" id={styles.signButton}>
-                  Sign Up
-                </Link>
-              </div>
-            ) : (
-              <div id={styles.prompt}>
-                <span>Already have an account?</span>
-                <Link to="/auth/sign-in" id={styles.signButton}>
-                  Sign In
-                </Link>
-              </div>
-            )}
+              <button className={styles.submitButton}>Submit</button>
+            </form>
+            <div>
+              {type === 'sign-in' ? (
+                <div id={styles.prompt}>
+                  <span>Dont have an account?</span>
+                  <Link to="/auth/sign-up" id={styles.signButton}>
+                    Sign Up
+                  </Link>
+                </div>
+              ) : (
+                <div id={styles.prompt}>
+                  <span>Already have an account?</span>
+                  <Link to="/auth/sign-in" id={styles.signButton}>
+                    Sign In
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-          {message && <Popup></Popup>}
         </div>
-      </div>
+      </>
     );
   };
   component.displayName = 'Auth';
