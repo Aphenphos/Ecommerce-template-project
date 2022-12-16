@@ -18,5 +18,9 @@ export async function rmImage(img_url: string) {
       credentials: 'include',
     }
   );
-  return;
+  if (resp.ok) {
+    return;
+  } else {
+    throw new Error('Failed to remove Image');
+  }
 }
