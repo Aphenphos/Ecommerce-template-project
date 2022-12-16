@@ -49,7 +49,6 @@ export async function deleteItem(id: number) {
 }
 
 export async function getItemById(id: number) {
-  console.log(id);
   const resp = await fetch(`/api/v1/items/getById/${id}`, {
     method: 'GET',
     credentials: 'include',
@@ -141,7 +140,6 @@ export async function getItemBySearch(search: string) {
   } else {
     params = search;
   }
-  console.log(params);
   const resp = await fetch(`/api/v1/items/getBySearch/${params}`, {
     method: 'GET',
     credentials: 'include',

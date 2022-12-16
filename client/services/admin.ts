@@ -20,7 +20,6 @@ export async function verifyAdmin() {
 
   if (resp.ok) {
     const data = await resp.json();
-    console.log(data);
     return data;
   } else {
     return false;

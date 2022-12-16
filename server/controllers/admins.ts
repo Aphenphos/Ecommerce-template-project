@@ -71,7 +71,6 @@ const adminController = Router()
     async (req: Request, res: Response, next: NextFunction) => {
       try {
         const id = req.body.id;
-        console.log(id);
         const data = await Vendor.makeVendor(req.body.id);
 
         res.json(data);

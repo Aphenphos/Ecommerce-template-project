@@ -64,7 +64,7 @@ export async function logoutUser() {
     credentials: 'include',
   });
   if (resp.ok) {
-    console.log('logged out');
+    return null;
   }
 }
 
@@ -76,7 +76,6 @@ export async function verifyVendor() {
 
   if (resp.ok) {
     const data = await resp.json();
-    console.log(data);
     return data;
   } else {
     return false;

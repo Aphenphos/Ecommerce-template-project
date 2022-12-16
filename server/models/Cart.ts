@@ -74,7 +74,6 @@ const Cart = class Cart {
     `,
       [user_id]
     );
-    console.log(rows);
     if (!rows[0]) {
       return null;
     } else {
@@ -97,7 +96,6 @@ const Cart = class Cart {
       `,
       [quantity, id, userId]
     );
-    console.log(rows);
     return new Cart(rows[0]);
   }
 };

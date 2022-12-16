@@ -18,10 +18,5 @@ export async function rmImage(img_url: string) {
       credentials: 'include',
     }
   );
-
-  if (resp.ok) {
-    console.log('image deleted');
-  } else {
-    console.log('error deleting image');
-  }
+  return;
 }

@@ -103,18 +103,15 @@ const itemController = Router()
       try {
         let items;
         const searchParams = req.params.search;
-        console.log(searchParams);
         if (
           searchParams === undefined ||
           searchParams === null ||
           searchParams === 'noSearch'
         ) {
-          console.log('hit');
           items = await Item.getAll();
         } else {
           items = await Item.getBySearch(searchParams!);
         }
-        console.log(items);
         if (items) {
           res.json(items);
         } else {

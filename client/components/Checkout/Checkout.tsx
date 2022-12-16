@@ -65,7 +65,6 @@ export default (): FC<Props> => {
       }
       await updateQuant(itemId, newQuant);
       setCartChange({ newQuant, change: 'increase' });
-      console.log('quant increased');
     };
     const handleDecrease = async (itemId: number, index: number) => {
       const newQuant = parseInt(cartItems[index].item_quantity) - 1;
@@ -82,7 +81,6 @@ export default (): FC<Props> => {
     };
 
     const handleRemove = async (itemid: bigint) => {
-      console.log(itemid);
       const rmFromCart = await removeFromCart(itemid);
       if (!rmFromCart) {
         setmChange('Failed to remove item from cart.');

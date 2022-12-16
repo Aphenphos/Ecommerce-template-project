@@ -30,7 +30,6 @@ const cartController = Router()
         const cartId = parseInt(req.params.id!);
         const userId = (req as any).user.id;
         const quant = req.body.quant;
-        console.log(cartId, userId, quant);
         const update = await Cart.updateQuantity(
           cartId,
           quant,
@@ -64,7 +63,6 @@ const cartController = Router()
       try {
         const userId = (req as any).user.id;
         const itemId = (req as any).params.id;
-        console.log(userId, itemId);
         const rmItem = await Cart.removeFrom(itemId, userId);
         res.send(rmItem);
       } catch (err) {
